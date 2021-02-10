@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-  devtool: 'inline-source-map',
+module.exports = (env) => ({
+  devtool: env.production ? false : 'eval-source-map',
   entry: './src/index.tsx',
   module: {
     rules: [
@@ -16,11 +16,26 @@ module.exports = {
       {
         exclude: /node_modules/,
         test: /\.tsx?$/,
-        use: ['babel-loader'],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  corejs: '3.8',
+                  useBuiltIns: 'usage',
+                },
+              ],
+              '@babel/preset-react',
+              '@babel/preset-typescript',
+            ],
+          },
+        },
       },
       {
         test: /\.xml$/i,
-        use: ['xml-loader'],
+        use: 'xml-loader',
       },
     ],
   },
@@ -34,6 +49,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.js', '.json', '.ts', '.tsx'],
   },
-};
+  target: 'web',
+});

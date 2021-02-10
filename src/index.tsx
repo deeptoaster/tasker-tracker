@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-function App(): JSX.Element {
-  return null;
-}
+import App from './App';
 
-render(<App />, document.getElementsByTagName('body')[0]);
+document.body.innerHTML = '<div id="root" />';
+render(<App />, document.getElementById('root'));
+
+if ((module as any).hot) {
+  (module as any).hot.accept();
+}

@@ -24,8 +24,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "webpack serve --mode development --open x-www-browser",
+    "build": "webpack --env production --mode production",
+    "start": "webpack serve --hot --mode development --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
