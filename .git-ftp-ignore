@@ -1,0 +1,9 @@
+.git-ftp-ignore
+.git-ftp-include
+.gitignore
+babel.config.json
+package-lock.json
+package.json
+prettier.config.js
+src/*
+webpack.config.js
