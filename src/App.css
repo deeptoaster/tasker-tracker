@@ -1,4 +1,32 @@
-.trackers-app-page {
+.trackers-create-card {
   display: flex;
-  justify-content: center;
+  margin-bottom: 2em;
+}
+.trackers-create-card-option {
+  position: relative;
+  width: 20em;
+  padding: 1em 2em;
+}
+.trackers-create-card-option + .trackers-create-card-option {
+  margin-left: 0.1em;
+}
+.trackers-create-card-option + .trackers-create-card-option::before {
+  content: '';
+  position: absolute;
+  top: 1em;
+  bottom: 1em;
+  left: -1em;
+  width: 0;
+  border-right: 0.05em solid #fff;
+  border-left: 0.05em solid #a6b8c1;
+  text-align: center;
+}
+.trackers-create-card-option + .trackers-create-card-option::after {
+  content: 'OR';
+  position: absolute;
+  top: 50%;
+  left: -1.75em;
+  margin-top: -0.75em;
+  background-color: #e3f3fb;
+  font-family: 'Playfair Display', sans-serif;
 }
