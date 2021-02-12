@@ -3,6 +3,5 @@
 .gitignore
 package-lock.json
 package.json
-prettier.config.js
 src/*
 webpack.config.js

@@ -1,15 +1,17 @@
-module.exports = (env) => ({
+const ESLintPlugin = require('eslint-webpack-plugin');
+
+module.exports = env => ({
   devtool: env.production ? false : 'eval-source-map',
   entry: './src/index.tsx',
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        type: 'asset/resource'
       },
       {
         exclude: /node_modules/,
@@ -22,27 +24,33 @@ module.exports = (env) => ({
                 '@babel/preset-env',
                 {
                   corejs: '3.8',
-                  useBuiltIns: 'usage',
-                },
+                  useBuiltIns: 'usage'
+                }
               ],
               '@babel/preset-react',
-              '@babel/preset-typescript',
-            ],
-          },
-        },
+              '@babel/preset-typescript'
+            ]
+          }
+        }
       },
       {
         test: /\.xml$/i,
-        use: 'xml-loader',
-      },
-    ],
+        use: 'xml-loader'
+      }
+    ]
   },
   output: {
     filename: 'tracker.js',
-    path: __dirname,
+    path: __dirname
   },
+  plugins: [
+    new ESLintPlugin({
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
+    })
+  ],
   resolve: {
-    extensions: ['.js', '.json', '.ts', '.tsx'],
+    extensions: ['.js', '.json', '.ts', '.tsx']
   },
   target: 'web',
+  watch: false
 });
