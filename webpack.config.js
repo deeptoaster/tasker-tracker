@@ -1,5 +1,3 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = (env) => ({
   devtool: env.production ? false : 'eval-source-map',
   entry: './src/index.tsx',
@@ -43,11 +41,6 @@ module.exports = (env) => ({
     filename: 'tracker.js',
     path: __dirname,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Tasker Tracker',
-    }),
-  ],
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx'],
   },
