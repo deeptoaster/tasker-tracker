@@ -1,32 +1,115 @@
-.trackers-create-card {
+#root {
   display: flex;
-  margin-bottom: 2em;
-}
-.trackers-create-card-option {
-  position: relative;
-  width: 20em;
-  padding: 1em 2em;
-}
-.trackers-create-card-option + .trackers-create-card-option {
-  margin-left: 0.1em;
-}
-.trackers-create-card-option + .trackers-create-card-option::before {
-  content: '';
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  top: 1em;
-  bottom: 1em;
-  left: -0.05em;
-  width: 0;
-  border-right: 0.05em solid #fff;
-  border-left: 0.05em solid #a6b8c1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.card-appear h2,
+.card-exit-active h2 {
+  color: transparent;
+  transition: color 300ms;
+}
+h2,
+.card-appear-active h2 {
+  color: inherit;
+  transition: color 600ms;
+}
+.card-appear article,
+.card-exit-active article {
+  box-shadow: none;
+  color: transparent;
+  text-shadow: none;
+  transition: box-shadow 200ms, color 200ms, text-shadow 200ms;
+}
+article,
+.card-appear-active article {
+  box-shadow: -0.05em -0.05em #fff, -0.5em -0.5em 2em #f9fdff,
+    0.05em 0.05em #a6b8c1, 0.5em 0.5em 2em #a6b8c1;
+  color: inherit;
+  text-shadow: -0.05em -0.05em 0.05em #fff, 0.05em 0.05em 0.05em #a6b8c1;
+  transition: box-shadow 400ms 400ms, color 400ms 600ms, text-shadow 400ms 600ms;
+}
+article {
+  border-radius: 1em;
   text-align: center;
 }
-.trackers-create-card-option + .trackers-create-card-option::after {
-  content: 'OR';
-  position: absolute;
-  top: 50%;
-  left: -0.8em;
-  margin-top: -0.75em;
+body,
+button {
+  font: 20px/1.5 Nunito, sans-serif;
+}
+body {
   background-color: #e3f3fb;
-  font-family: 'Playfair Display', sans-serif;
+  color: #505f66;
+}
+.card-appear button,
+.card-exit-active.card-exit-active button {
+  box-shadow: none;
+  background-color: transparent;
+  color: transparent;
+  transition: background-color 200ms, box-shadow 200ms, color 200ms;
+}
+button,
+button:active:active,
+.card-appear-active.card-appear-active button {
+  background-color: #ecda80;
+  color: #383629;
+}
+button,
+.card-appear-active button {
+  box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
+    0.05em 0.05em #c3bfae, 0.25em 0.25em 1em #a6b8c1;
+  transition: background-color 400ms 800ms, box-shadow 400ms 800ms,
+    color 400ms 800ms;
+}
+.card-appear-done button {
+  transition: background-color 50ms, box-shadow 50ms, color 50ms;
+}
+button,
+button input[type='file'] {
+  cursor: pointer;
+}
+button {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.5em;
+  padding: 0.5em 1em;
+}
+button:focus,
+button:hover {
+  background-color: #ffee9a;
+  color: #605c4a;
+  outline: none;
+}
+button:active {
+  box-shadow: -0.05em -0.05em #fff, -0.1em -0.1em 0.4em inset #ffee9a,
+    0.05em 0.05em #fff, 0.1em 0.1em 0.4em inset #c3bfae;
+}
+button input[type='file'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+figure,
+h2,
+h3,
+p {
+  margin: 1em 0;
+}
+figure {
+  text-align: center;
+}
+h2 {
+  font: 2em 'Playfair Display', sans-serif;
+}
+h3 {
+  font-weight: bold;
+  font-size: 1em;
 }

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useCallback } from 'react';
 
+import './CreateTrackersStage.css';
+
 export default function CreateTrackersStage(props: {
   setTrackers: (trackers: ReadonlyMap<string, ReadonlyArray<string>>) => void;
 }): JSX.Element {
@@ -13,7 +15,7 @@ export default function CreateTrackersStage(props: {
   const uploadConfig = useCallback((): void => {}, []);
 
   return (
-    <>
+    <div>
       <h2>Where would you like to start?</h2>
       <article className="trackers-create-card">
         <div className="trackers-create-card-option">
@@ -44,6 +46,6 @@ export default function CreateTrackersStage(props: {
           </figure>
         </div>
       </article>
-    </>
+    </div>
   );
 }

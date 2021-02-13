@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 
 import App from './App';
 
-import './index.css';
-
 render(<App />, document.getElementById('root'));
 
-if ((module as any).hot) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+if ((module as any).hot != null) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   (module as any).hot.accept();
 }

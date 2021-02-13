@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useState } from 'react';
 
 import CreateTrackersStage from './stages/CreateTrackersStage';
@@ -12,9 +13,32 @@ export default function App(): JSX.Element {
     ReadonlyArray<string>
   > | null>(null);
 
-  return trackers == null ? (
-    <CreateTrackersStage setTrackers={setTrackers} />
-  ) : (
-    <EditTrackersStage setTrackers={setTrackers} trackers={trackers} />
+  return (
+    <TransitionGroup component={null}>
+      {trackers == null ? (
+        <CSSTransition
+          appear={true}
+          classNames="card"
+          key="create"
+          timeout={{
+            enter: 1200,
+            exit: 300
+          }}
+        >
+          <CreateTrackersStage setTrackers={setTrackers} />
+        </CSSTransition>
+      ) : (
+        <CSSTransition
+          classNames="card"
+          key="edit"
+          timeout={{
+            enter: 1200,
+            exit: 300
+          }}
+        >
+          <EditTrackersStage setTrackers={setTrackers} trackers={trackers} />
+        </CSSTransition>
+      )}
+    </TransitionGroup>
   );
 }
