@@ -37,10 +37,6 @@ module.exports = env => ({
             ]
           }
         }
-      },
-      {
-        test: /\.xml$/i,
-        use: 'xml-loader'
       }
     ]
   },

@@ -1,34 +1,27 @@
-.trackers-create-card {
+.create-card {
   display: flex;
-  margin-bottom: 2em;
 }
-.trackers-create-card-option {
+.create-card-option {
   position: relative;
   width: 20em;
   padding: 1em 2em;
 }
-.trackers-create-card-option + .trackers-create-card-option {
+.create-card-option + .create-card-option {
   margin-left: 0.1em;
 }
-.card-appear
-  .trackers-create-card-option
-  + .trackers-create-card-option::before,
-.card-exit-active
-  .trackers-create-card-option
-  + .trackers-create-card-option::before {
+.card-appear .create-card-option + .create-card-option::before,
+.card-exit-active .create-card-option + .create-card-option::before {
   top: 50%;
   bottom: 50%;
   transition: top 200ms, bottom 200ms;
 }
-.trackers-create-card-option + .trackers-create-card-option::before,
-.card-appear-active
-  .trackers-create-card-option
-  + .trackers-create-card-option::before {
+.create-card-option + .create-card-option::before,
+.card-appear-active .create-card-option + .create-card-option::before {
   top: 1em;
   bottom: 1em;
   transition: top 400ms 800ms, bottom 400ms 800ms;
 }
-.trackers-create-card-option + .trackers-create-card-option::before {
+.create-card-option + .create-card-option::before {
   content: '';
   position: absolute;
   left: -0.05em;
@@ -37,7 +30,7 @@
   border-left: 0.05em solid #a6b8c1;
   text-align: center;
 }
-.trackers-create-card-option + .trackers-create-card-option::after {
+.create-card-option + .create-card-option::after {
   content: 'OR';
   position: absolute;
   top: 50%;

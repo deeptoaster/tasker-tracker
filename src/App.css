@@ -8,6 +8,24 @@
   bottom: 0;
   left: 0;
 }
+.error.error-enter,
+.error.error-exit-active {
+  opacity: 0;
+}
+.error,
+.error.error-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.error {
+  position: absolute;
+  bottom: 2em;
+  box-shadow: 0 0 0.2em #fcb7c6, 0.75em 0.75em 3em #a6b8c1;
+  padding: 1em 2em;
+  background-color: #fcb7c6;
+  color: #644f54;
+  font-weight: bold;
+}
 .card-appear h2,
 .card-exit-active h2 {
   color: transparent;
@@ -34,6 +52,7 @@ article,
   transition: box-shadow 400ms 400ms, color 400ms 600ms, text-shadow 400ms 600ms;
 }
 article {
+  margin-bottom: 3em;
   border-radius: 1em;
   text-align: center;
 }
@@ -86,7 +105,7 @@ button:hover {
   outline: none;
 }
 button:active {
-  box-shadow: -0.05em -0.05em #fff, -0.1em -0.1em 0.4em inset #ffee9a,
+  box-shadow: -0.05em -0.05em #a6b8c1, -0.1em -0.1em 0.4em inset #ffee9a,
     0.05em 0.05em #fff, 0.1em 0.1em 0.4em inset #c3bfae;
 }
 button input[type='file'] {
