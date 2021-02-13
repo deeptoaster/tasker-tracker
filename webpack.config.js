@@ -1,6 +1,11 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = env => ({
+  devServer: {
+    watchOptions: {
+      ignored: /node_modules/
+    }
+  },
   devtool: env.production ? false : 'eval-source-map',
   entry: './src/index.tsx',
   module: {
