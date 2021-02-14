@@ -1,9 +1,9 @@
 .tracker-card-container.card-enter,
-.tracker-card-container.card-exit-active {
+.tracker-card-container.card-exit-active.card-exit-active {
   width: 0;
   margin-left: 0;
-  transition: box-shadow 200ms, color 200ms, margin 200ms, text-shadow 200ms,
-    width 200ms;
+  transition: box-shadow 200ms, color 200ms, margin 300ms, text-shadow 200ms,
+    width 300ms;
 }
 .tracker-card-container,
 .tracker-card-container.card-enter-active {
@@ -110,6 +110,7 @@
 .tracker-card-container button:hover {
   background-color: #d8edf8;
   color: #96acb6;
+  z-index: 1;
 }
 .tracker-card-container button:active {
   box-shadow: -0.05em -0.05em #a6b8c1, -0.02em -0.02em 0.08em inset #f9fdff,
@@ -123,6 +124,9 @@
 }
 .tracker-card-container li button.add {
   width: 100%;
+}
+.tracker-card-container button.hidden {
+  visibility: hidden;
 }
 .tracker-card-container button::before {
   font-weight: bold;

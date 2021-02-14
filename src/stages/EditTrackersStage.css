@@ -6,7 +6,7 @@
 .tracker-card.preview {
   box-shadow: none;
   overflow: visible;
-  margin-bottom: 0;
+  margin-bottom: 2.5em;
 }
 .tracker-card li.preview::before {
   display: none;

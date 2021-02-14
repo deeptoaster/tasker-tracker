@@ -7,8 +7,8 @@ export type Config = {
 };
 
 export type Tracker = {
-  options: ReadonlyArray<string>;
-  title: string;
+  readonly options: ReadonlyArray<string>;
+  readonly title: string;
 };
 
 export const ErrorContext = createContext<(error: Error) => void>(() => {});

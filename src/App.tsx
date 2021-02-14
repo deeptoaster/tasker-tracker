@@ -15,10 +15,9 @@ import './App.css';
 const ERROR_DURATION = 5000;
 
 export default function App(): JSX.Element {
+  const [config, setConfig] = useState<Config | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const errorTimeout = useRef<number>();
-
-  const [config, setConfig] = useState<Config | null>(null);
 
   const setTrackers = useCallback(
     (trackers: ReadonlyArray<Tracker>): void => {
