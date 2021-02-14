@@ -2,7 +2,11 @@ import { createContext } from 'react';
 
 export const FILE_TYPES = ['application/xml', 'text/xml'];
 
-export type Config = ReadonlyMap<string, ReadonlyArray<string>>;
+export type Config = {
+  readonly trackers: Trackers;
+};
+
+export type Trackers = ReadonlyMap<string, ReadonlyArray<string>>;
 
 export const ErrorContext = createContext<(error: Error) => void>(() => {});
 
@@ -19,5 +23,5 @@ export async function parseFromFile(file: File): Promise<Config> {
     file.type as DOMParserSupportedType
   );
 
-  return new Map();
+  return { trackers: new Map() };
 }

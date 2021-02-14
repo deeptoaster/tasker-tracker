@@ -1,5 +1,6 @@
 .create-card {
   display: flex;
+  text-align: center;
 }
 .create-card-option {
   position: relative;
@@ -9,14 +10,16 @@
 .create-card-option + .create-card-option {
   margin-left: 0.1em;
 }
-.card-appear .create-card-option + .create-card-option::before,
-.card-exit-active .create-card-option + .create-card-option::before {
+.stage-appear .create-card-option + .create-card-option::before,
+.stage-enter .create-card-option + .create-card-option::before,
+.stage-exit-active .create-card-option + .create-card-option::before {
   top: 50%;
   bottom: 50%;
   transition: top 200ms, bottom 200ms;
 }
 .create-card-option + .create-card-option::before,
-.card-appear-active .create-card-option + .create-card-option::before {
+.stage-appear-active .create-card-option + .create-card-option::before,
+.stage-enter-active .create-card-option + .create-card-option::before {
   top: 1em;
   bottom: 1em;
   transition: top 400ms 800ms, bottom 400ms 800ms;

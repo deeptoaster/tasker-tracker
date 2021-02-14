@@ -28,25 +28,29 @@
   color: #644f54;
   font-weight: bold;
 }
-.card-appear h2,
-.card-exit-active h2 {
+.stage-appear h2,
+.stage-enter h2,
+.stage-exit-active h2 {
   color: transparent;
   transition: color 300ms;
 }
 h2,
-.card-appear-active h2 {
+.stage-appear-active h2,
+.stage-enter-active h2 {
   color: inherit;
   transition: color 600ms;
 }
-.card-appear article,
-.card-exit-active article {
+.stage-appear article,
+.stage-enter article,
+.stage-exit-active article {
   box-shadow: none;
   color: transparent;
   text-shadow: none;
   transition: box-shadow 200ms, color 200ms, text-shadow 200ms;
 }
 article,
-.card-appear-active article {
+.stage-appear-active article,
+.stage-enter-active article {
   box-shadow: -0.05em -0.05em #fff, -0.5em -0.5em 2em #f9fdff,
     0.05em 0.05em #a6b8c1, 0.5em 0.5em 2em #a6b8c1;
   color: inherit;
@@ -54,20 +58,25 @@ article,
   transition: box-shadow 400ms 400ms, color 400ms 600ms, text-shadow 400ms 600ms;
 }
 article {
+  overflow: hidden;
   margin-bottom: 3em;
   border-radius: 1em;
-  text-align: center;
+}
+article + article {
+  margin-left: 2em;
 }
 body,
-button {
+button,
+input {
   font: 20px/1.5 Nunito, sans-serif;
 }
 body {
   background-color: #e3f3fb;
   color: #505f66;
 }
-.card-appear button,
-.card-exit-active.card-exit-active button {
+.stage-appear button,
+.stage-enter button,
+.stage-exit-active.stage-exit-active button {
   box-shadow: none;
   background-color: transparent;
   color: transparent;
@@ -75,18 +84,21 @@ body {
 }
 button,
 button:active:active,
-.card-appear-active.card-appear-active button {
+.stage-appear-active.stage-appear-active button,
+.stage-enter-active.stage-enter-active button {
   background-color: #ecda80;
   color: #383629;
 }
 button,
-.card-appear-active button {
+.stage-appear-active button,
+.stage-enter-active button {
   box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
     0.05em 0.05em #c3bfae, 0.25em 0.25em 1em #a6b8c1;
   transition: background-color 400ms 800ms, box-shadow 400ms 800ms,
     color 400ms 800ms;
 }
-.card-appear-done button {
+.stage-appear-done button,
+.stage-enter-done button {
   transition: background-color 50ms, box-shadow 50ms, color 50ms;
 }
 button,
@@ -96,6 +108,7 @@ button input[type='file'] {
 button {
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   border: 0;
   border-radius: 0.5em;
   padding: 0.5em 1em;
@@ -118,6 +131,12 @@ button input[type='file'] {
   left: 0;
   opacity: 0;
 }
+button.close::before {
+  content: '\d7';
+}
+button.add::before {
+  content: '+';
+}
 figure,
 h2,
 p {
@@ -134,4 +153,30 @@ h3 {
   margin: 0.8em;
   font-weight: bold;
   font-size: 1.25em;
+}
+.stage-appear input,
+.stage-enter input,
+.stage-exit-active input {
+  background-color: transparent;
+  color: transparent;
+  transition: background-color 200ms, color 200ms;
+}
+input,
+.stage-appear-active input,
+.stage-enter-active input {
+  background-color: #f3fafe;
+  color: #161819;
+  transition: background-color 400ms 600ms, color 400ms 600ms;
+}
+input {
+  width: 100%;
+  border: none;
+  padding: 0 0.5em;
+  font-size: 1em;
+  line-height: inherit;
+}
+h3 input {
+  margin: -0.8em;
+  padding: 0.8em;
+  font-weight: bold;
 }

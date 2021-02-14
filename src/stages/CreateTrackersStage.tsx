@@ -7,14 +7,16 @@ import { Config, ErrorContext, FILE_TYPES } from '../TrackerUtils';
 import './CreateTrackersStage.css';
 
 export default function CreateTrackersStage(props: {
-  setTrackers: (trackers: Config) => void;
+  setConfig: (trackers: Config) => void;
 }): JSX.Element {
-  const { setTrackers } = props;
+  const { setConfig } = props;
   const error = useContext(ErrorContext);
 
   const createNewConfig = useCallback((): void => {
-    setTrackers(new Map());
-  }, [setTrackers]);
+    setConfig({
+      trackers: new Map([['Breakfast', ['Spam', 'Eggs', 'Ham']]])
+    });
+  }, [setConfig]);
 
   const uploadConfig = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
@@ -23,11 +25,11 @@ export default function CreateTrackersStage(props: {
         event.currentTarget.files.length !== 0
       ) {
         TrackerUtils.parseFromFile(event.currentTarget.files[0])
-          .then(setTrackers)
+          .then(setConfig)
           .catch(error);
       }
     },
-    [error, setTrackers]
+    [error, setConfig]
   );
 
   return (
