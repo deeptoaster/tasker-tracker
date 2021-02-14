@@ -14,7 +14,7 @@ export default function CreateTrackersStage(props: {
 
   const createNewConfig = useCallback((): void => {
     setConfig({
-      trackers: new Map([['Breakfast', ['Spam', 'Eggs', 'Ham']]])
+      trackers: [{ options: ['Spam', 'Eggs', 'Ham'], title: 'Breakfast' }]
     });
   }, [setConfig]);
 

@@ -6,7 +6,7 @@ import {
 } from 'react-transition-group';
 import { useCallback, useRef, useState } from 'react';
 
-import { Config, ErrorContext, Trackers } from './TrackerUtils';
+import { Config, ErrorContext, Tracker } from './TrackerUtils';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import EditTrackersStage from './stages/EditTrackersStage';
 
@@ -21,7 +21,7 @@ export default function App(): JSX.Element {
   const [config, setConfig] = useState<Config | null>(null);
 
   const setTrackers = useCallback(
-    (trackers: Trackers): void => {
+    (trackers: ReadonlyArray<Tracker>): void => {
       setConfig({ ...config, trackers });
     },
     [config]

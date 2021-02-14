@@ -42,7 +42,9 @@ h2,
 }
 .stage-appear article,
 .stage-enter article,
-.stage-exit-active article {
+.stage-exit-active article,
+.card-enter article,
+.card-exit-active article {
   box-shadow: none;
   color: transparent;
   text-shadow: none;
@@ -50,7 +52,8 @@ h2,
 }
 article,
 .stage-appear-active article,
-.stage-enter-active article {
+.stage-enter-active article,
+.card-enter-active article {
   box-shadow: -0.05em -0.05em #fff, -0.5em -0.5em 2em #f9fdff,
     0.05em 0.05em #a6b8c1, 0.5em 0.5em 2em #a6b8c1;
   color: inherit;
@@ -61,9 +64,6 @@ article {
   overflow: hidden;
   margin-bottom: 3em;
   border-radius: 1em;
-}
-article + article {
-  margin-left: 2em;
 }
 body,
 button,
@@ -76,7 +76,9 @@ body {
 }
 .stage-appear button,
 .stage-enter button,
-.stage-exit-active.stage-exit-active button {
+.stage-exit-active.stage-exit-active button,
+.stage-enter-done .card-enter button,
+.stage-enter-done .card-exit-active.card-exit-active button {
   box-shadow: none;
   background-color: transparent;
   color: transparent;
@@ -85,20 +87,23 @@ body {
 button,
 button:active:active,
 .stage-appear-active.stage-appear-active button,
-.stage-enter-active.stage-enter-active button {
+.stage-enter-active.stage-enter-active button,
+.stage-enter-done .card-enter-active.card-enter-active button {
   background-color: #ecda80;
   color: #383629;
 }
 button,
 .stage-appear-active button,
-.stage-enter-active button {
+.stage-enter-active button,
+.stage-enter-done .card-enter-active button {
   box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
     0.05em 0.05em #c3bfae, 0.25em 0.25em 1em #a6b8c1;
   transition: background-color 400ms 800ms, box-shadow 400ms 800ms,
     color 400ms 800ms;
 }
 .stage-appear-done button,
-.stage-enter-done button {
+.stage-enter-done button,
+.stage-enter-done .card-enter-done button {
   transition: background-color 50ms, box-shadow 50ms, color 50ms;
 }
 button,
@@ -156,14 +161,17 @@ h3 {
 }
 .stage-appear input,
 .stage-enter input,
-.stage-exit-active input {
+.stage-exit-active input,
+.stage-enter-done .card-enter input,
+.stage-enter-done .card-exit-active input {
   background-color: transparent;
   color: transparent;
   transition: background-color 200ms, color 200ms;
 }
 input,
 .stage-appear-active input,
-.stage-enter-active input {
+.stage-enter-active input,
+.stage-enter-done .card-enter-active input {
   background-color: #f3fafe;
   color: #161819;
   transition: background-color 400ms 600ms, color 400ms 600ms;

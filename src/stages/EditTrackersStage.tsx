@@ -1,47 +1,43 @@
 import * as React from 'react';
-import { Trackers } from '../TrackerUtils';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useCallback } from 'react';
+
+import { Tracker } from '../TrackerUtils';
+import TrackerCard from '../TrackerCard';
 
 import './EditTrackersStage.css';
 
 export default function EditTrackersStage(props: {
-  setTrackers: (trackers: Trackers) => void;
-  trackers: Trackers;
+  setTrackers: (trackers: ReadonlyArray<Tracker>) => void;
+  trackers: ReadonlyArray<Tracker>;
 }): JSX.Element {
   const { setTrackers, trackers } = props;
+
+  const addTracker = useCallback((): void => {
+    setTrackers([...trackers, { options: [], title: '' }]);
+  }, [setTrackers, trackers]);
 
   return (
     <div>
       <h2>What would you like to track?</h2>
-      <div className="edit-cards">
-        {Array.from(trackers).map(
-          ([trackerId, tracker]: [
-            string,
-            ReadonlyArray<string>
-          ]): JSX.Element => (
-            <article className="edit-card" key={trackerId}>
-              <h3>
-                <input type="text" value={trackerId} />
-              </h3>
-              <ul>
-                {tracker.map(
-                  (option: string): JSX.Element => (
-                    <li key={option}>
-                      <input type="text" value={option} />
-                      <button className="close" />
-                    </li>
-                  )
-                )}
-                <li className="preview" key={null}>
-                  <button className="add" />
-                </li>
-              </ul>
-            </article>
+      <TransitionGroup className="tracker-cards">
+        {trackers.map(
+          (tracker: Tracker, index: number): JSX.Element => (
+            <CSSTransition
+              classNames="card"
+              key={index}
+              timeout={{ enter: 1200, exit: 300 }}
+            >
+              <TrackerCard {...tracker} />
+            </CSSTransition>
           )
         )}
-        <article className="edit-card preview" key={null}>
-          <button className="add" />
-        </article>
-      </div>
+        <div className="tracker-card-container">
+          <article className="tracker-card preview" key={null}>
+            <button className="add" onClick={addTracker} />
+          </article>
+        </div>
+      </TransitionGroup>
     </div>
   );
 }
