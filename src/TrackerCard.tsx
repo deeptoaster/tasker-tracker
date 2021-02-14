@@ -63,19 +63,24 @@ export default function TrackerCard(
                   value={option}
                 />
                 <button
-                  className="close"
+                  className="button-close button-stub"
                   onClick={(): void => removeTrackerOption(optionIndex)}
                 />
               </li>
             )
           )}
           <li className="preview" key={null}>
-            <button className="add" onClick={addTrackerOption} />
+            <button
+              className="button-add button-stub"
+              onClick={addTrackerOption}
+            />
           </li>
         </ul>
       </article>
       <button
-        className={`close ${removeTracker == null ? 'hidden' : ''}`}
+        className={`button-close button-stub ${
+          removeTracker == null ? 'hidden' : ''
+        }`}
         onClick={removeTracker ?? undefined}
       />
     </div>

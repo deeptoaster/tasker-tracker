@@ -28,6 +28,12 @@
   color: #644f54;
   font-weight: bold;
 }
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
 .stage-appear h2,
 .stage-enter h2,
 .stage-exit-active h2 {
@@ -44,7 +50,8 @@ h2,
 .stage-enter article,
 .stage-exit-active article,
 .card-enter article,
-.card-exit-active article {
+.card-exit-active article,
+footer.stage-enter {
   box-shadow: none;
   color: transparent;
   text-shadow: none;
@@ -53,7 +60,9 @@ h2,
 article,
 .stage-appear-active article,
 .stage-enter-active article,
-.card-enter-active article {
+.card-enter-active article,
+footer,
+footer.stage-enter-active {
   box-shadow: -0.05em -0.05em #fff, -0.5em -0.5em 2em #f9fdff,
     0.05em 0.05em #a6b8c1, 0.5em 0.5em 2em #a6b8c1;
   color: inherit;
@@ -74,9 +83,9 @@ body {
   background-color: #e3f3fb;
   color: #505f66;
 }
-.stage-appear button,
-.stage-enter button,
-.stage-exit-active.stage-exit-active button,
+.stage-appear.stage-appear button,
+.stage-enter.stage-enter button,
+.stage-exit-active.stage-exit-active.stage-exit-active button,
 .stage-enter-done .card-enter button,
 .stage-enter-done .card-exit-active.card-exit-active button {
   box-shadow: none;
@@ -89,17 +98,39 @@ button:active:active,
 .stage-appear-active.stage-appear-active button,
 .stage-enter-active.stage-enter-active button,
 .stage-enter-done .card-enter-active.card-enter-active button {
+  background-color: #cce7f4;
+  color: #314b57;
+}
+button.button-primary,
+button.button-primary:active:active,
+.stage-appear-active.stage-appear-active button.button-primary,
+.stage-enter-active.stage-enter-active button.button-primary,
+.stage-enter-done .card-enter-active.card-enter-active button.button-primary {
   background-color: #ecda80;
   color: #383629;
 }
 button,
-.stage-appear-active button,
-.stage-enter-active button,
+.stage-appear-active.stage-appear-active button,
+.stage-enter-active.stage-enter-active button,
 .stage-enter-done .card-enter-active button {
   box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
-    0.05em 0.05em #c3bfae, 0.25em 0.25em 1em #a6b8c1;
+    0.05em 0.05em #a6b8c1, 0.25em 0.25em 1em #a6b8c1;
   transition: background-color 400ms 800ms, box-shadow 400ms 800ms,
     color 400ms 800ms;
+}
+button.button-primary,
+.stage-appear-active.stage-appear-active button.button-primary,
+.stage-enter-active.stage-enter-active button.button-primary,
+.stage-enter-done .card-enter-active button.button-primary {
+  box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
+    0.05em 0.05em #c3bfae, 0.25em 0.25em 1em #a6b8c1;
+}
+button.button-stub,
+.stage-appear-active.stage-appear-active button.button-stub,
+.stage-enter-active.stage-enter-active button.button-stub,
+.stage-enter-done .card-enter-active button.button-stub {
+  box-shadow: -0.05em -0.05em #fff, -0.05em -0.05em 0.2em #f9fdff,
+    0.05em 0.05em #a6b8c1, 0.05em 0.05em 0.2em #a6b8c1;
 }
 .stage-appear-done button,
 .stage-enter-done button,
@@ -120,13 +151,26 @@ button {
 }
 button:focus,
 button:hover {
-  background-color: #ffee9a;
-  color: #605c4a;
+  background-color: #d8edf8;
+  color: #46616e;
   outline: none;
 }
+button.button-primary:focus,
+button.button-primary:hover {
+  background-color: #ffee9a;
+  color: #605c4a;
+}
 button:active {
+  box-shadow: -0.05em -0.05em #a6b8c1, -0.1em -0.1em 0.4em inset #f9fdff,
+    0.05em 0.05em #fff, 0.1em 0.1em 0.4em inset #a6b8c1;
+}
+button.button-primary:active {
   box-shadow: -0.05em -0.05em #a6b8c1, -0.1em -0.1em 0.4em inset #ffee9a,
     0.05em 0.05em #fff, 0.1em 0.1em 0.4em inset #c3bfae;
+}
+button.button-stub:active {
+  box-shadow: -0.05em -0.05em #a6b8c1, -0.02em -0.02em 0.08em inset #f9fdff,
+    0.05em 0.05em #fff, 0.02em 0.02em 0.08em inset #a6b8c1;
 }
 button input[type='file'] {
   position: absolute;
@@ -136,11 +180,11 @@ button input[type='file'] {
   left: 0;
   opacity: 0;
 }
-button.close::before {
-  content: '\d7';
-}
-button.add::before {
+button.button-add::before {
   content: '+';
+}
+button.button-close::before {
+  content: '\d7';
 }
 figure,
 h2,
@@ -149,6 +193,16 @@ p {
 }
 figure {
   text-align: center;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 2em;
+}
+footer button + button {
+  margin-left: 2em;
 }
 h2 {
   font: 2em 'Playfair Display', sans-serif;

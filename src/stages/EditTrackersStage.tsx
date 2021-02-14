@@ -137,7 +137,7 @@ export default function EditTrackersStage(props: {
         )}
         <div className="tracker-card-container">
           <article className="tracker-card preview" key={null}>
-            <button className="add" onClick={addTracker} />
+            <button className="button-add button-stub" onClick={addTracker} />
           </article>
         </div>
       </TransitionGroup>

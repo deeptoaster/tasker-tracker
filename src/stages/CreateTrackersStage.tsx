@@ -2,7 +2,12 @@ import * as React from 'react';
 import { ChangeEvent, useCallback, useContext } from 'react';
 
 import * as TrackerUtils from '../TrackerUtils';
-import { Config, ErrorContext, FILE_TYPES } from '../TrackerUtils';
+import {
+  CONFIG_DEFAULT,
+  Config,
+  ErrorContext,
+  FILE_TYPES
+} from '../TrackerUtils';
 
 import './CreateTrackersStage.css';
 
@@ -13,9 +18,7 @@ export default function CreateTrackersStage(props: {
   const error = useContext(ErrorContext);
 
   const createNewConfig = useCallback((): void => {
-    setConfig({
-      trackers: [{ options: ['Spam', 'Eggs', 'Ham'], title: 'Breakfast' }]
-    });
+    setConfig(CONFIG_DEFAULT);
   }, [setConfig]);
 
   const uploadConfig = useCallback(
@@ -43,7 +46,9 @@ export default function CreateTrackersStage(props: {
             config for you.
           </p>
           <figure>
-            <button onClick={createNewConfig}>Create New Config</button>
+            <button className="button-primary" onClick={createNewConfig}>
+              Create New Config
+            </button>
           </figure>
         </div>
         <div className="create-card-option">
@@ -53,7 +58,7 @@ export default function CreateTrackersStage(props: {
             it here.
           </p>
           <figure>
-            <button>
+            <button className="button-primary">
               <input
                 accept={FILE_TYPES.join()}
                 onChange={uploadConfig}

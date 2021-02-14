@@ -84,45 +84,22 @@
 .tracker-card li input {
   box-sizing: border-box;
 }
-.tracker-card-container button,
-.tracker-card-container button:active:active,
-.stage-appear-active.stage-appear-active .tracker-card-container button,
-.stage-enter-active.stage-enter-active .tracker-card-container button,
-.stage-enter-done
-  .tracker-card-container.card-enter-active.card-enter-active
-  button {
-  background-color: #cce7f4;
-}
-.tracker-card-container button,
-.stage-appear-active.stage-appear-active .tracker-card-container button,
-.stage-enter-active.stage-enter-active .tracker-card-container button,
-.stage-enter-done
-  .tracker-card-container.card-enter-active.card-enter-active
-  button {
-  box-shadow: -0.05em -0.05em #fff, -0.05em -0.05em 0.2em #f9fdff,
-    0.05em 0.05em #a6b8c1, 0.05em 0.05em 0.2em #a6b8c1;
-}
 .tracker-card-container button {
   height: 1.5em;
   padding: 0;
 }
 .tracker-card-container button:focus,
 .tracker-card-container button:hover {
-  background-color: #d8edf8;
-  color: #96acb6;
   z-index: 1;
+  color: #96acb6;
 }
-.tracker-card-container button:active {
-  box-shadow: -0.05em -0.05em #a6b8c1, -0.02em -0.02em 0.08em inset #f9fdff,
-    0.05em 0.05em #fff, 0.02em 0.02em 0.08em inset #a6b8c1;
-}
-.tracker-card-container li button.close {
+.tracker-card-container li button.button-close {
   position: absolute;
   right: 0;
   width: 1.5em;
   margin: 0.25em;
 }
-.tracker-card-container li button.add {
+.tracker-card-container li button.button-add {
   width: 100%;
 }
 .tracker-card-container button.hidden {

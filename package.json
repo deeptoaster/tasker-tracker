@@ -20,7 +20,13 @@
       "arrow-body-style": "error",
       "curly": "error",
       "dot-notation": "error",
-      "eqeqeq": "error",
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "never"
+        }
+      ],
       "no-await-in-loop": "error",
       "no-return-await": "error",
       "no-unreachable-loop": "error",
