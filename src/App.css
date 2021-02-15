@@ -29,18 +29,18 @@
   font-weight: bold;
 }
 .form-control {
-  clear: left;
-  margin: 0.5em 0;
+  display: flex;
+  margin: 0.5em -0.25em 0 0;
 }
 .form-control label {
-  float: left;
+  overflow: hidden;
   width: 8em;
-}
-.form-control .input-group {
-  margin-left: 8em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .input-group {
-  padding: 0 0.5em;
+  flex: 1;
+  padding: 0 0.75em;
 }
 .input-group input {
   margin: 0 -0.5em;
@@ -51,21 +51,28 @@
 .pull-right {
   float: right;
 }
-.stage-appear h2,
-.stage-enter h2,
-.stage-exit-active h2 {
+.stage-appear a,
+.stage-enter a,
+.stage-exit-active a {
   color: transparent;
-  transition: color 300ms;
+  transition: color 200ms;
 }
-h2,
-.stage-appear-active h2,
-.stage-enter-active h2 {
-  color: inherit;
-  transition: color 600ms;
+a,
+.stage-appear-active a,
+.stage-enter-active a,
+.card-enter-active a {
+  color: #859fab;
+  text-decoration: none;
+  transition: color 400ms 600ms;
+}
+a:hover,
+a:focus {
+  text-decoration: underline;
+  outline: none;
 }
 .stage-appear article,
 .stage-enter article,
-.stage-exit-active article,
+.stage-exit-active.stage-exit-active article,
 .card-enter article,
 .card-exit-active article,
 footer.stage-enter {
@@ -223,6 +230,18 @@ footer button + button {
 }
 form {
   margin: 1em 0;
+}
+.stage-appear h2,
+.stage-enter h2,
+.stage-exit-active h2 {
+  color: transparent;
+  transition: color 300ms;
+}
+h2,
+.stage-appear-active h2,
+.stage-enter-active h2 {
+  color: inherit;
+  transition: color 600ms;
 }
 h2 {
   font: 2em 'Playfair Display', sans-serif;

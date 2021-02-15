@@ -10,6 +10,7 @@ import { Config, ErrorContext, Tracker } from './TrackerUtils';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import EditTrackersStage from './stages/EditTrackersStage';
+import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
 
 import './App.css';
 
@@ -18,6 +19,7 @@ const ERROR_DURATION = 5000;
 enum Stage {
   EDIT_TRACKERS,
   API_SETTINGS,
+  SPREADSHEET_SETTINGS,
   length
 }
 
@@ -49,16 +51,12 @@ export default function App(): JSX.Element {
   );
 
   const setClientId = useCallback(
-    (clientId: string) => {
-      setPartialConfig({ clientId });
-    },
+    (clientId: string) => setPartialConfig({ clientId }),
     [setPartialConfig]
   );
 
   const setClientSecret = useCallback(
-    (clientSecret: string) => {
-      setPartialConfig({ clientSecret });
-    },
+    (clientSecret: string) => setPartialConfig({ clientSecret }),
     [setPartialConfig]
   );
 
@@ -102,6 +100,11 @@ export default function App(): JSX.Element {
               clientSecret={config.clientSecret}
               setClientId={setClientId}
               setClientSecret={setClientSecret}
+            />
+          ) : stage === Stage.SPREADSHEET_SETTINGS ? (
+            <SpreadsheetSettingsStage
+              setTrackers={setTrackers}
+              trackers={config.trackers}
             />
           ) : null}
         </CSSTransition>

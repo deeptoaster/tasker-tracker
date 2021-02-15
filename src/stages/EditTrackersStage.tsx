@@ -13,12 +13,13 @@ export default function EditTrackersStage(props: {
 }): JSX.Element {
   const { setTrackers, trackers } = props;
 
-  const addTracker = useCallback((): void => {
-    setTrackers([...trackers, TRACKER_DEFAULT]);
-  }, [setTrackers, trackers]);
+  const addTracker = useCallback(
+    (): void => setTrackers([...trackers, TRACKER_DEFAULT]),
+    [setTrackers, trackers]
+  );
 
   const addTrackerOption = useCallback(
-    (trackerIndexToChange): void => {
+    (trackerIndexToChange): void =>
       setTrackers(
         trackers.map(
           (tracker: Tracker, trackerIndex: number): Tracker =>
@@ -26,8 +27,7 @@ export default function EditTrackersStage(props: {
               ? { ...tracker, options: [...tracker.options, ''] }
               : tracker
         )
-      );
-    },
+      ),
     [setTrackers, trackers]
   );
 
@@ -43,7 +43,7 @@ export default function EditTrackersStage(props: {
   );
 
   const removeTrackerOption = useCallback(
-    (trackerIndexToChange: number, optionIndexToRemove: number): void => {
+    (trackerIndexToChange: number, optionIndexToRemove: number): void =>
       setTrackers(
         trackers.map(
           (tracker: Tracker, trackerIndex: number): Tracker =>
@@ -57,8 +57,7 @@ export default function EditTrackersStage(props: {
                 }
               : tracker
         )
-      );
-    },
+      ),
     [setTrackers, trackers]
   );
 
@@ -67,7 +66,7 @@ export default function EditTrackersStage(props: {
       trackerIndexToChange: number,
       optionIndexToSet: number,
       optionToSet: string
-    ): void => {
+    ): void =>
       setTrackers(
         trackers.map(
           (tracker: Tracker, trackerIndex: number): Tracker =>
@@ -81,13 +80,12 @@ export default function EditTrackersStage(props: {
                 }
               : tracker
         )
-      );
-    },
+      ),
     [setTrackers, trackers]
   );
 
   const setTrackerTitle = useCallback(
-    (trackerIndexToChange: number, title: string): void => {
+    (trackerIndexToChange: number, title: string): void =>
       setTrackers(
         trackers.map(
           (tracker: Tracker, trackerIndex: number): Tracker =>
@@ -95,8 +93,7 @@ export default function EditTrackersStage(props: {
               ? { ...tracker, title }
               : tracker
         )
-      );
-    },
+      ),
     [setTrackers, trackers]
   );
 
@@ -135,8 +132,8 @@ export default function EditTrackersStage(props: {
             </CSSTransition>
           )
         )}
-        <div className="tracker-card-container">
-          <article className="tracker-card preview" key={null}>
+        <div className="tracker-card-container" key={null}>
+          <article className="tracker-card preview">
             <button className="button-add button-stub" onClick={addTracker} />
           </article>
         </div>

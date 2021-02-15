@@ -46,7 +46,7 @@
 }
 .stage-appear .tracker-card li::before,
 .stage-enter .tracker-card li::before,
-.stage-exit-active .tracker-card li::before,
+.stage-exit-active.stage-exit-active .tracker-card li::before,
 .stage-enter-done .card-enter .tracker-card li::before,
 .stage-enter-done .card-exit-active .tracker-card li::before {
   color: transparent;

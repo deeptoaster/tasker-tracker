@@ -17,9 +17,9 @@ export default function CreateTrackersStage(props: {
   const { setConfig } = props;
   const error = useContext(ErrorContext);
 
-  const createNewConfig = useCallback((): void => {
-    setConfig(CONFIG_DEFAULT);
-  }, [setConfig]);
+  const createNewConfig = useCallback((): void => setConfig(CONFIG_DEFAULT), [
+    setConfig
+  ]);
 
   const uploadConfig = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {

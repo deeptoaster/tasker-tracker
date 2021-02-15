@@ -27,15 +27,14 @@ export default function TrackerCard(
 
   const titleInput = useRef<HTMLInputElement>(null);
 
-  const handleTitleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setTrackerTitle(event.currentTarget.value);
-    },
+  const updateTitle = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void =>
+      setTrackerTitle(event.currentTarget.value),
     [setTrackerTitle]
   );
 
   useEffect((): void => {
-    if (title === '') {
+    if (title === '' && options.length === 0) {
       titleInput.current?.focus();
     }
   });
@@ -45,7 +44,7 @@ export default function TrackerCard(
       <article className="tracker-card">
         <h3>
           <input
-            onChange={handleTitleChange}
+            onChange={updateTitle}
             ref={titleInput}
             type="text"
             value={title}
