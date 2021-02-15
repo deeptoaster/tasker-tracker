@@ -7,6 +7,7 @@ import {
 import { useCallback, useRef, useState } from 'react';
 
 import { Config, ErrorContext, Tracker } from './TrackerUtils';
+import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import EditTrackersStage from './stages/EditTrackersStage';
 
@@ -16,6 +17,7 @@ const ERROR_DURATION = 5000;
 
 enum Stage {
   EDIT_TRACKERS,
+  API_SETTINGS,
   length
 }
 
@@ -37,13 +39,32 @@ export default function App(): JSX.Element {
     }
   }, [stage]);
 
-  const setTrackers = useCallback(
-    (trackers: ReadonlyArray<Tracker>): void => {
+  const setPartialConfig = useCallback(
+    (partialConfig: Partial<Config>): void => {
       if (config != null) {
-        setConfig({ ...config, trackers });
+        setConfig({ ...config, ...partialConfig });
       }
     },
     [config]
+  );
+
+  const setClientId = useCallback(
+    (clientId: string) => {
+      setPartialConfig({ clientId });
+    },
+    [setPartialConfig]
+  );
+
+  const setClientSecret = useCallback(
+    (clientSecret: string) => {
+      setPartialConfig({ clientSecret });
+    },
+    [setPartialConfig]
+  );
+
+  const setTrackers = useCallback(
+    (trackers: ReadonlyArray<Tracker>): void => setPartialConfig({ trackers }),
+    [setPartialConfig]
   );
 
   const showError = useCallback((error: Error): void => {
@@ -62,7 +83,7 @@ export default function App(): JSX.Element {
         <CSSTransition
           appear={true}
           classNames="stage"
-          key={config == null ? 'create' : 'edit'}
+          key={config == null ? null : stage}
           timeout={{
             enter: 1200,
             exit: 300
@@ -74,6 +95,13 @@ export default function App(): JSX.Element {
             <EditTrackersStage
               setTrackers={setTrackers}
               trackers={config.trackers}
+            />
+          ) : stage === Stage.API_SETTINGS ? (
+            <ApiSettingsStage
+              clientId={config.clientId}
+              clientSecret={config.clientSecret}
+              setClientId={setClientId}
+              setClientSecret={setClientSecret}
             />
           ) : null}
         </CSSTransition>

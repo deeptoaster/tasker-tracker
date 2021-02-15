@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback } from 'react';
 
-import { Tracker } from '../TrackerUtils';
+import { TRACKER_DEFAULT, Tracker } from '../TrackerUtils';
 import TrackerCard from '../TrackerCard';
 
 import './EditTrackersStage.css';
@@ -14,7 +14,7 @@ export default function EditTrackersStage(props: {
   const { setTrackers, trackers } = props;
 
   const addTracker = useCallback((): void => {
-    setTrackers([...trackers, { options: [], title: '' }]);
+    setTrackers([...trackers, TRACKER_DEFAULT]);
   }, [setTrackers, trackers]);
 
   const addTrackerOption = useCallback(

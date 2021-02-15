@@ -28,6 +28,7 @@
 }
 .tracker-card h3 {
   width: 10em;
+  margin: 0.8em;
 }
 .tracker-card ul {
   list-style-type: none;

@@ -28,6 +28,23 @@
   color: #644f54;
   font-weight: bold;
 }
+.form-control {
+  clear: left;
+  margin: 0.5em 0;
+}
+.form-control label {
+  float: left;
+  width: 8em;
+}
+.form-control .input-group {
+  margin-left: 8em;
+}
+.input-group {
+  padding: 0 0.5em;
+}
+.input-group input {
+  margin: 0 -0.5em;
+}
 .pull-left {
   float: left;
 }
@@ -204,12 +221,15 @@ footer {
 footer button + button {
   margin-left: 2em;
 }
+form {
+  margin: 1em 0;
+}
 h2 {
   font: 2em 'Playfair Display', sans-serif;
   color: #617078;
 }
 h3 {
-  margin: 0.8em;
+  margin: 0.8em 0;
   font-weight: bold;
   font-size: 1.25em;
 }
@@ -240,5 +260,8 @@ input {
 h3 input {
   margin: -0.8em;
   padding: 0.8em;
+  font-weight: bold;
+}
+label {
   font-weight: bold;
 }
