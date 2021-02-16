@@ -1,20 +1,22 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback, useContext } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect } from 'react';
 
 import * as TrackerUtils from '../TrackerUtils';
 import {
   CONFIG_DEFAULT,
   Config,
   ErrorContext,
-  FILE_TYPES
+  FILE_TYPES,
+  StageError
 } from '../TrackerUtils';
 
 import './CreateTrackersStage.css';
 
 export default function CreateTrackersStage(props: {
   setConfig: (trackers: Config) => void;
+  setStageError: (stageError: StageError | null) => void;
 }): JSX.Element {
-  const { setConfig } = props;
+  const { setConfig, setStageError } = props;
   const error = useContext(ErrorContext);
 
   const createNewConfig = useCallback((): void => setConfig(CONFIG_DEFAULT), [
@@ -34,6 +36,10 @@ export default function CreateTrackersStage(props: {
     },
     [error, setConfig]
   );
+
+  useEffect((): void => {
+    setStageError(null);
+  }, [setStageError]);
 
   return (
     <div>

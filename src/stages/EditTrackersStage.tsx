@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { TRACKER_DEFAULT, Tracker } from '../TrackerUtils';
+import { StageError, TRACKER_DEFAULT, Tracker } from '../TrackerUtils';
 import TrackerCard from '../TrackerCard';
 
 import './EditTrackersStage.css';
 
 export default function EditTrackersStage(props: {
+  setStageError: (stageError: StageError | null) => void;
   setTrackers: (trackers: ReadonlyArray<Tracker>) => void;
+  stageError: StageError | null;
   trackers: ReadonlyArray<Tracker>;
 }): JSX.Element {
-  const { setTrackers, trackers } = props;
+  const { setStageError, setTrackers, stageError, trackers } = props;
+  const [focused, setFocused] = useState<boolean>(false);
 
   const addTracker = useCallback(
     (): void => setTrackers([...trackers, TRACKER_DEFAULT]),
@@ -30,6 +33,10 @@ export default function EditTrackersStage(props: {
       ),
     [setTrackers, trackers]
   );
+
+  const blur = useCallback((): void => setFocused(false), []);
+
+  const focus = useCallback((): void => setFocused(true), []);
 
   const removeTracker = useCallback(
     (trackerIndexToRemove: number): void =>
@@ -97,6 +104,79 @@ export default function EditTrackersStage(props: {
     [setTrackers, trackers]
   );
 
+  useEffect(() => {
+    try {
+      const titleEmptyIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => tracker.title === ''
+      );
+
+      if (titleEmptyIndex !== -1) {
+        throw new StageError(
+          'Category title cannot be empty.',
+          focus,
+          'title',
+          titleEmptyIndex
+        );
+      }
+
+      for (
+        let trackerIndex = 0;
+        trackerIndex < trackers.length;
+        trackerIndex++
+      ) {
+        const { options } = trackers[trackerIndex];
+
+        const optionEmptyIndex = options.findIndex(
+          (option: string): boolean => option === ''
+        );
+
+        if (optionEmptyIndex !== -1) {
+          throw new StageError(
+            'Option cannot be empty.',
+            focus,
+            'options',
+            trackerIndex,
+            optionEmptyIndex
+          );
+        }
+
+        const optionDuplicateIndex = options.findIndex(
+          (option: string, optionIndex: number): boolean => {
+            for (
+              let otherOptionIndex = 0;
+              otherOptionIndex < optionIndex;
+              otherOptionIndex++
+            ) {
+              if (options[otherOptionIndex] === option) {
+                return true;
+              }
+            }
+
+            return false;
+          }
+        );
+
+        if (optionDuplicateIndex !== -1) {
+          throw new StageError(
+            'Options within a category must be unique.',
+            focus,
+            'options',
+            trackerIndex,
+            optionDuplicateIndex
+          );
+        }
+      }
+
+      setStageError(null);
+    } catch (error) {
+      if (error instanceof StageError) {
+        setStageError(error);
+      } else {
+        throw error;
+      }
+    }
+  }, [focus, setStageError, trackers]);
+
   return (
     <div>
       <h2>What would you like to track?</h2>
@@ -111,6 +191,7 @@ export default function EditTrackersStage(props: {
               <TrackerCard
                 {...tracker}
                 addTrackerOption={(): void => addTrackerOption(trackerIndex)}
+                onFocus={blur}
                 removeTracker={
                   trackerIndex !== 0
                     ? (): void => removeTracker(trackerIndex)
@@ -127,6 +208,14 @@ export default function EditTrackersStage(props: {
                 }}
                 setTrackerTitle={(title: string): void =>
                   setTrackerTitle(trackerIndex, title)
+                }
+                stageError={
+                  focused &&
+                  (stageError?.source === 'title' ||
+                    stageError?.source === 'options') &&
+                  stageError.trackerIndex === trackerIndex
+                    ? stageError
+                    : null
                 }
               />
             </CSSTransition>

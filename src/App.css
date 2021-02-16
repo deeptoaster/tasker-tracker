@@ -21,12 +21,13 @@
 }
 .error {
   position: absolute;
-  bottom: 2em;
+  bottom: 3em;
   box-shadow: 0 0 0.2em #fcb7c6, 0.75em 0.75em 3em #a6b8c1;
   padding: 1em 2em;
   background-color: #fcb7c6;
   color: #644f54;
   font-weight: bold;
+  z-index: 1;
 }
 .form-control {
   display: flex;

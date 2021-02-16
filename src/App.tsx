@@ -4,9 +4,9 @@ import {
   SwitchTransition,
   TransitionGroup
 } from 'react-transition-group';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Config, ErrorContext, Tracker } from './TrackerUtils';
+import { Config, ErrorContext, StageError, Tracker } from './TrackerUtils';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import EditTrackersStage from './stages/EditTrackersStage';
@@ -28,18 +28,26 @@ export default function App(): JSX.Element {
   const [error, setError] = useState<Error | null>(null);
   const errorTimeout = useRef<number>();
   const [stage, setStage] = useState<Stage>(Stage.EDIT_TRACKERS);
+  const [stageError, setStageError] = useState<StageError | null>(null);
 
-  const back = useCallback(() => {
-    if (stage !== 0) {
+  const back = useCallback((): void => {
+    if (stage === 0) {
+      setConfig(null);
+    } else {
       setStage(stage - 1);
     }
   }, [stage]);
 
-  const next = useCallback(() => {
-    if (stage !== Stage.length - 1) {
+  const next = useCallback((): void => {
+    if (stage === Stage.length - 1) {
+      throw new Error();
+    } else if (stageError == null) {
       setStage(stage + 1);
+    } else {
+      setError(stageError);
+      stageError.focus();
     }
-  }, [stage]);
+  }, [stage, stageError]);
 
   const setPartialConfig = useCallback(
     (partialConfig: Partial<Config>): void => {
@@ -51,12 +59,12 @@ export default function App(): JSX.Element {
   );
 
   const setClientId = useCallback(
-    (clientId: string) => setPartialConfig({ clientId }),
+    (clientId: string): void => setPartialConfig({ clientId }),
     [setPartialConfig]
   );
 
   const setClientSecret = useCallback(
-    (clientSecret: string) => setPartialConfig({ clientSecret }),
+    (clientSecret: string): void => setPartialConfig({ clientSecret }),
     [setPartialConfig]
   );
 
@@ -65,18 +73,21 @@ export default function App(): JSX.Element {
     [setPartialConfig]
   );
 
-  const showError = useCallback((error: Error): void => {
-    setError(error);
-    window.clearTimeout(errorTimeout.current);
+  useEffect((): void => {
+    if (error != null) {
+      window.clearTimeout(errorTimeout.current);
 
-    errorTimeout.current = window.setTimeout(
-      () => setError(null),
-      ERROR_DURATION
-    );
-  }, []);
+      errorTimeout.current = window.setTimeout(
+        () => setError(null),
+        ERROR_DURATION
+      );
+    }
+  }, [error]);
+
+  useEffect((): void => setError(null), [stage]);
 
   return (
-    <ErrorContext.Provider value={showError}>
+    <ErrorContext.Provider value={setError}>
       <SwitchTransition>
         <CSSTransition
           appear={true}
@@ -88,10 +99,15 @@ export default function App(): JSX.Element {
           }}
         >
           {config == null ? (
-            <CreateTrackersStage setConfig={setConfig} />
+            <CreateTrackersStage
+              setConfig={setConfig}
+              setStageError={setStageError}
+            />
           ) : stage === Stage.EDIT_TRACKERS ? (
             <EditTrackersStage
+              setStageError={setStageError}
               setTrackers={setTrackers}
+              stageError={stageError}
               trackers={config.trackers}
             />
           ) : stage === Stage.API_SETTINGS ? (
@@ -100,10 +116,13 @@ export default function App(): JSX.Element {
               clientSecret={config.clientSecret}
               setClientId={setClientId}
               setClientSecret={setClientSecret}
+              setStageError={setStageError}
             />
           ) : stage === Stage.SPREADSHEET_SETTINGS ? (
             <SpreadsheetSettingsStage
+              setStageError={setStageError}
               setTrackers={setTrackers}
+              stageError={stageError}
               trackers={config.trackers}
             />
           ) : null}
@@ -119,11 +138,8 @@ export default function App(): JSX.Element {
           <CSSTransition classNames="stage" key="pager" timeout={300}>
             <footer>
               <div className="pull-right">
-                <button
-                  className={stage === 0 ? 'disabled' : ''}
-                  onClick={back}
-                >
-                  Back
+                <button onClick={back}>
+                  {stage === 0 ? 'Start Over' : 'Back'}
                 </button>
                 <button className="button-primary" onClick={next}>
                   {stage === Stage.length - 1 ? 'Download' : 'Next'}

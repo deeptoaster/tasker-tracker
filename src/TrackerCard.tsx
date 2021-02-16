@@ -1,27 +1,31 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
-import { Tracker } from './TrackerUtils';
+import { StageError, Tracker } from './TrackerUtils';
+import TrackerOptionRow from './TrackerOptionRow';
 
 import './TrackerCard.css';
-import { useEffect, useRef } from 'react';
 
 export default function TrackerCard(
   props: Tracker & {
     addTrackerOption: () => void;
+    onFocus: () => void;
     removeTracker: (() => void) | null;
     removeTrackerOption: (optionIndex: number) => void;
     setTrackerOption: (optionIndex: number, option: string) => void;
     setTrackerTitle: (title: string) => void;
+    stageError: StageError | null;
   }
 ): JSX.Element {
   const {
     addTrackerOption,
+    onFocus,
     options,
     removeTracker,
     removeTrackerOption,
     setTrackerOption,
     setTrackerTitle,
+    stageError,
     title
   } = props;
 
@@ -34,10 +38,17 @@ export default function TrackerCard(
   );
 
   useEffect((): void => {
-    if (title === '' && options.length === 0) {
+    if (title === '' && options.join() === '') {
       titleInput.current?.focus();
     }
-  });
+  }, [title, options]);
+
+  useEffect((): void => {
+    if (stageError?.source === 'title') {
+      titleInput.current?.focus();
+      onFocus();
+    }
+  }, [onFocus, stageError]);
 
   return (
     <div className="tracker-card-container">
@@ -53,19 +64,25 @@ export default function TrackerCard(
         <ul>
           {options.map(
             (option: string, optionIndex: number): JSX.Element => (
-              <li key={optionIndex}>
-                <input
-                  onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-                    setTrackerOption(optionIndex, event.currentTarget.value)
-                  }
-                  type="text"
-                  value={option}
-                />
-                <button
-                  className="button-close button-stub"
-                  onClick={(): void => removeTrackerOption(optionIndex)}
-                />
-              </li>
+              <TrackerOptionRow
+                key={optionIndex}
+                onFocus={onFocus}
+                option={option}
+                removeOption={
+                  optionIndex !== 0
+                    ? (): void => removeTrackerOption(optionIndex)
+                    : null
+                }
+                setOption={(option: string): void =>
+                  setTrackerOption(optionIndex, option)
+                }
+                stageError={
+                  stageError?.source === 'options' &&
+                  stageError.optionIndex === optionIndex
+                    ? stageError
+                    : null
+                }
+              />
             )
           )}
           <li className="preview" key={null}>

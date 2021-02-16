@@ -14,7 +14,7 @@ export const CONFIG_DEFAULT: Config = {
 };
 
 export const TRACKER_DEFAULT: Tracker = {
-  options: [],
+  options: [''],
   sheetId: '',
   sheetName: 'Sheet1',
   title: ''
@@ -27,6 +27,32 @@ export type Config = {
   readonly clientSecret: string;
   readonly trackers: ReadonlyArray<Tracker>;
 };
+
+export class StageError extends Error {
+  public constructor(message: string, focus: () => void, source: keyof Config);
+  public constructor(
+    message: string,
+    focus: () => void,
+    source: Exclude<keyof Tracker, 'options'>,
+    trackerIndex: number
+  );
+  public constructor(
+    message: string,
+    focus: () => void,
+    source: 'options',
+    trackerIndex: number,
+    optionIndex: number
+  );
+  public constructor(
+    message: string,
+    public readonly focus: () => void,
+    public readonly source: keyof Config | keyof Tracker,
+    public readonly trackerIndex?: number,
+    public readonly optionIndex?: number
+  ) {
+    super(message);
+  }
+}
 
 export type Tracker = {
   readonly options: ReadonlyArray<string>;

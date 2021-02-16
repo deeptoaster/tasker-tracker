@@ -2,11 +2,14 @@
 .tracker-card-container.card-exit-active.card-exit-active {
   width: 0;
   margin-left: 0;
+  margin-right: 0;
   transition: box-shadow 200ms, color 200ms, margin 300ms, text-shadow 200ms,
     width 300ms;
 }
 .tracker-card-container,
 .tracker-card-container.card-enter-active {
+  margin-left: 2em;
+  margin-rigth: 2em;
   width: 14.5em;
   transition: box-shadow 400ms 400ms, color 400ms 600ms, margin 400ms,
     text-shadow 400ms 600ms, width 400ms;
@@ -15,10 +18,6 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 3em;
-}
-.tracker-card-container + .tracker-card-container,
-.tracker-card-container + .tracker-card-container.card-enter-active {
-  margin-left: 2em;
 }
 .tracker-card {
   flex: 1;

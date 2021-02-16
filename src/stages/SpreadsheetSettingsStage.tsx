@@ -1,15 +1,23 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Tracker } from '../TrackerUtils';
+import { StageError, Tracker } from '../TrackerUtils';
+import SpreadsheetRow from '../SpreadsheetRow';
 
 import './SpreadsheetSettingsStage.css';
 
 export default function SpreadsheetSettingsStage(props: {
+  setStageError: (stageError: StageError | null) => void;
   setTrackers: (trackers: ReadonlyArray<Tracker>) => void;
+  stageError: StageError | null;
   trackers: ReadonlyArray<Tracker>;
 }): JSX.Element {
-  const { setTrackers, trackers } = props;
+  const { setStageError, setTrackers, stageError, trackers } = props;
+  const [focused, setFocused] = useState<boolean>(false);
+
+  const blur = useCallback((): void => setFocused(false), []);
+
+  const focus = useCallback((): void => setFocused(true), []);
 
   const setPartialTracker = useCallback(
     (trackerIndexToChange: number, partialTracker: Partial<Tracker>): void =>
@@ -24,17 +32,55 @@ export default function SpreadsheetSettingsStage(props: {
     [setTrackers, trackers]
   );
 
-  const setSheetId = useCallback(
+  const setTrackerSheetId = useCallback(
     (trackerIndex: number, sheetId: string): void =>
       setPartialTracker(trackerIndex, { sheetId }),
     [setPartialTracker]
   );
 
-  const setSheetName = useCallback(
+  const setTrackerSheetName = useCallback(
     (trackerIndex: number, sheetName: string): void =>
       setPartialTracker(trackerIndex, { sheetName }),
     [setPartialTracker]
   );
+
+  useEffect((): void => {
+    try {
+      const sheetIdEmptyIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => tracker.sheetId === ''
+      );
+
+      if (sheetIdEmptyIndex !== -1) {
+        throw new StageError(
+          'Sheet ID cannot be empty.',
+          focus,
+          'sheetId',
+          sheetIdEmptyIndex
+        );
+      }
+
+      const sheetNameEmptyIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => tracker.sheetId === ''
+      );
+
+      if (sheetNameEmptyIndex !== -1) {
+        throw new StageError(
+          'Sheet Name cannot be empty.',
+          focus,
+          'sheetName',
+          sheetNameEmptyIndex
+        );
+      }
+
+      setStageError(null);
+    } catch (error) {
+      if (error instanceof StageError) {
+        setStageError(error);
+      } else {
+        throw error;
+      }
+    }
+  }, [focus, setStageError, trackers]);
 
   return (
     <div>
@@ -58,30 +104,28 @@ export default function SpreadsheetSettingsStage(props: {
           </div>
           {trackers.map(
             (tracker: Tracker, trackerIndex: number): JSX.Element => (
-              <div className="form-control" key={trackerIndex}>
-                <label htmlFor={`spreadsheet-sheet-${trackerIndex}-id`}>
-                  {tracker.title}
-                </label>
-                <div className="input-group spreadsheet-id-input-group">
-                  <input
-                    id={`spreadsheet-sheet-${trackerIndex}-id`}
-                    onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-                      setSheetId(trackerIndex, event.currentTarget.value)
-                    }
-                    type="text"
-                    value={tracker.sheetId}
-                  />
-                </div>
-                <div className="input-group">
-                  <input
-                    onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-                      setSheetName(trackerIndex, event.currentTarget.value)
-                    }
-                    type="text"
-                    value={tracker.sheetName}
-                  />
-                </div>
-              </div>
+              <SpreadsheetRow
+                key={trackerIndex}
+                onFocus={blur}
+                setSheetId={(sheetId: string): void =>
+                  setTrackerSheetId(trackerIndex, sheetId)
+                }
+                setSheetName={(sheetName: string): void =>
+                  setTrackerSheetName(trackerIndex, sheetName)
+                }
+                sheetId={tracker.sheetId}
+                sheetName={tracker.sheetName}
+                stageError={
+                  focused &&
+                  (stageError?.source === 'sheetId' ||
+                    stageError?.source === 'sheetName') &&
+                  stageError.trackerIndex === trackerIndex
+                    ? stageError
+                    : null
+                }
+                title={tracker.title}
+                trackerIndex={trackerIndex}
+              />
             )
           )}
         </form>

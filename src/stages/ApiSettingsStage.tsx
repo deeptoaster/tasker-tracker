@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+
+import { StageError } from '../TrackerUtils';
 
 import './ApiSettingsStage.css';
 
@@ -8,8 +10,28 @@ export default function ApiSettingsStage(props: {
   clientSecret: string;
   setClientId: (clientId: string) => void;
   setClientSecret: (clientSecret: string) => void;
+  setStageError: (stageError: StageError | null) => void;
 }): JSX.Element {
-  const { clientId, clientSecret, setClientId, setClientSecret } = props;
+  const {
+    clientId,
+    clientSecret,
+    setClientId,
+    setClientSecret,
+    setStageError
+  } = props;
+
+  const clientIdInput = useRef<HTMLInputElement>(null);
+  const clientSecretInput = useRef<HTMLInputElement>(null);
+
+  const focusClientId = useCallback(
+    (): void => clientIdInput.current?.focus(),
+    []
+  );
+
+  const focusClientSecret = useCallback(
+    (): void => clientSecretInput.current?.focus(),
+    []
+  );
 
   const updateClientSecret = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void =>
@@ -22,6 +44,34 @@ export default function ApiSettingsStage(props: {
       setClientId(event.currentTarget.value),
     [setClientId]
   );
+
+  useEffect((): void => {
+    try {
+      if (clientId === '') {
+        throw new StageError(
+          'Client ID cannot be empty.',
+          focusClientId,
+          'clientId'
+        );
+      }
+
+      if (clientSecret === '') {
+        throw new StageError(
+          'Client Secret cannot be empty.',
+          focusClientSecret,
+          'clientSecret'
+        );
+      }
+
+      setStageError(null);
+    } catch (error) {
+      if (error instanceof StageError) {
+        setStageError(error);
+      } else {
+        throw error;
+      }
+    }
+  }, [clientId, clientSecret, focusClientId, focusClientSecret, setStageError]);
 
   return (
     <div>
@@ -47,6 +97,7 @@ export default function ApiSettingsStage(props: {
               <input
                 id="api-client-id"
                 onChange={updateClientId}
+                ref={clientIdInput}
                 type="text"
                 value={clientId}
               />
@@ -58,6 +109,7 @@ export default function ApiSettingsStage(props: {
               <input
                 id="api-client-secret"
                 onChange={updateClientSecret}
+                ref={clientSecretInput}
                 type="text"
                 value={clientSecret}
               />
