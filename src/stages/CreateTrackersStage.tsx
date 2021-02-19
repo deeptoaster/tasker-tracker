@@ -29,7 +29,7 @@ export default function CreateTrackersStage(props: {
         event.currentTarget.files != null &&
         event.currentTarget.files.length !== 0
       ) {
-        TrackerUtils.parseFromFile(event.currentTarget.files[0])
+        TrackerUtils.parseFromBlob(event.currentTarget.files[0])
           .then(setConfig)
           .catch(error);
       }

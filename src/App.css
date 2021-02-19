@@ -109,64 +109,100 @@ body {
   color: #505f66;
 }
 .stage-appear.stage-appear button,
+.stage-appear.stage-appear .button,
 .stage-enter.stage-enter button,
+.stage-enter.stage-enter .button,
 .stage-exit-active.stage-exit-active.stage-exit-active button,
+.stage-exit-active.stage-exit-active.stage-exit-active .button,
 .stage-enter-done .card-enter button,
-.stage-enter-done .card-exit-active.card-exit-active button {
+.stage-enter-done .card-enter .button,
+.stage-enter-done
+  .card-exit-active.card-exit-active
+  button
+  .stage-enter-done
+  .card-exit-active.card-exit-active
+  .button {
   box-shadow: none;
   background-color: transparent;
   color: transparent;
   transition: background-color 200ms, box-shadow 200ms, color 200ms;
 }
 button,
+.button,
 button:active:active,
+.button:active:active,
 .stage-appear-active.stage-appear-active button,
+.stage-appear-active.stage-appear-active .button,
 .stage-enter-active.stage-enter-active button,
-.stage-enter-done .card-enter-active.card-enter-active button {
+.stage-enter-active.stage-enter-active .button,
+.stage-enter-done .card-enter-active.card-enter-active button,
+.stage-enter-done .card-enter-active.card-enter-active .button {
   background-color: #cce7f4;
   color: #314b57;
 }
 button.button-primary,
+.button.button-primary,
 button.button-primary:active:active,
+.button.button-primary:active:active,
 .stage-appear-active.stage-appear-active button.button-primary,
+.stage-appear-active.stage-appear-active .button.button-primary,
 .stage-enter-active.stage-enter-active button.button-primary,
-.stage-enter-done .card-enter-active.card-enter-active button.button-primary {
+.stage-enter-active.stage-enter-active .button.button-primary,
+.stage-enter-done .card-enter-active.card-enter-active button.button-primary,
+.stage-enter-done .card-enter-active.card-enter-active .button.button-primary {
   background-color: #ecda80;
   color: #383629;
 }
 button,
+.button,
 .stage-appear-active.stage-appear-active button,
+.stage-appear-active.stage-appear-active .button,
 .stage-enter-active.stage-enter-active button,
-.stage-enter-done .card-enter-active button {
+.stage-enter-active.stage-enter-active .button,
+.stage-enter-done .card-enter-active button,
+.stage-enter-done .card-enter-active .button {
   box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
     0.05em 0.05em #a6b8c1, 0.25em 0.25em 1em #a6b8c1;
   transition: background-color 400ms 800ms, box-shadow 400ms 800ms,
     color 400ms 800ms;
 }
 button.button-primary,
+.button.button-primary,
 .stage-appear-active.stage-appear-active button.button-primary,
+.stage-appear-active.stage-appear-active .button.button-primary,
 .stage-enter-active.stage-enter-active button.button-primary,
-.stage-enter-done .card-enter-active button.button-primary {
+.stage-enter-active.stage-enter-active .button.button-primary,
+.stage-enter-done .card-enter-active button.button-primary,
+.stage-enter-done .card-enter-active .button.button-primary {
   box-shadow: -0.05em -0.05em #fff, -0.25em -0.25em 1em #f9fdff,
     0.05em 0.05em #c3bfae, 0.25em 0.25em 1em #a6b8c1;
 }
 button.button-stub,
+.button.button-stub,
 .stage-appear-active.stage-appear-active button.button-stub,
+.stage-appear-active.stage-appear-active .button.button-stub,
 .stage-enter-active.stage-enter-active button.button-stub,
-.stage-enter-done .card-enter-active button.button-stub {
+.stage-enter-active.stage-enter-active .button.button-stub,
+.stage-enter-done .card-enter-active button.button-stub,
+.stage-enter-done .card-enter-active .button.button-stub {
   box-shadow: -0.05em -0.05em #fff, -0.05em -0.05em 0.2em #f9fdff,
     0.05em 0.05em #a6b8c1, 0.05em 0.05em 0.2em #a6b8c1;
 }
 .stage-appear-done button,
+.stage-appear-done .button,
 .stage-enter-done button,
-.stage-enter-done .card-enter-done button {
+.stage-enter-done .button,
+.stage-enter-done .card-enter-done button,
+.stage-enter-done .card-enter-done .button {
   transition: background-color 50ms, box-shadow 50ms, color 50ms;
 }
 button,
+.button,
 button input[type='file'] {
   cursor: pointer;
 }
-button {
+button,
+.button {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
@@ -175,29 +211,37 @@ button {
   padding: 0.5em 1em;
 }
 button:focus,
-button:hover {
+.button:focus,
+button:hover,
+.button:hover {
   background-color: #d8edf8;
   color: #46616e;
   outline: none;
 }
 button.button-primary:focus,
-button.button-primary:hover {
+.button.button-primary:focus,
+button.button-primary:hover,
+.button.button-primary:hover {
   background-color: #ffee9a;
   color: #605c4a;
 }
-button:active {
+button:active,
+.button:active {
   box-shadow: -0.05em -0.05em #a6b8c1, -0.1em -0.1em 0.4em inset #f9fdff,
     0.05em 0.05em #fff, 0.1em 0.1em 0.4em inset #a6b8c1;
 }
-button.button-primary:active {
+button.button-primary:active,
+.button.button-primary:active {
   box-shadow: -0.05em -0.05em #a6b8c1, -0.1em -0.1em 0.4em inset #ffee9a,
     0.05em 0.05em #fff, 0.1em 0.1em 0.4em inset #c3bfae;
 }
-button.button-stub:active {
+button.button-stub:active,
+.button.button-stub:active {
   box-shadow: -0.05em -0.05em #a6b8c1, -0.02em -0.02em 0.08em inset #f9fdff,
     0.05em 0.05em #fff, 0.02em 0.02em 0.08em inset #a6b8c1;
 }
-button input[type='file'] {
+button input[type='file'],
+.button input[type='file'] {
   position: absolute;
   top: 0;
   right: 0;
@@ -205,10 +249,12 @@ button input[type='file'] {
   left: 0;
   opacity: 0;
 }
-button.button-add::before {
+button.button-add::before,
+.button.button-add::before {
   content: '+';
 }
-button.button-close::before {
+button.button-close::before,
+.button.button-close::before {
   content: '\d7';
 }
 figure,
@@ -226,7 +272,10 @@ footer {
   left: 0;
   padding: 2em;
 }
-footer button + button {
+footer button + button,
+footer .button + button,
+footer button + .button,
+footer .button + .button {
   margin-left: 2em;
 }
 form {

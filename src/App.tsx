@@ -4,8 +4,9 @@ import {
   SwitchTransition,
   TransitionGroup
 } from 'react-transition-group';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import * as TrackerUtils from './TrackerUtils';
 import { Config, ErrorContext, StageError, Tracker } from './TrackerUtils';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
@@ -39,6 +40,14 @@ export default function App(): JSX.Element {
       setStage(stage - 1);
     }
   }, [stage]);
+
+  const downloadUrl = useMemo(
+    (): string | null =>
+      config != null && stage === Stage.DOWNLOAD
+        ? window.URL.createObjectURL(TrackerUtils.exportToBlob(config))
+        : null,
+    [config, stage]
+  );
 
   const next = useCallback((): void => {
     if (stage === Stage.length - 1) {
@@ -145,9 +154,21 @@ export default function App(): JSX.Element {
                 <button onClick={back}>
                   {stage === 0 ? 'Start Over' : 'Back'}
                 </button>
-                <button className="button-primary" onClick={next}>
-                  {stage === Stage.length - 1 ? 'Download' : 'Next'}
-                </button>
+                {downloadUrl != null ? (
+                  <a
+                    className="button button-primary"
+                    download="tracker.xml"
+                    href={downloadUrl}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Download
+                  </a>
+                ) : (
+                  <button className="button-primary" onClick={next}>
+                    Next
+                  </button>
+                )}
               </div>
             </footer>
           </CSSTransition>
