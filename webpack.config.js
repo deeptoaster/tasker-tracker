@@ -52,6 +52,6 @@ module.exports = env => ({
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx']
   },
-  target: 'web',
+  target: env.production ? 'browserslist' : 'web',
   watch: false
 });

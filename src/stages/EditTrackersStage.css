@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 -2em;
+  margin: 0 -1em;
 }
 .tracker-card.preview {
   box-shadow: none;

@@ -8,8 +8,8 @@
 }
 .tracker-card-container,
 .tracker-card-container.card-enter-active {
-  margin-left: 2em;
-  margin-rigth: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
   width: 14.5em;
   transition: box-shadow 400ms 400ms, color 400ms 600ms, margin 400ms,
     text-shadow 400ms 600ms, width 400ms;
