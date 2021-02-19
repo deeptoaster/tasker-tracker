@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
 import { StageError } from './TrackerUtils';
 
@@ -27,6 +27,15 @@ export default function SpreadsheetRow(props: {
   const sheetIdInput = useRef<HTMLInputElement>(null);
   const sheetNameInput = useRef<HTMLInputElement>(null);
 
+  const updateSheetId = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      const matches = /\/d\/(\w+)/.exec(event.currentTarget.value);
+
+      setSheetId(matches != null ? matches[1] : event.currentTarget.value);
+    },
+    [setSheetId]
+  );
+
   useEffect((): void => {
     if (stageError?.source === 'sheetId') {
       sheetIdInput.current?.focus();
@@ -43,12 +52,7 @@ export default function SpreadsheetRow(props: {
       <div className="input-group spreadsheet-id-input-group">
         <input
           id={`spreadsheet-sheet-${trackerIndex}-id`}
-          onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-            setSheetId(
-              /(?<=\/d\/)\w+/.exec(event.currentTarget.value)?.join() ??
-                event.currentTarget.value
-            )
-          }
+          onChange={updateSheetId}
           ref={sheetIdInput}
           type="text"
           value={sheetId}
