@@ -44,7 +44,10 @@ export default function SpreadsheetRow(props: {
         <input
           id={`spreadsheet-sheet-${trackerIndex}-id`}
           onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-            setSheetId(event.currentTarget.value)
+            setSheetId(
+              /(?<=\/d\/)\w+/.exec(event.currentTarget.value)?.join() ??
+                event.currentTarget.value
+            )
           }
           ref={sheetIdInput}
           type="text"

@@ -52,7 +52,7 @@ export default function SpreadsheetSettingsStage(props: {
 
       if (sheetIdEmptyIndex !== -1) {
         throw new StageError(
-          'Sheet ID cannot be empty.',
+          'Spreadsheet URL or ID cannot be empty.',
           focus,
           'sheetId',
           sheetIdEmptyIndex

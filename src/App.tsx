@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Config, ErrorContext, StageError, Tracker } from './TrackerUtils';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
+import DownloadStage from './stages/DownloadStage';
 import EditTrackersStage from './stages/EditTrackersStage';
 import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
 
@@ -20,6 +21,7 @@ enum Stage {
   EDIT_TRACKERS,
   API_SETTINGS,
   SPREADSHEET_SETTINGS,
+  DOWNLOAD,
   length
 }
 
@@ -125,6 +127,8 @@ export default function App(): JSX.Element {
               stageError={stageError}
               trackers={config.trackers}
             />
+          ) : stage === Stage.DOWNLOAD ? (
+            <DownloadStage />
           ) : null}
         </CSSTransition>
       </SwitchTransition>
