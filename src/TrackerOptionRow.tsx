@@ -14,11 +14,11 @@ export default function TrackerOptionRow(props: {
   const input = useRef<HTMLInputElement>(null);
 
   useEffect((): void => {
-    if (stageError != null) {
+    if (stageError != null || option === '') {
       input.current?.focus();
       onFocus();
     }
-  }, [onFocus, stageError]);
+  }, [onFocus, option, stageError]);
 
   return (
     <li>

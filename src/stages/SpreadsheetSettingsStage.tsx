@@ -7,12 +7,21 @@ import SpreadsheetRow from '../SpreadsheetRow';
 import './SpreadsheetSettingsStage.css';
 
 export default function SpreadsheetSettingsStage(props: {
+  setSheetName: (sheetName: string) => void;
   setStageError: (stageError: StageError | null) => void;
   setTrackers: (trackers: ReadonlyArray<Tracker>) => void;
+  sheetName: string;
   stageError: StageError | null;
   trackers: ReadonlyArray<Tracker>;
 }): JSX.Element {
-  const { setStageError, setTrackers, stageError, trackers } = props;
+  const {
+    setSheetName,
+    setStageError,
+    setTrackers,
+    sheetName,
+    stageError,
+    trackers
+  } = props;
   const [focused, setFocused] = useState<boolean>(false);
 
   const blur = useCallback((): void => setFocused(false), []);
@@ -38,12 +47,6 @@ export default function SpreadsheetSettingsStage(props: {
     [setPartialTracker]
   );
 
-  const setTrackerSheetName = useCallback(
-    (trackerIndex: number, sheetName: string): void =>
-      setPartialTracker(trackerIndex, { sheetName }),
-    [setPartialTracker]
-  );
-
   useEffect((): void => {
     try {
       const sheetIdEmptyIndex = trackers.findIndex(
@@ -59,17 +62,8 @@ export default function SpreadsheetSettingsStage(props: {
         );
       }
 
-      const sheetNameEmptyIndex = trackers.findIndex(
-        (tracker: Tracker): boolean => tracker.sheetId === ''
-      );
-
-      if (sheetNameEmptyIndex !== -1) {
-        throw new StageError(
-          'Sheet Name cannot be empty.',
-          focus,
-          'sheetName',
-          sheetNameEmptyIndex
-        );
+      if (sheetName === '') {
+        throw new StageError('Sheet Name cannot be empty.', focus, 'sheetName');
       }
 
       setStageError(null);
@@ -80,7 +74,7 @@ export default function SpreadsheetSettingsStage(props: {
         throw error;
       }
     }
-  }, [focus, setStageError, trackers]);
+  }, [focus, setStageError, sheetName, trackers]);
 
   return (
     <div>
@@ -110,16 +104,14 @@ export default function SpreadsheetSettingsStage(props: {
                 setSheetId={(sheetId: string): void =>
                   setTrackerSheetId(trackerIndex, sheetId)
                 }
-                setSheetName={(sheetName: string): void =>
-                  setTrackerSheetName(trackerIndex, sheetName)
-                }
+                setSheetName={setSheetName}
                 sheetId={tracker.sheetId}
-                sheetName={tracker.sheetName}
+                sheetName={sheetName}
                 stageError={
                   focused &&
-                  (stageError?.source === 'sheetId' ||
-                    stageError?.source === 'sheetName') &&
-                  stageError.trackerIndex === trackerIndex
+                  ((stageError?.source === 'sheetId' &&
+                    stageError.trackerIndex === trackerIndex) ||
+                    (stageError?.source === 'sheetName' && trackerIndex === 0))
                     ? stageError
                     : null
                 }
