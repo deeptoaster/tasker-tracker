@@ -23,9 +23,11 @@
   position: absolute;
   bottom: 3em;
   box-shadow: 0 0 0.2em #fcb7c6, 0.75em 0.75em 3em #a6b8c1;
+  max-width: 80%;
   padding: 1em 2em;
   background-color: #fcb7c6;
   color: #644f54;
+  text-align: center;
   font-weight: bold;
   z-index: 1;
 }

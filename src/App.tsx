@@ -90,6 +90,12 @@ export default function App(): JSX.Element {
   );
 
   useEffect((): void => {
+    if (config == null) {
+      setError(null);
+    }
+  }, [config]);
+
+  useEffect((): void => {
     if (error != null) {
       window.clearTimeout(errorTimeout.current);
 

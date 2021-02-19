@@ -55,9 +55,25 @@ export default function ApiSettingsStage(props: {
         );
       }
 
+      if (!/^\d+-\w+.apps.googleusercontent.com$/.test(clientId)) {
+        throw new StageError(
+          'Client ID does not appear to be valid.',
+          focusClientId,
+          'clientId'
+        );
+      }
+
       if (clientSecret === '') {
         throw new StageError(
           'Client Secret cannot be empty.',
+          focusClientSecret,
+          'clientSecret'
+        );
+      }
+
+      if (!/^[\w-]+=*$/.test(clientSecret)) {
+        throw new StageError(
+          'Client Secret does not appear to be valid.',
           focusClientSecret,
           'clientSecret'
         );

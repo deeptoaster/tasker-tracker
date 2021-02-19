@@ -107,12 +107,25 @@ export default function EditTrackersStage(props: {
   useEffect(() => {
     try {
       const titleEmptyIndex = trackers.findIndex(
-        (tracker: Tracker): boolean => tracker.title === ''
+        (tracker: Tracker): boolean => tracker.title.length < 3
       );
 
       if (titleEmptyIndex !== -1) {
         throw new StageError(
-          'Category title cannot be empty.',
+          'Category title must be at least three characters long.',
+          focus,
+          'title',
+          titleEmptyIndex
+        );
+      }
+
+      const titleInvalidIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => !/^[A-Z]\w+[\da-z]$/.test(tracker.title)
+      );
+
+      if (titleInvalidIndex !== -1) {
+        throw new StageError(
+          'Category title must start with a capital letter, end in a lowercase letter or number, and contain only letters, numbers, or underscores.',
           focus,
           'title',
           titleEmptyIndex
@@ -137,6 +150,20 @@ export default function EditTrackersStage(props: {
             'options',
             trackerIndex,
             optionEmptyIndex
+          );
+        }
+
+        const optionInvalidIndex = options.findIndex(
+          (option: string): boolean => !/^[ \w]+$/.test(option)
+        );
+
+        if (optionInvalidIndex !== -1) {
+          throw new StageError(
+            'Option must contain only letters, numbers, and underscores.',
+            focus,
+            'options',
+            trackerIndex,
+            optionInvalidIndex
           );
         }
 

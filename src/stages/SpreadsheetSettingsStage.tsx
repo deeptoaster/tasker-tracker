@@ -62,8 +62,29 @@ export default function SpreadsheetSettingsStage(props: {
         );
       }
 
+      const sheetIdInvalidIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => !/^\w+$/.test(tracker.sheetId)
+      );
+
+      if (sheetIdInvalidIndex !== -1) {
+        throw new StageError(
+          'Spreadsheet URL or ID does not appear to be valid. It must contain only letters, numbers, and underscores.',
+          focus,
+          'sheetId',
+          sheetIdInvalidIndex
+        );
+      }
+
       if (sheetName === '') {
         throw new StageError('Sheet Name cannot be empty.', focus, 'sheetName');
+      }
+
+      if (!/^[\w ]+$/.test(sheetName)) {
+        throw new StageError(
+          'Sheet Name must contain only letters, numbers, underscores, and spaces.',
+          focus,
+          'sheetName'
+        );
       }
 
       setStageError(null);
