@@ -13,13 +13,15 @@ export const CONFIG_DEFAULT: Config = {
   ]
 };
 
+export const FILE_TYPES = ['application/xml', 'text/xml'];
+
+const TIME_ZONE_DEFAULT = 'America/Los_Angeles';
+
 export const TRACKER_DEFAULT: Tracker = {
   options: [''],
   sheetId: '',
   title: ''
 };
-
-export const FILE_TYPES = ['application/xml', 'text/xml'];
 
 export type Config = {
   readonly clientId: string;
@@ -60,6 +62,7 @@ export class StageError extends Error {
     public readonly optionIndex?: number
   ) {
     super(message);
+    this.name = 'StageError';
   }
 }
 
@@ -713,7 +716,11 @@ export function exportToBlob(config: Config): Blob {
   text.push(
     '  <Variable sr="vars1">\n',
     '    <n>%Timezone</n>\n',
-    `    <v>${Intl.DateTimeFormat().resolvedOptions().timeZone}</v>\n`,
+    `    <v>${
+      typeof Intl !== 'undefined'
+        ? Intl.DateTimeFormat().resolvedOptions().timeZone
+        : TIME_ZONE_DEFAULT
+    }</v>\n`,
     '  </Variable>\n'
   );
 

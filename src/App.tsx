@@ -4,7 +4,14 @@ import {
   SwitchTransition,
   TransitionGroup
 } from 'react-transition-group';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 import * as TrackerUtils from './TrackerUtils';
 import { Config, ErrorContext, StageError, Tracker } from './TrackerUtils';
@@ -16,6 +23,7 @@ import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
 
 import './App.css';
 
+const DOWNLOAD_NAME = 'tracker.xml';
 const ERROR_DURATION = 5000;
 
 enum Stage {
@@ -41,12 +49,28 @@ export default function App(): JSX.Element {
     }
   }, [stage]);
 
-  const downloadUrl = useMemo(
-    (): string | null =>
+  const downloadBlob = useMemo(
+    (): Blob | null =>
       config != null && stage === Stage.DOWNLOAD
-        ? window.URL.createObjectURL(TrackerUtils.exportToBlob(config))
+        ? TrackerUtils.exportToBlob(config)
         : null,
     [config, stage]
+  );
+
+  const downloadUrl = useMemo(
+    (): string | null =>
+      downloadBlob != null ? window.URL.createObjectURL(downloadBlob) : null,
+    [downloadBlob]
+  );
+
+  const handleDownloadClick = useCallback(
+    (event: MouseEvent): void => {
+      if ('msSaveBlob' in window.navigator) {
+        window.navigator.msSaveBlob(downloadBlob, DOWNLOAD_NAME);
+        event.preventDefault();
+      }
+    },
+    [downloadBlob]
   );
 
   const next = useCallback((): void => {
@@ -170,8 +194,9 @@ export default function App(): JSX.Element {
                 {downloadUrl != null ? (
                   <a
                     className="button button-primary"
-                    download="tracker.xml"
+                    download={DOWNLOAD_NAME}
                     href={downloadUrl}
+                    onClick={handleDownloadClick}
                     rel="noreferrer"
                     target="_blank"
                   >

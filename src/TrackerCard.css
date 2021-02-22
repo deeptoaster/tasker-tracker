@@ -15,8 +15,6 @@
     text-shadow 400ms 600ms, width 400ms;
 }
 .tracker-card-container {
-  display: flex;
-  flex-direction: column;
   margin-bottom: 3em;
 }
 .tracker-card {
@@ -85,6 +83,7 @@
   box-sizing: border-box;
 }
 .tracker-card-container button {
+  width: 100%;
   height: 1.5em;
   padding: 0;
 }

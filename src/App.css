@@ -7,6 +7,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  overflow: hidden;
 }
 .error.error-enter,
 .error.error-exit-active {
@@ -68,10 +69,14 @@ a,
   text-decoration: none;
   transition: color 400ms 600ms;
 }
-a:hover,
-a:focus {
+a:focus,
+a:hover {
   text-decoration: underline;
   outline: none;
+}
+a.button:focus,
+a.button:hover {
+  text-decoration: none;
 }
 .stage-appear article,
 .stage-enter article,

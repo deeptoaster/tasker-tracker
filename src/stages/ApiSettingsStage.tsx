@@ -81,7 +81,7 @@ export default function ApiSettingsStage(props: {
 
       setStageError(null);
     } catch (error) {
-      if (error instanceof StageError) {
+      if ((error as Error).name === 'StageError') {
         setStageError(error);
       } else {
         throw error;

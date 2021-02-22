@@ -1,3 +1,5 @@
+import 'core-js/es/map';
+import 'core-js/es/set';
 import * as React from 'react';
 import { render } from 'react-dom';
 
