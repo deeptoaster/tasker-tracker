@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StageError, TRACKER_DEFAULT, Tracker } from '../TrackerUtils';
+import { StageError, TRACKER_DEFAULT, Tracker } from '../TrackerDefs';
 import TrackerCard from '../TrackerCard';
 
 import './EditTrackersStage.css';

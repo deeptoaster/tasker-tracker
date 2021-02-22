@@ -14,7 +14,7 @@ import {
 } from 'react';
 
 import * as TrackerUtils from './TrackerUtils';
-import { Config, ErrorContext, StageError, Tracker } from './TrackerUtils';
+import { Config, ErrorContext, StageError, Tracker } from './TrackerDefs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';

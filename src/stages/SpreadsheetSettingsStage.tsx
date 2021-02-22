@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StageError, Tracker } from '../TrackerUtils';
+import { StageError, Tracker } from '../TrackerDefs';
 import SpreadsheetRow from '../SpreadsheetRow';
 
 import './SpreadsheetSettingsStage.css';

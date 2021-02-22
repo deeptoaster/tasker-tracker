@@ -1,4 +1,13 @@
-import { Config, FILE_TYPES, TAG_TASK, Tracker } from '../TrackerUtils';
+import {
+  Config,
+  FILE_TYPES,
+  TAG_TASK,
+  TASK_APPEND_PREFIX,
+  Tracker,
+  VARIABLE_PREFIX,
+  VARIABLE_SHEET_ID_PREFIX,
+  VariableName
+} from '../TrackerDefs';
 
 const TIME_ZONE_DEFAULT = 'America/Los_Angeles';
 
@@ -223,10 +232,10 @@ export default function exportToBlob(config: Config): Blob {
     '      <Int sr="arg1" val="1"/>\n',
     '      <Int sr="arg10" val="0"/>\n',
     '      <Int sr="arg11" val="0"/>\n',
-    '      <Str sr="arg2" ve="3">https://content-sheets.googleapis.com/v4/spreadsheets/%par1/values/%27%Sheet%27%21A%3AZ:append</Str>\n',
+    `      <Str sr="arg2" ve="3">https://content-sheets.googleapis.com/v4/spreadsheets/%par1/values/%27%${VARIABLE_PREFIX}${VariableName.SHEET_NAME}%27%21A%3AZ:append</Str>\n`,
     '      <Str sr="arg3" ve="3">%headers</Str>\n',
     '      <Str sr="arg4" ve="3">valueInputOption:USER_ENTERED</Str>\n',
-    '      <Str sr="arg5" ve="3">{"majorDimension":"ROWS","range":"\'%Sheet\'!A:Z","values":[[%row()]]}</Str>\n',
+    `      <Str sr="arg5" ve="3">{"majorDimension":"ROWS","range":"'%${VARIABLE_PREFIX}${VariableName.SHEET_NAME}'!A:Z","values":[[%row()]]}</Str>\n`,
     '      <Str sr="arg6" ve="3"/>\n',
     '      <Str sr="arg7" ve="3"/>\n',
     '      <Int sr="arg8" val="30"/>\n',
@@ -253,8 +262,8 @@ export default function exportToBlob(config: Config): Blob {
     '      </Bundle>\n',
     '      <Int sr="arg1" val="0"/>\n',
     '      <Str sr="arg10" ve="3"/>\n',
-    `      <Str sr="arg2" ve="3">${config.clientId}</Str>\n`,
-    `      <Str sr="arg3" ve="3">${config.clientSecret}</Str>\n`,
+    `      <Str sr="arg2" ve="3">%${VARIABLE_PREFIX}${VariableName.CLIENT_ID}</Str>\n`,
+    `      <Str sr="arg3" ve="3">%${VARIABLE_PREFIX}${VariableName.CLIENT_SECRET}</Str>\n`,
     '      <Str sr="arg4" ve="3">https://accounts.google.com/o/oauth2/v2/auth</Str>\n',
     '      <Str sr="arg5" ve="3">https://www.googleapis.com/oauth2/v4/token</Str>\n',
     '      <Str sr="arg6" ve="3">https://www.googleapis.com/auth/spreadsheets</Str>\n',
@@ -387,7 +396,7 @@ export default function exportToBlob(config: Config): Blob {
     '    <Action sr="act1" ve="7">\n',
     '      <code>547</code>\n',
     '      <Str sr="arg0" ve="3">%timezone</Str>\n',
-    '      <Str sr="arg1" ve="3">%Timezone</Str>\n',
+    `      <Str sr="arg1" ve="3">%${VARIABLE_PREFIX}Timezone</Str>\n`,
     '      <Int sr="arg2" val="0"/>\n',
     '      <Int sr="arg3" val="0"/>\n',
     '      <Int sr="arg4" val="0"/>\n',
@@ -446,7 +455,7 @@ export default function exportToBlob(config: Config): Blob {
       `  <${TAG_TASK} sr="task${appendId}">\n`,
       `		<cdate>${now}</cdate>\n`,
       `		<id>${appendId}</id>\n`,
-      `		<nme>Append ${tracker.title}</nme>\n`,
+      `		<nme>${TASK_APPEND_PREFIX}${tracker.title}</nme>\n`,
       '		<Action sr="act0" ve="7">\n',
       '			<code>130</code>\n',
       '			<Str sr="arg0" ve="3">Widget Busy</Str>\n',
@@ -468,7 +477,7 @@ export default function exportToBlob(config: Config): Blob {
       '			<Int sr="arg1">\n',
       '				<var>%priority</var>\n',
       '			</Int>\n',
-      `			<Str sr="arg2" ve="3">%${tracker.title}</Str>\n`,
+      `			<Str sr="arg2" ve="3">%${VARIABLE_PREFIX}${VARIABLE_SHEET_ID_PREFIX}${tracker.title}</Str>\n`,
       '			<Str sr="arg3" ve="3">%par1</Str>\n',
       '			<Str sr="arg4" ve="3"/>\n',
       '			<Int sr="arg5" val="0"/>\n',
@@ -530,7 +539,7 @@ export default function exportToBlob(config: Config): Blob {
       '      <Int sr="arg1">\n',
       '        <var>%priority</var>\n',
       '      </Int>\n',
-      `      <Str sr="arg2" ve="3">%${tracker.title}</Str>\n`,
+      `      <Str sr="arg2" ve="3">%${VARIABLE_PREFIX}${VARIABLE_SHEET_ID_PREFIX}${tracker.title}</Str>\n`,
       '      <Str sr="arg3" ve="3">Sheet2!A1</Str>\n',
       '      <Str sr="arg4" ve="3">%http_data</Str>\n',
       '      <Int sr="arg5" val="0"/>\n',
@@ -606,7 +615,7 @@ export default function exportToBlob(config: Config): Blob {
       '    <pri>6</pri>\n',
       '    <Action sr="act0" ve="7">\n',
       '      <code>104</code>\n',
-      `      <Str sr="arg0" ve="3">https://docs.google.com/spreadsheets/d/%${tracker.title}/edit</Str>\n`,
+      `      <Str sr="arg0" ve="3">https://docs.google.com/spreadsheets/d/%${VARIABLE_PREFIX}${VARIABLE_SHEET_ID_PREFIX}${tracker.title}/edit</Str>\n`,
       '    </Action>\n',
       `  </${TAG_TASK}>\n`
     );
@@ -622,7 +631,7 @@ export default function exportToBlob(config: Config): Blob {
         '    <pri>7</pri>\n',
         '    <Action sr="act0" ve="7">\n',
         '      <code>130</code>\n',
-        `      <Str sr="arg0" ve="3">Append ${tracker.title}</Str>\n`,
+        `      <Str sr="arg0" ve="3">${TASK_APPEND_PREFIX}${tracker.title}</Str>\n`,
         '      <Int sr="arg1">\n',
         '        <var>%priority</var>\n',
         '      </Int>\n',
@@ -645,14 +654,28 @@ export default function exportToBlob(config: Config): Blob {
 
   text.push(
     '  <Variable sr="vars0">\n',
-    '    <n>%Sheet</n>\n',
-    `    <v>${config.sheetName}</v>\n`,
+    `    <n>%${VARIABLE_PREFIX}${VariableName.CLIENT_ID}</n>\n`,
+    `    <v>${config.clientId}</v>\n`,
     '  </Variable>\n'
   );
 
   text.push(
     '  <Variable sr="vars1">\n',
-    '    <n>%Timezone</n>\n',
+    `    <n>%${VARIABLE_PREFIX}${VariableName.CLIENT_SECRET}</n>\n`,
+    `    <v>${config.clientSecret}</v>\n`,
+    '  </Variable>\n'
+  );
+
+  text.push(
+    '  <Variable sr="vars2">\n',
+    `    <n>%${VARIABLE_PREFIX}${VariableName.SHEET_NAME}</n>\n`,
+    `    <v>${config.sheetName}</v>\n`,
+    '  </Variable>\n'
+  );
+
+  text.push(
+    '  <Variable sr="vars3">\n',
+    `    <n>%${VARIABLE_PREFIX}Timezone</n>\n`,
     `    <v>${
       typeof Intl !== 'undefined'
         ? Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -663,8 +686,8 @@ export default function exportToBlob(config: Config): Blob {
 
   config.trackers.forEach((tracker: Tracker, trackerIndex: number): void => {
     text.push(
-      `  <Variable sr="vars${trackerIndex + 2}">\n`,
-      `    <n>%${tracker.title}</n>\n`,
+      `  <Variable sr="vars${trackerIndex + 4}">\n`,
+      `    <n>%${VARIABLE_PREFIX}${VARIABLE_SHEET_ID_PREFIX}${tracker.title}</n>\n`,
       `    <v>${tracker.sheetId}</v>\n`,
       '  </Variable>\n'
     );

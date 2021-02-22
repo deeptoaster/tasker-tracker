@@ -8,7 +8,7 @@ import {
   ErrorContext,
   FILE_TYPES,
   StageError
-} from '../TrackerUtils';
+} from '../TrackerDefs';
 
 import './CreateTrackersStage.css';
 

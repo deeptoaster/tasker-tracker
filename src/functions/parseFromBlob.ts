@@ -1,18 +1,41 @@
-import { Config, FILE_TYPES, TAG_TASK } from '../TrackerUtils';
+import {
+  Config,
+  FILE_TYPES,
+  TAG_TASK,
+  TAG_VARIABLE,
+  TASK_APPEND_PREFIX,
+  Tracker,
+  VARIABLE_PREFIX,
+  VARIABLE_SHEET_ID_PREFIX,
+  VariableName
+} from '../TrackerDefs';
+
+const TASK_APPEND_REGEX = new RegExp(
+  `^${TASK_APPEND_PREFIX}([A-Z]\\w+[\\da-z])$`
+);
+
+const VARIABLE_REGEX = new RegExp(`^%${VARIABLE_PREFIX}([A-Z]\\w+[\\da-z])$`);
+
+type ConfigBuilder = Partial<
+  {
+    -readonly [key in keyof Config]: Config[key];
+  }
+>;
 
 type Option = {
   option: string;
   trackerTitle: string;
 };
 
-// type WritableConfig = {
-//   -readonly [key in keyof Config]: Config[key];
-// };
+type Variable = {
+  name: string;
+  value: string;
+};
 
-function parseTask(profileNode: Element): Option | null {
+function parseTask(optionNode: Element): Option | null {
   const option: Partial<Option> = {};
 
-  profileNode.childNodes.forEach((childNode: Node) => {
+  optionNode.childNodes.forEach((childNode: Node) => {
     switch (childNode.nodeName) {
       case 'Action':
         childNode.childNodes.forEach((grandchildNode: Node) => {
@@ -21,7 +44,7 @@ function parseTask(profileNode: Element): Option | null {
             (grandchildNode as Element).getAttribute('sr') === 'arg0' &&
             grandchildNode.firstChild?.nodeValue != null
           ) {
-            const matches = /^Append ([A-Z]\w+[\da-z])$/.exec(
+            const matches = TASK_APPEND_REGEX.exec(
               grandchildNode.firstChild.nodeValue
             );
 
@@ -41,10 +64,37 @@ function parseTask(profileNode: Element): Option | null {
     }
   });
 
-  console.log(option);
-
   return option.option != null && option.trackerTitle != null
     ? (option as Option)
+    : null;
+}
+
+function parseVariable(variableNode: Element): Variable | null {
+  const variable: Partial<Variable> = {};
+
+  variableNode.childNodes.forEach((childNode: Node) => {
+    switch (childNode.nodeName) {
+      case 'n':
+        if (childNode.firstChild?.nodeValue != null) {
+          const matches = VARIABLE_REGEX.exec(childNode.firstChild.nodeValue);
+
+          if (matches != null) {
+            variable.name = matches[1] as VariableName;
+          }
+        }
+
+        break;
+      case 'v':
+        if (childNode.firstChild?.nodeValue != null) {
+          variable.value = childNode.firstChild.nodeValue;
+        }
+
+        break;
+    }
+  });
+
+  return variable.name != null && variable.value != null
+    ? (variable as Variable)
     : null;
 }
 
@@ -54,16 +104,18 @@ export default async function parseFromBlob(blob: Blob): Promise<Config> {
   }
 
   const options: Array<Option> = [];
-  const value = await blob.text();
+  const text = await blob.text();
+  const variables: { [name: string]: string } = {};
 
   const taskerData = new DOMParser().parseFromString(
-    value,
+    text,
     blob.type as DOMParserSupportedType
   ).firstChild;
 
   if (taskerData != null) {
     taskerData.childNodes.forEach((node: Node) => {
       let option: Option | null;
+      let variable: Variable | null;
 
       switch (node.nodeName) {
         case TAG_TASK:
@@ -74,9 +126,85 @@ export default async function parseFromBlob(blob: Blob): Promise<Config> {
           }
 
           break;
+        case TAG_VARIABLE:
+          variable = parseVariable(node as Element);
+
+          if (variable != null) {
+            variables[variable.name] = variable.value;
+          }
+
+          break;
       }
     });
   }
 
-  throw new Error('File upload is not yet supported.');
+  const config: ConfigBuilder = {};
+
+  const trackers: ReadonlyArray<Tracker> = Object.values(
+    options.reduce(
+      (
+        trackers: { readonly [title: string]: Partial<Tracker> },
+        option: Option
+      ): { readonly [title: string]: Partial<Tracker> } => ({
+        ...trackers,
+        [option.trackerTitle]: {
+          ...trackers[option.trackerTitle],
+          options: [
+            ...(option.trackerTitle in trackers
+              ? trackers[option.trackerTitle].options ?? []
+              : []),
+            option.option
+          ]
+        }
+      }),
+      Object.entries(variables).reduce(
+        (
+          trackers: { readonly [title: string]: Partial<Tracker> },
+          [name, value]: [string, string]
+        ): { readonly [title: string]: Partial<Tracker> } =>
+          name.startsWith(VARIABLE_SHEET_ID_PREFIX)
+            ? {
+                ...trackers,
+                [name.slice(VARIABLE_SHEET_ID_PREFIX.length)]: {
+                  sheetId: value,
+                  title: name.slice(VARIABLE_SHEET_ID_PREFIX.length)
+                }
+              }
+            : trackers,
+        {}
+      )
+    )
+  ).filter(
+    (tracker: Partial<Tracker>) =>
+      tracker.options != null &&
+      tracker.sheetId != null &&
+      tracker.title != null
+  ) as ReadonlyArray<Tracker>;
+
+  if (trackers.length !== 0) {
+    config.trackers = trackers;
+  }
+
+  if (VariableName.CLIENT_ID in variables) {
+    config.clientId = variables[VariableName.CLIENT_ID];
+  }
+
+  if (VariableName.CLIENT_SECRET in variables) {
+    config.clientSecret = variables[VariableName.CLIENT_SECRET];
+  }
+
+  if (VariableName.SHEET_NAME in variables) {
+    config.sheetName = variables[VariableName.SHEET_NAME];
+  }
+
+  if (
+    config.clientId != null &&
+    config.clientSecret != null &&
+    config.sheetName != null &&
+    config.trackers != null
+  ) {
+    return config as Config;
+  } else {
+    throw new Error('Invalid Tasker Tracker config file uploaded.');
+  }
 }

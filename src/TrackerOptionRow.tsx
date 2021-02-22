@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
-import { StageError } from './TrackerUtils';
+import { StageError } from './TrackerDefs';
 
 export default function TrackerOptionRow(props: {
   onFocus: () => void;

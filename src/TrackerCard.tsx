@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
-import { StageError, Tracker } from './TrackerUtils';
+import { StageError, Tracker } from './TrackerDefs';
 import TrackerOptionRow from './TrackerOptionRow';
 
 import './TrackerCard.css';
