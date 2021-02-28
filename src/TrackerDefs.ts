@@ -1,11 +1,17 @@
+export const TRACKER_DEFAULT: Tracker = {
+  options: [''],
+  sheetId: '',
+  sheetName: 'Sheet1',
+  title: ''
+};
+
 export const CONFIG_DEFAULT: Config = {
   clientId: '',
   clientSecret: '',
-  sheetName: 'Sheet1',
   trackers: [
     {
+      ...TRACKER_DEFAULT,
       options: ['Spam', 'Eggs', 'Ham'],
-      sheetId: '',
       title: 'Breakfast'
     }
   ]
@@ -15,26 +21,18 @@ export const FILE_TYPES = ['application/xml', 'text/xml'];
 export const TAG_TASK = 'Task';
 export const TAG_VARIABLE = 'Variable';
 export const TASK_APPEND_PREFIX = 'Append ';
-
-export const TRACKER_DEFAULT: Tracker = {
-  options: [''],
-  sheetId: '',
-  title: ''
-};
-
 export const VARIABLE_PREFIX = 'Tracker';
-export const VARIABLE_SHEET_ID_PREFIX = 'SheetId';
 
 export enum VariableName {
   CLIENT_ID = 'ClientId',
   CLIENT_SECRET = 'ClientSecret',
+  SHEET_ID = 'SheetId',
   SHEET_NAME = 'SheetName'
 }
 
 export type Config = {
   readonly clientId: string;
   readonly clientSecret: string;
-  readonly sheetName: string;
   readonly trackers: ReadonlyArray<Tracker>;
 };
 
@@ -76,5 +74,6 @@ export class StageError extends Error {
 export type Tracker = {
   readonly options: ReadonlyArray<string>;
   readonly sheetId: string;
+  readonly sheetName: string;
   readonly title: string;
 };

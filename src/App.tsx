@@ -40,11 +40,6 @@ export default function App(): JSX.Element {
     [setPartialConfig]
   );
 
-  const setSheetName = useCallback(
-    (sheetName: string): void => setPartialConfig({ sheetName }),
-    [setPartialConfig]
-  );
-
   const setTrackers = useCallback(
     (trackers: ReadonlyArray<Tracker>): void => setPartialConfig({ trackers }),
     [setPartialConfig]
@@ -104,10 +99,8 @@ export default function App(): JSX.Element {
             />
           ) : stage === Stage.SPREADSHEET_SETTINGS ? (
             <SpreadsheetSettingsStage
-              setSheetName={setSheetName}
               setStageError={setStageError}
               setTrackers={setTrackers}
-              sheetName={config.sheetName}
               stageError={stageError}
               trackers={config.trackers}
             />

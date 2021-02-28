@@ -35,7 +35,6 @@ export default function EditTrackersStage(props: {
   );
 
   const blur = useCallback((): void => setFocused(false), []);
-
   const focus = useCallback((): void => setFocused(true), []);
 
   const removeTracker = useCallback(

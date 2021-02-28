@@ -6,7 +6,6 @@ import {
   TASK_APPEND_PREFIX,
   Tracker,
   VARIABLE_PREFIX,
-  VARIABLE_SHEET_ID_PREFIX,
   VariableName
 } from '../TrackerDefs';
 
@@ -162,12 +161,20 @@ export default async function parseFromBlob(blob: Blob): Promise<Config> {
           trackers: { readonly [title: string]: Partial<Tracker> },
           [name, value]: [string, string]
         ): { readonly [title: string]: Partial<Tracker> } =>
-          name.startsWith(VARIABLE_SHEET_ID_PREFIX)
+          name.startsWith(VariableName.SHEET_ID)
             ? {
                 ...trackers,
-                [name.slice(VARIABLE_SHEET_ID_PREFIX.length)]: {
+                [name.slice(VariableName.SHEET_ID.length)]: {
                   sheetId: value,
-                  title: name.slice(VARIABLE_SHEET_ID_PREFIX.length)
+                  title: name.slice(VariableName.SHEET_ID.length)
+                }
+              }
+            : name.startsWith(VariableName.SHEET_NAME)
+            ? {
+                ...trackers,
+                [name.slice(VariableName.SHEET_NAME.length)]: {
+                  sheetName: value,
+                  title: name.slice(VariableName.SHEET_NAME.length)
                 }
               }
             : trackers,
@@ -175,9 +182,10 @@ export default async function parseFromBlob(blob: Blob): Promise<Config> {
       )
     )
   ).filter(
-    (tracker: Partial<Tracker>) =>
+    (tracker: Partial<Tracker>): boolean =>
       tracker.options != null &&
       tracker.sheetId != null &&
+      tracker.sheetName != null &&
       tracker.title != null
   ) as ReadonlyArray<Tracker>;
 
@@ -193,14 +201,9 @@ export default async function parseFromBlob(blob: Blob): Promise<Config> {
     config.clientSecret = variables[VariableName.CLIENT_SECRET];
   }
 
-  if (VariableName.SHEET_NAME in variables) {
-    config.sheetName = variables[VariableName.SHEET_NAME];
-  }
-
   if (
     config.clientId != null &&
     config.clientSecret != null &&
-    config.sheetName != null &&
     config.trackers != null
   ) {
     return config as Config;

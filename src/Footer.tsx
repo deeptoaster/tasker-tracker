@@ -79,6 +79,16 @@ export default function Footer(props: {
       {config != null ? (
         <CSSTransition classNames="stage" key="pager" timeout={300}>
           <footer>
+            <div className="pull-left">
+              <a
+                className="button"
+                href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Buy Me a Beer
+              </a>
+            </div>
             <div className="pull-right">
               <button onClick={back}>
                 {stage === 0 ? 'Start Over' : 'Back'}

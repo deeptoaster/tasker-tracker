@@ -7,25 +7,14 @@ import SpreadsheetRow from '../SpreadsheetRow';
 import './SpreadsheetSettingsStage.css';
 
 export default function SpreadsheetSettingsStage(props: {
-  setSheetName: (sheetName: string) => void;
   setStageError: (stageError: StageError | null) => void;
   setTrackers: (trackers: ReadonlyArray<Tracker>) => void;
-  sheetName: string;
   stageError: StageError | null;
   trackers: ReadonlyArray<Tracker>;
 }): JSX.Element {
-  const {
-    setSheetName,
-    setStageError,
-    setTrackers,
-    sheetName,
-    stageError,
-    trackers
-  } = props;
+  const { setStageError, setTrackers, stageError, trackers } = props;
   const [focused, setFocused] = useState<boolean>(false);
-
   const blur = useCallback((): void => setFocused(false), []);
-
   const focus = useCallback((): void => setFocused(true), []);
 
   const setPartialTracker = useCallback(
@@ -44,6 +33,12 @@ export default function SpreadsheetSettingsStage(props: {
   const setTrackerSheetId = useCallback(
     (trackerIndex: number, sheetId: string): void =>
       setPartialTracker(trackerIndex, { sheetId }),
+    [setPartialTracker]
+  );
+
+  const setTrackerSheetName = useCallback(
+    (trackerIndex: number, sheetName: string): void =>
+      setPartialTracker(trackerIndex, { sheetName }),
     [setPartialTracker]
   );
 
@@ -75,15 +70,29 @@ export default function SpreadsheetSettingsStage(props: {
         );
       }
 
-      if (sheetName === '') {
-        throw new StageError('Sheet Name cannot be empty.', focus, 'sheetName');
+      const sheetNameEmptyIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => tracker.sheetName === ''
+      );
+
+      if (sheetNameEmptyIndex !== -1) {
+        throw new StageError(
+          'Sheet Name cannot be empty.',
+          focus,
+          'sheetName',
+          sheetNameEmptyIndex
+        );
       }
 
-      if (!/^[\w ]+$/.test(sheetName)) {
+      const sheetNameInvalidIndex = trackers.findIndex(
+        (tracker: Tracker): boolean => !/^[\w ]+$/.test(tracker.sheetName)
+      );
+
+      if (sheetNameInvalidIndex !== -1) {
         throw new StageError(
           'Sheet Name must contain only letters, numbers, underscores, and spaces.',
           focus,
-          'sheetName'
+          'sheetName',
+          sheetNameInvalidIndex
         );
       }
 
@@ -95,7 +104,7 @@ export default function SpreadsheetSettingsStage(props: {
         throw error;
       }
     }
-  }, [focus, setStageError, sheetName, trackers]);
+  }, [focus, setStageError, trackers]);
 
   return (
     <div>
@@ -125,14 +134,16 @@ export default function SpreadsheetSettingsStage(props: {
                 setSheetId={(sheetId: string): void =>
                   setTrackerSheetId(trackerIndex, sheetId)
                 }
-                setSheetName={setSheetName}
+                setSheetName={(sheetName: string): void =>
+                  setTrackerSheetName(trackerIndex, sheetName)
+                }
                 sheetId={tracker.sheetId}
-                sheetName={sheetName}
+                sheetName={tracker.sheetName}
                 stageError={
                   focused &&
-                  ((stageError?.source === 'sheetId' &&
-                    stageError.trackerIndex === trackerIndex) ||
-                    (stageError?.source === 'sheetName' && trackerIndex === 0))
+                  (stageError?.source === 'sheetId' ||
+                    stageError?.source === 'sheetName') &&
+                    stageError.trackerIndex === trackerIndex
                     ? stageError
                     : null
                 }
