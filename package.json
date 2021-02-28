@@ -17,50 +17,27 @@
       "project": "./tsconfig.json"
     },
     "rules": {
-      "arrow-body-style": "error",
-      "curly": "error",
-      "dot-notation": "error",
-      "eqeqeq": [
-        "error",
-        "always",
-        {
-          "null": "never"
-        }
-      ],
-      "no-await-in-loop": "error",
-      "no-return-await": "error",
-      "no-unreachable-loop": "error",
-      "no-unsafe-optional-chaining": "error",
-      "no-useless-backreference": "error",
-      "no-useless-return": "error",
-      "no-var": "error",
-      "prefer-const": "error",
-      "prefer-spread": "error",
-      "sort-imports": [
-        "error",
-        {
-          "allowSeparatedGroups": true
-        }
-      ],
-      "sort-keys": "error",
       "@typescript-eslint/array-type": [
         "warn",
         {
           "default": "generic"
         }
       ],
-      "react/destructuring-assignment": "error",
-      "react/function-component-definition": "error",
-      "react/jsx-boolean-value": [
-        "error",
-        "always"
-      ],
-      "react/jsx-sort-props": "error",
-      "react/prefer-stateless-function": "error",
-      "react/self-closing-comp": "error",
       "@typescript-eslint/explicit-function-return-type": "error",
       "@typescript-eslint/explicit-member-accessibility": "error",
       "@typescript-eslint/member-ordering": "error",
+      "@typescript-eslint/no-inferrable-types": [
+        "error",
+        {
+          "ignoreParameters": true
+        }
+      ],
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false
+        }
+      ],
       "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
       "@typescript-eslint/no-unnecessary-condition": [
         "error",
@@ -80,6 +57,41 @@
         }
       ],
       "@typescript-eslint/switch-exhaustiveness-check": "error",
+      "arrow-body-style": "error",
+      "curly": "error",
+      "dot-notation": "error",
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "never"
+        }
+      ],
+      "no-await-in-loop": "error",
+      "no-return-await": "error",
+      "no-unreachable-loop": "error",
+      "no-unsafe-optional-chaining": "error",
+      "no-useless-backreference": "error",
+      "no-useless-return": "error",
+      "no-var": "error",
+      "prefer-const": "error",
+      "prefer-spread": "error",
+      "react/destructuring-assignment": "error",
+      "react/function-component-definition": "error",
+      "react/jsx-boolean-value": [
+        "error",
+        "always"
+      ],
+      "react/jsx-sort-props": "error",
+      "react/prefer-stateless-function": "error",
+      "react/self-closing-comp": "error",
+      "sort-imports": [
+        "error",
+        {
+          "allowSeparatedGroups": true
+        }
+      ],
+      "sort-keys": "error",
       "react/no-unescaped-entities": "off",
       "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-floating-promises": "off"
@@ -122,7 +134,7 @@
     "url": "git+ssh://git@github.com/deeptoaster/tasker-tracker.git"
   },
   "author": "Deep Toaster",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/deeptoaster/tasker-tracker/issues"
   },

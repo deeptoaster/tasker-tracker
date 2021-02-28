@@ -1,38 +1,18 @@
 import * as React from 'react';
-import {
-  CSSTransition,
-  SwitchTransition,
-  TransitionGroup
-} from 'react-transition-group';
-import {
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import * as TrackerUtils from './TrackerUtils';
-import { Config, ErrorContext, StageError, Tracker } from './TrackerDefs';
+import { Config, Stage, StageError, Tracker } from './TrackerDefs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';
 import EditTrackersStage from './stages/EditTrackersStage';
+import Footer from './Footer';
 import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
 
 import './App.css';
 
-const DOWNLOAD_NAME = 'tracker.xml';
 const ERROR_DURATION = 5000;
-
-enum Stage {
-  EDIT_TRACKERS,
-  API_SETTINGS,
-  SPREADSHEET_SETTINGS,
-  DOWNLOAD,
-  length
-}
 
 export default function App(): JSX.Element {
   const [config, setConfig] = useState<Config | null>(null);
@@ -40,49 +20,6 @@ export default function App(): JSX.Element {
   const errorTimeout = useRef<number>();
   const [stage, setStage] = useState<Stage>(Stage.EDIT_TRACKERS);
   const [stageError, setStageError] = useState<StageError | null>(null);
-
-  const back = useCallback((): void => {
-    if (stage === 0) {
-      setConfig(null);
-    } else {
-      setStage(stage - 1);
-    }
-  }, [stage]);
-
-  const downloadBlob = useMemo(
-    (): Blob | null =>
-      config != null && stage === Stage.DOWNLOAD
-        ? TrackerUtils.exportToBlob(config)
-        : null,
-    [config, stage]
-  );
-
-  const downloadUrl = useMemo(
-    (): string | null =>
-      downloadBlob != null ? window.URL.createObjectURL(downloadBlob) : null,
-    [downloadBlob]
-  );
-
-  const handleDownloadClick = useCallback(
-    (event: MouseEvent): void => {
-      if ('msSaveBlob' in window.navigator) {
-        window.navigator.msSaveBlob(downloadBlob, DOWNLOAD_NAME);
-        event.preventDefault();
-      }
-    },
-    [downloadBlob]
-  );
-
-  const next = useCallback((): void => {
-    if (stage === Stage.length - 1) {
-      throw new Error();
-    } else if (stageError == null) {
-      setStage(stage + 1);
-    } else {
-      setError(stageError);
-      stageError.focus();
-    }
-  }, [stage, stageError]);
 
   const setPartialConfig = useCallback(
     (partialConfig: Partial<Config>): void => {
@@ -133,7 +70,7 @@ export default function App(): JSX.Element {
   useEffect((): void => setError(null), [stage]);
 
   return (
-    <ErrorContext.Provider value={setError}>
+    <>
       <SwitchTransition>
         <CSSTransition
           appear={true}
@@ -147,6 +84,7 @@ export default function App(): JSX.Element {
           {config == null ? (
             <CreateTrackersStage
               setConfig={setConfig}
+              setError={setError}
               setStageError={setStageError}
             />
           ) : stage === Stage.EDIT_TRACKERS ? (
@@ -178,40 +116,15 @@ export default function App(): JSX.Element {
           ) : null}
         </CSSTransition>
       </SwitchTransition>
-      <TransitionGroup component={null}>
-        {error != null ? (
-          <CSSTransition classNames="error" key="error" timeout={300}>
-            <p className="error">{error.message}</p>
-          </CSSTransition>
-        ) : null}
-        {config != null ? (
-          <CSSTransition classNames="stage" key="pager" timeout={300}>
-            <footer>
-              <div className="pull-right">
-                <button onClick={back}>
-                  {stage === 0 ? 'Start Over' : 'Back'}
-                </button>
-                {downloadUrl != null ? (
-                  <a
-                    className="button button-primary"
-                    download={DOWNLOAD_NAME}
-                    href={downloadUrl}
-                    onClick={handleDownloadClick}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    Download
-                  </a>
-                ) : (
-                  <button className="button-primary" onClick={next}>
-                    Next
-                  </button>
-                )}
-              </div>
-            </footer>
-          </CSSTransition>
-        ) : null}
-      </TransitionGroup>
-    </ErrorContext.Provider>
+      <Footer
+        config={config}
+        error={error}
+        setConfig={setConfig}
+        setError={setError}
+        setStage={setStage}
+        stage={stage}
+        stageError={stageError}
+      />
+    </>
   );
 }

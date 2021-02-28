@@ -1,23 +1,17 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback, useContext, useEffect } from 'react';
+import { ChangeEvent, useCallback, useEffect } from 'react';
 
 import * as TrackerUtils from '../TrackerUtils';
-import {
-  CONFIG_DEFAULT,
-  Config,
-  ErrorContext,
-  FILE_TYPES,
-  StageError
-} from '../TrackerDefs';
+import { CONFIG_DEFAULT, Config, FILE_TYPES } from '../TrackerDefs';
 
 import './CreateTrackersStage.css';
 
 export default function CreateTrackersStage(props: {
   setConfig: (trackers: Config) => void;
-  setStageError: (stageError: StageError | null) => void;
+  setError: (error: Error) => void;
+  setStageError: (stageError: null) => void;
 }): JSX.Element {
-  const { setConfig, setStageError } = props;
-  const error = useContext(ErrorContext);
+  const { setConfig, setError, setStageError } = props;
 
   const createNewConfig = useCallback((): void => setConfig(CONFIG_DEFAULT), [
     setConfig
@@ -31,10 +25,10 @@ export default function CreateTrackersStage(props: {
       ) {
         TrackerUtils.parseFromBlob(event.currentTarget.files[0])
           .then(setConfig)
-          .catch(error);
+          .catch(setError);
       }
     },
-    [error, setConfig]
+    [setConfig, setError]
   );
 
   useEffect((): void => {

@@ -1,5 +1,3 @@
-import { createContext } from 'react';
-
 export const CONFIG_DEFAULT: Config = {
   clientId: '',
   clientSecret: '',
@@ -40,6 +38,14 @@ export type Config = {
   readonly trackers: ReadonlyArray<Tracker>;
 };
 
+export enum Stage {
+  EDIT_TRACKERS,
+  API_SETTINGS,
+  SPREADSHEET_SETTINGS,
+  DOWNLOAD,
+  length
+}
+
 export class StageError extends Error {
   public constructor(message: string, focus: () => void, source: keyof Config);
   public constructor(
@@ -72,5 +78,3 @@ export type Tracker = {
   readonly sheetId: string;
   readonly title: string;
 };
-
-export const ErrorContext = createContext<(error: Error) => void>(() => {});
