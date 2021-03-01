@@ -13,6 +13,7 @@ export default function Footer(props: {
   setConfig: (config: Config | null) => void;
   setError: (error: Error) => void;
   setStage: (stage: Stage) => void;
+  showHelp: () => void;
   stage: Stage;
   stageError: StageError | null;
 }): JSX.Element {
@@ -22,6 +23,7 @@ export default function Footer(props: {
     setConfig,
     setError,
     setStage,
+    showHelp,
     stage,
     stageError
   } = props;
@@ -80,14 +82,15 @@ export default function Footer(props: {
         <CSSTransition classNames="stage" key="pager" timeout={300}>
           <footer>
             <div className="pull-left">
-              <a
+              <button onClick={showHelp}>Show Help</button>
+              {/*<a
                 className="button"
                 href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
                 rel="noreferrer"
                 target="_blank"
               >
                 Buy Me a Beer
-              </a>
+              </a>*/}
             </div>
             <div className="pull-right">
               <button onClick={back}>

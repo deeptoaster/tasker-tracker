@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import {
+  CSSTransition,
+  SwitchTransition,
+  TransitionGroup
+} from 'react-transition-group';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Config, Stage, StageError, Tracker } from './TrackerDefs';
@@ -8,6 +12,7 @@ import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';
 import EditTrackersStage from './stages/EditTrackersStage';
 import Footer from './Footer';
+import Help from './Help';
 import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
 
 import './App.css';
@@ -18,8 +23,11 @@ export default function App(): JSX.Element {
   const [config, setConfig] = useState<Config | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const errorTimeout = useRef<number>();
+  const [helpVisible, setHelpVisible] = useState<boolean>(false);
   const [stage, setStage] = useState<Stage>(Stage.EDIT_TRACKERS);
   const [stageError, setStageError] = useState<StageError | null>(null);
+
+  const hideHelp = useCallback((): void => setHelpVisible(false), []);
 
   const setPartialConfig = useCallback(
     (partialConfig: Partial<Config>): void => {
@@ -45,6 +53,8 @@ export default function App(): JSX.Element {
     [setPartialConfig]
   );
 
+  const showHelp = useCallback((): void => setHelpVisible(true), []);
+
   useEffect((): void => {
     if (config == null) {
       setError(null);
@@ -66,58 +76,68 @@ export default function App(): JSX.Element {
 
   return (
     <>
-      <SwitchTransition>
-        <CSSTransition
-          appear={true}
-          classNames="stage"
-          key={config == null ? null : stage}
-          timeout={{
-            enter: 1200,
-            exit: 300
-          }}
-        >
-          {config == null ? (
-            <CreateTrackersStage
-              setConfig={setConfig}
-              setError={setError}
-              setStageError={setStageError}
-            />
-          ) : stage === Stage.EDIT_TRACKERS ? (
-            <EditTrackersStage
-              setStageError={setStageError}
-              setTrackers={setTrackers}
-              stageError={stageError}
-              trackers={config.trackers}
-            />
-          ) : stage === Stage.API_SETTINGS ? (
-            <ApiSettingsStage
-              clientId={config.clientId}
-              clientSecret={config.clientSecret}
-              setClientId={setClientId}
-              setClientSecret={setClientSecret}
-              setStageError={setStageError}
-            />
-          ) : stage === Stage.SPREADSHEET_SETTINGS ? (
-            <SpreadsheetSettingsStage
-              setStageError={setStageError}
-              setTrackers={setTrackers}
-              stageError={stageError}
-              trackers={config.trackers}
-            />
-          ) : stage === Stage.DOWNLOAD ? (
-            <DownloadStage />
-          ) : null}
-        </CSSTransition>
-      </SwitchTransition>
-      <Footer
-        config={config}
-        error={error}
-        setConfig={setConfig}
-        setError={setError}
-        setStage={setStage}
-        stage={stage}
-        stageError={stageError}
-      />
+      <TransitionGroup component={null}>
+        {helpVisible ? (
+          <CSSTransition classNames="overlay" timeout={300}>
+            <Help hideHelp={hideHelp} />
+          </CSSTransition>
+        ) : null}
+      </TransitionGroup>
+      <section>
+        <SwitchTransition>
+          <CSSTransition
+            appear={true}
+            classNames="stage"
+            key={config == null ? null : stage}
+            timeout={{
+              enter: 1200,
+              exit: 300
+            }}
+          >
+            {config == null ? (
+              <CreateTrackersStage
+                setConfig={setConfig}
+                setError={setError}
+                setStageError={setStageError}
+              />
+            ) : stage === Stage.EDIT_TRACKERS ? (
+              <EditTrackersStage
+                setStageError={setStageError}
+                setTrackers={setTrackers}
+                stageError={stageError}
+                trackers={config.trackers}
+              />
+            ) : stage === Stage.API_SETTINGS ? (
+              <ApiSettingsStage
+                clientId={config.clientId}
+                clientSecret={config.clientSecret}
+                setClientId={setClientId}
+                setClientSecret={setClientSecret}
+                setStageError={setStageError}
+              />
+            ) : stage === Stage.SPREADSHEET_SETTINGS ? (
+              <SpreadsheetSettingsStage
+                setStageError={setStageError}
+                setTrackers={setTrackers}
+                stageError={stageError}
+                trackers={config.trackers}
+              />
+            ) : stage === Stage.DOWNLOAD ? (
+              <DownloadStage />
+            ) : null}
+          </CSSTransition>
+        </SwitchTransition>
+        <Footer
+          config={config}
+          error={error}
+          setConfig={setConfig}
+          setError={setError}
+          setStage={setStage}
+          showHelp={showHelp}
+          stage={stage}
+          stageError={stageError}
+        />
+      </section>
     </>
   );
 }
