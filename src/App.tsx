@@ -24,8 +24,19 @@ export default function App(): JSX.Element {
   const [error, setError] = useState<Error | null>(null);
   const errorTimeout = useRef<number>();
   const [helpVisible, setHelpVisible] = useState<boolean>(false);
+  const [navigationDisabled, setNavigationDisabled] = useState<boolean>(false);
   const [stage, setStage] = useState<Stage>(Stage.EDIT_TRACKERS);
   const [stageError, setStageError] = useState<StageError | null>(null);
+
+  const disableNavigation = useCallback(
+    (): void => setNavigationDisabled(true),
+    []
+  );
+
+  const enableNavigation = useCallback(
+    (): void => setNavigationDisabled(false),
+    []
+  );
 
   const hideHelp = useCallback((): void => setHelpVisible(false), []);
 
@@ -89,6 +100,8 @@ export default function App(): JSX.Element {
             appear={true}
             classNames="stage"
             key={config == null ? null : stage}
+            onEntered={enableNavigation}
+            onExiting={disableNavigation}
             timeout={{
               enter: 1200,
               exit: 300
@@ -130,6 +143,7 @@ export default function App(): JSX.Element {
         <Footer
           config={config}
           error={error}
+          navigationDisabled={navigationDisabled}
           setConfig={setConfig}
           setError={setError}
           setStage={setStage}

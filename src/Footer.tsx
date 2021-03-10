@@ -10,6 +10,7 @@ const DOWNLOAD_NAME = 'tracker.xml';
 export default function Footer(props: {
   config: Config | null;
   error: Error | null;
+  navigationDisabled: boolean;
   setConfig: (config: Config | null) => void;
   setError: (error: Error) => void;
   setStage: (stage: Stage) => void;
@@ -19,6 +20,7 @@ export default function Footer(props: {
 }): JSX.Element {
   const {
     config,
+    navigationDisabled,
     error,
     setConfig,
     setError,
@@ -83,14 +85,14 @@ export default function Footer(props: {
           <footer>
             <div className="pull-left">
               <button onClick={showHelp}>Show Help</button>
-              {/*<a
+              <a
                 className="button"
                 href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
                 rel="noreferrer"
                 target="_blank"
               >
                 Buy Me a Beer
-              </a>*/}
+              </a>
             </div>
             <div className="pull-right">
               <button onClick={back}>
@@ -108,7 +110,10 @@ export default function Footer(props: {
                   Download
                 </a>
               ) : (
-                <button className="button-primary" onClick={next}>
+                <button
+                  className="button-primary"
+                  onClick={!navigationDisabled ? next : undefined}
+                >
                   Next
                 </button>
               )}
