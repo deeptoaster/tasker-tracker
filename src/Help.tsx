@@ -9,8 +9,10 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
     <aside>
       <h3>
         Tasker Tracker is a tool to generate{' '}
-        <a href="https://tasker.joaoapps.com/">Tasker</a> configs for tracking
-        stuff on a Google Sheet.
+        <a href="https://tasker.joaoapps.com/" rel="noreferrer" target="_blank">
+          Tasker
+        </a>{' '}
+        configs for tracking stuff on a Google Sheet.
       </h3>
       <p>
         For example, you might be interested in keeping a log of what you have
@@ -29,7 +31,11 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
           Sleeping, Socializing, Working)
         </li>
         <li>
-          <a href="https://www.bbc.com/future/article/20190403-how-much-water-should-you-drink-a-day">
+          <a
+            href="https://www.bbc.com/future/article/20190403-how-much-water-should-you-drink-a-day"
+            rel="noreferrer"
+            target="_blank"
+          >
             How often you drink water
           </a>
         </li>
@@ -47,7 +53,11 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
       <p>
         Tasker Tracker works by appending a row to a Google Sheet each time you
         trigger a task. The easiest way to get started is to make a copy of{' '}
-        <a href="https://docs.google.com/spreadsheets/d/1FM4yns1OOVF2VmTaK00dLNSP6s5HavDLmp8yHKbOWF0/edit?usp=sharing">
+        <a
+          href="https://docs.google.com/spreadsheets/d/1FM4yns1OOVF2VmTaK00dLNSP6s5HavDLmp8yHKbOWF0/edit?usp=sharing"
+          rel="noreferrer"
+          target="_blank"
+        >
           this spreadsheet
         </a>{' '}
         into your own Google Drive account. (Remember to delete the sample data
@@ -59,7 +69,7 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
         Optionally, create a second sheet (named <samp>Sheet2</samp>) that
         combines the most recent items tracked into a single cell.
       </p>
-      <h3>There's no limit to what you can do with the logged data.</h3>
+      <h3>There's no limit to what you can do with the logged data!</h3>
       <p>
         The spreadsheet template above includes a few basic transformations and
         charts to get you started with visualizations.

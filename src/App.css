@@ -56,13 +56,20 @@ a,
 .overlay-enter-active a,
 .stage-appear-active a,
 .stage-enter-active a,
-.card-enter-active a {
+.card-enter-active a,
+button.button-link.button-link,
+.overlay-enter-active button.button-link.button-link,
+.stage-appear-active button.button-link.button-link,
+.stage-enter-active button.button-link.button-link,
+.card-enter-active button.button-link.button-link {
   color: #859fab;
   text-decoration: none;
   transition: color 400ms 600ms;
 }
 a:focus,
-a:hover {
+a:hover,
+button.button-link:focus,
+button.button-link:hover {
   text-decoration: underline;
   outline: none;
 }
@@ -259,6 +266,12 @@ button.button-add::before,
 button.button-close::before,
 .button.button-close::before {
   content: '\d7';
+}
+button.button-link.button-link {
+  box-shadow: none;
+  padding: 0;
+  background-color: transparent;
+  text-shadow: inherit;
 }
 figure,
 h2,

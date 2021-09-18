@@ -11,13 +11,15 @@ export default function ApiSettingsStage(props: {
   setClientId: (clientId: string) => void;
   setClientSecret: (clientSecret: string) => void;
   setStageError: (stageError: StageError | null) => void;
+  showHelp: () => void;
 }): JSX.Element {
   const {
     clientId,
     clientSecret,
     setClientId,
     setClientSecret,
-    setStageError
+    setStageError,
+    showHelp
   } = props;
 
   const clientIdInput = useRef<HTMLInputElement>(null);
@@ -95,16 +97,21 @@ export default function ApiSettingsStage(props: {
       <article className="api-card">
         <h3>API Settings</h3>
         <p>
+          Click{' '}
+          <button className="button-link" onClick={showHelp}>
+            Show Help
+          </button>{' '}
+          below to learn how to set up a spreadsheet.
+        </p>
+        <p>
           Follow the first three steps of{' '}
           <a href="https://forum.joaoapps.com/index.php?resources/add-a-row-of-data-to-a-google-spreadsheet-no-plugins.383/">
             this Tasker guide
           </a>{' '}
           and enter the <label htmlFor="api-client-id">Client ID</label> and{' '}
-          <label htmlFor="api-client-secret">Client Secret</label> below.
-        </p>
-        <p>
-          Don't worry&mdash;this whole service runs within your browser, so we
-          can't read any of your data.
+          <label htmlFor="api-client-secret">Client Secret</label> below. (Don't
+          worry! This tool runs in your browser, so we can't read any of your
+          data.)
         </p>
         <form>
           <div className="form-control">

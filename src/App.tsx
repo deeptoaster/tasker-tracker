@@ -127,6 +127,7 @@ export default function App(): JSX.Element {
                 setClientId={setClientId}
                 setClientSecret={setClientSecret}
                 setStageError={setStageError}
+                showHelp={showHelp}
               />
             ) : stage === Stage.SPREADSHEET_SETTINGS ? (
               <SpreadsheetSettingsStage
