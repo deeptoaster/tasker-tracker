@@ -112,6 +112,7 @@ export default function App(): JSX.Element {
                 setConfig={setConfig}
                 setError={setError}
                 setStageError={setStageError}
+                showHelp={showHelp}
               />
             ) : stage === Stage.EDIT_TRACKERS ? (
               <EditTrackersStage

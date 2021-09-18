@@ -184,7 +184,7 @@ export default function exportToBlob(config: Config): Blob {
     '      <Str sr="arg4" ve="3"/>\n',
     '      <Str sr="arg5" ve="3"/>\n',
     '      <Int sr="arg6" val="0"/>\n',
-    '      <Int sr="arg7" val="0"/>\n',
+    '      <Int sr="arg7" val="1"/>\n',
     '      <Str sr="arg8" ve="3"/>\n',
     '    </Action>\n',
     '    <Action sr="act3" ve="7">\n',
@@ -643,9 +643,6 @@ export default function exportToBlob(config: Config): Blob {
         '      <Int sr="arg8" val="0"/>\n',
         '      <Int sr="arg9" val="0"/>\n',
         '    </Action>\n',
-        '    <Img sr="icn" ve="2">\n',
-        '      <nme>mw_maps_local_hotel</nme>\n',
-        '    </Img>\n',
         `  </${TAG_TASK}>\n`
       );
     });

@@ -10,8 +10,9 @@ export default function CreateTrackersStage(props: {
   setConfig: (trackers: Config) => void;
   setError: (error: Error) => void;
   setStageError: (stageError: null) => void;
+  showHelp: () => void;
 }): JSX.Element {
-  const { setConfig, setError, setStageError } = props;
+  const { setConfig, setError, setStageError, showHelp } = props;
 
   const createNewConfig = useCallback((): void => setConfig(CONFIG_DEFAULT), [
     setConfig
@@ -69,6 +70,34 @@ export default function CreateTrackersStage(props: {
           </figure>
         </div>
       </article>
+      <ul className="create-card-links">
+        <li>
+          <button className="button-link" onClick={showHelp}>
+            About
+          </button>
+        </li>
+        <li>
+          <a
+            href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Donate
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/deeptoaster/tasker-tracker"
+            rel="noreferrer"
+            target="_blank"
+          >
+            GitHub
+          </a>
+        </li>
+        <li>
+          <a href="https://fishbotwilleatyou.com/">fishbotwilleatyou</a>
+        </li>
+      </ul>
     </div>
   );
 }
