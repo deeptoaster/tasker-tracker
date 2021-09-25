@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { MouseEvent, useCallback, useMemo } from 'react';
+import { MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import * as TrackerUtils from './TrackerUtils';
 import { Config, Stage, StageError } from './TrackerDefs';
@@ -30,6 +30,8 @@ export default function Footer(props: {
     stageError
   } = props;
 
+  const [downloadBlob, setDownloadBlob] = useState<Blob | null>(null);
+
   const back = useCallback((): void => {
     if (stage === 0) {
       setConfig(null);
@@ -37,14 +39,6 @@ export default function Footer(props: {
       setStage(stage - 1);
     }
   }, [setConfig, setStage, stage]);
-
-  const downloadBlob = useMemo(
-    (): Blob | null =>
-      config != null && stage === Stage.DOWNLOAD
-        ? TrackerUtils.exportToBlob(config)
-        : null,
-    [config, stage]
-  );
 
   const downloadUrl = useMemo(
     (): string | null =>
@@ -72,6 +66,16 @@ export default function Footer(props: {
       stageError.focus();
     }
   }, [setError, setStage, stage, stageError]);
+
+  React.useEffect((): void => {
+    if (config != null && stage === Stage.DOWNLOAD) {
+      TrackerUtils.exportToBlob(config).then((blob: Blob): void =>
+        setDownloadBlob(blob)
+      );
+    } else {
+      setDownloadBlob(null);
+    }
+  }, [config, stage]);
 
   return (
     <TransitionGroup component={null}>

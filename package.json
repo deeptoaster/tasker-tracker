@@ -94,7 +94,14 @@
       "sort-keys": "error",
       "react/no-unescaped-entities": "off",
       "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-floating-promises": "off"
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "args": "all",
+          "argsIgnorePattern": "^_"
+        }
+      ]
     }
   },
   "postcss": {
@@ -107,6 +114,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "jszip": "^3.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-transition-group": "^4.4.1"
@@ -129,7 +137,7 @@
     "style-loader": "^2.0.0",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.2.1"
   },
   "scripts": {
     "build": "webpack --env production --mode production",

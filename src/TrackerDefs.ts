@@ -18,17 +18,27 @@ export const CONFIG_DEFAULT: Config = {
 };
 
 export const FILE_TYPES = ['application/xml', 'text/xml'];
-export const TAG_TASK = 'Task';
-export const TAG_VARIABLE = 'Variable';
+export const PROJECT_BASE = 'Base';
+export const SERVICE_PREFIX = 'TT';
 export const TASK_APPEND_PREFIX = 'Append ';
-export const VARIABLE_PREFIX = 'Tracker';
+
+export enum Tag {
+  TASK = 'Task',
+  VARIABLE = 'Variable'
+}
 
 export enum VariableName {
   CLIENT_ID = 'ClientId',
   CLIENT_SECRET = 'ClientSecret',
   SHEET_ID = 'SheetId',
-  SHEET_NAME = 'SheetName'
+  SHEET_NAME = 'SheetName',
+  TIMEZONE = 'Timezone'
 }
+
+export const TAG_PREFIXES: { [tag in Tag]: string } = {
+  [Tag.TASK]: 'task',
+  [Tag.VARIABLE]: 'vars'
+};
 
 export type Config = {
   readonly clientId: string;
