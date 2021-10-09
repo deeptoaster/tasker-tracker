@@ -17,7 +17,8 @@ export const CONFIG_DEFAULT: Config = {
   ]
 };
 
-export const FILE_TYPES = ['application/xml', 'text/xml'];
+export const FILE_TYPE_DEFAULT: DOMParserSupportedType = 'application/xml';
+export const FILE_TYPES = [FILE_TYPE_DEFAULT, 'application/zip', 'text/xml'];
 export const PROJECT_BASE = 'Base';
 export const SERVICE_PREFIX = 'TT';
 export const TASK_APPEND_PREFIX = 'Append ';

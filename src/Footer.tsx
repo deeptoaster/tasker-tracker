@@ -5,7 +5,7 @@ import { MouseEvent, useCallback, useMemo, useState } from 'react';
 import * as TrackerUtils from './TrackerUtils';
 import { Config, Stage, StageError } from './TrackerDefs';
 
-const DOWNLOAD_NAME = 'tracker.xml';
+const DOWNLOAD_NAME = 'tracker.zip';
 
 export default function Footer(props: {
   config: Config | null;
@@ -49,6 +49,7 @@ export default function Footer(props: {
   const handleDownloadClick = useCallback(
     (event: MouseEvent): void => {
       if ('msSaveBlob' in window.navigator) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         window.navigator.msSaveBlob(downloadBlob, DOWNLOAD_NAME);
         event.preventDefault();
       }

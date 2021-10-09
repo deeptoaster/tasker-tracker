@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 
 import {
   Config,
-  FILE_TYPES,
+  FILE_TYPE_DEFAULT,
   PROJECT_BASE,
   SERVICE_PREFIX,
   TAG_PREFIXES,
@@ -429,7 +429,7 @@ function makeBaseBlob(config: Config, now: number): Blob {
   );
 
   text.push('</TaskerData>\n');
-  return new Blob(text, { type: FILE_TYPES[0] });
+  return new Blob(text, { type: FILE_TYPE_DEFAULT });
 }
 
 function makeTrackerBlob(tracker: Tracker, now: number): Blob {
@@ -690,7 +690,7 @@ function makeTrackerBlob(tracker: Tracker, now: number): Blob {
   );
 
   text.push('</TaskerData>\n');
-  return new Blob(text, { type: FILE_TYPES[0] });
+  return new Blob(text, { type: FILE_TYPE_DEFAULT });
 }
 
 export default function exportToBlob(config: Config): Promise<Blob> {
