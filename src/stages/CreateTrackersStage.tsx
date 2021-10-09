@@ -24,7 +24,7 @@ export default function CreateTrackersStage(props: {
         event.currentTarget.files != null &&
         event.currentTarget.files.length !== 0
       ) {
-        TrackerUtils.parseFromBlob(event.currentTarget.files[0])
+        TrackerUtils.parseFromBlobs(event.currentTarget.files)
           .then(setConfig)
           .catch(setError);
       }
@@ -62,6 +62,7 @@ export default function CreateTrackersStage(props: {
             <button className="button-primary">
               <input
                 accept={FILE_TYPES.join()}
+                multiple={true}
                 onChange={uploadConfig}
                 type="file"
               />

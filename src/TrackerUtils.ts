@@ -1,2 +1,2 @@
 export { default as exportToBlob } from './functions/exportToBlob';
-export { default as parseFromBlob } from './functions/parseFromBlob';
+export { default as parseFromBlobs } from './functions/parseFromBlobs';
