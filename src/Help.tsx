@@ -7,22 +7,30 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
 
   return (
     <aside>
-      <h3>
-        Tasker Tracker is a tool to generate{' '}
-        <a href="https://tasker.joaoapps.com/" rel="noreferrer" target="_blank">
-          Tasker
-        </a>{' '}
-        configs for tracking stuff on a Google Sheet.
-      </h3>
+      <h3>What's Tasker Tracker?</h3>
       <p>
+        <strong>
+          Tasker Tracker helps you track stuff with{' '}
+          <a
+            href="https://tasker.joaoapps.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Tasker
+          </a>{' '}
+          and Google Sheets.
+        </strong>{' '}
         For example, you might be interested in keeping a log of what you have
         for breakfast in the morning, along with when and where you have your
-        breakfast. With a Tasker Tracker config defined with a list of possible
-        breakfast foods as options, all you'd need to do is tap a single button
-        on your phone at breakfast, and Tasker handles the rest.
+        breakfast. With Tasker Tracker, all you'd need to do is tap a single
+        button on your phone at breakfast, and it all gets fed into pretty
+        charts.
       </p>
-      <h3>Tasker Tracker can track all sorts of stuff.</h3>
-      <p>Here are a few ideas:</p>
+      <h3>What can I do with it?</h3>
+      <p>
+        <strong>Tasker Tracker can track all sorts of stuff.</strong> Here are a
+        few ideas:
+      </p>
       <ul>
         <li>What you have for breakfast each day (Spam, Eggs, Ham)</li>
         <li>What mood you're in throughout the day (on a scale of 1 to 5)</li>
@@ -43,36 +51,53 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
         <li>When your dog uses the toilet</li>
       </ul>
       <p>
-        You track multiple categories of events in a config&mdash;just come up
-        with a list of options for each category as you enter them into this
-        config generator.
+        You track multiple categories at once&mdash;just come up with a list of
+        options for each category as you enter them into the tool.
       </p>
-      <h3>
-        To get started, you'll need to create a spreadsheet in Google Sheets.
-      </h3>
+      <h3>How do I get started?</h3>
+      <ol>
+        <li>
+          Make a copy of{' '}
+          <a
+            href="https://docs.google.com/spreadsheets/d/1FM4yns1OOVF2VmTaK00dLNSP6s5HavDLmp8yHKbOWF0/edit?usp=sharing"
+            rel="noreferrer"
+            target="_blank"
+          >
+            this spreadsheet
+          </a>{' '}
+          into your own Google Drive account. (This is where your stuff gets
+          logged!)
+        </li>
+        <li>Use this tool to create and download your Tasker config.</li>
+        <li>
+          Extract the Project XML files from the ZIP and{' '}
+          <a
+            href="https://www.reddit.com/r/tasker/comments/7g7694/how_to_import_a_file_into_tasker_a_quick_easy/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            import them into Tasker
+          </a>
+          .
+        </li>
+        <li>
+          <a
+            href="https://tasker.joaoapps.com/userguide/en/app_widgets.html"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Set up some Shortcuts in Tasker
+          </a>{' '}
+          (or any other way you'd like to trigger the tasks to run).
+        </li>
+      </ol>
       <p>
-        Tasker Tracker works by appending a row to a Google Sheet each time you
-        trigger a task. The easiest way to get started is to make a copy of{' '}
-        <a
-          href="https://docs.google.com/spreadsheets/d/1FM4yns1OOVF2VmTaK00dLNSP6s5HavDLmp8yHKbOWF0/edit?usp=sharing"
-          rel="noreferrer"
-          target="_blank"
-        >
-          this spreadsheet
-        </a>{' '}
-        into your own Google Drive account. (Remember to delete the sample data
-        rows before you start logging!)
-      </p>
-      <p>
-        If you want to do it yourself, start by creating an empty sheet with
-        four columns and one row for each category you want to track.
-        Optionally, create a second sheet (named <samp>Sheet2</samp>) that
-        combines the most recent items tracked into a single cell.
-      </p>
-      <h3>There's no limit to what you can do with the logged data!</h3>
-      <p>
-        The spreadsheet template above includes a few basic transformations and
-        charts to get you started with visualizations.
+        <strong>
+          There's no limit to what you can do with the logged data!
+        </strong>{' '}
+        The spreadsheet template includes a few basic transformations and charts
+        to get you started with visualizations, but don't that stop you from
+        creating more.
       </p>
       <button className="button-stub overlay-close" onClick={hideHelp}>
         Close

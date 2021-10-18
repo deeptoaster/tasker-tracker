@@ -15,7 +15,7 @@ export default function CreateTrackersStage(props: {
   const { setConfig, setError, setStageError, showHelp } = props;
 
   const createNewConfig = useCallback((): void => setConfig(CONFIG_DEFAULT), [
-    setConfig
+    setConfig,
   ]);
 
   const uploadConfig = useCallback(
@@ -96,7 +96,13 @@ export default function CreateTrackersStage(props: {
           </a>
         </li>
         <li>
-          <a href="https://fishbotwilleatyou.com/">fishbotwilleatyou</a>
+          <a
+            href="https://fishbotwilleatyou.com/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            fishbotwilleatyou
+          </a>
         </li>
       </ul>
     </div>
