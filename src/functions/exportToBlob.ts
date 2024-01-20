@@ -10,7 +10,7 @@ import {
   Tag,
   Tracker,
   VariableName
-} from '../TrackerDefs';
+} from '../defs';
 
 const TIME_ZONE_DEFAULT = 'America/Los_Angeles';
 

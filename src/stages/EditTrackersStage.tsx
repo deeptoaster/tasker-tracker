@@ -2,8 +2,9 @@ import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StageError, TRACKER_DEFAULT, Tracker } from '../TrackerDefs';
-import TrackerCard from '../TrackerCard';
+import { StageError, TRACKER_DEFAULT, Tracker } from '../defs';
+import Button from '../components/Button';
+import TrackerCard from '../components/TrackerCard';
 
 import './EditTrackersStage.css';
 
@@ -249,7 +250,7 @@ export default function EditTrackersStage(props: {
         )}
         <div className="tracker-card-container" key={null}>
           <article className="tracker-card preview">
-            <button className="button-add button-stub" onClick={addTracker} />
+            <Button onClick={addTracker} variant="add" />
           </article>
         </div>
       </TransitionGroup>

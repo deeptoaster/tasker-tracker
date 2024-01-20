@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
-import { StageError } from './TrackerDefs';
+import Button from './Button';
+import { StageError } from '../defs';
 
 export default function TrackerOptionRow(props: {
   onFocus: () => void;
@@ -30,7 +31,7 @@ export default function TrackerOptionRow(props: {
     <li>
       <input onChange={updateOption} ref={input} type="text" value={option} />
       {removeOption != null ? (
-        <button className="button-close button-stub" onClick={removeOption} />
+        <Button onClick={removeOption} variant="close" />
       ) : null}
     </li>
   );

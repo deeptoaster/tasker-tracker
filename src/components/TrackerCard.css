@@ -3,7 +3,11 @@
   width: 0;
   margin-left: 0;
   margin-right: 0;
-  transition: box-shadow 200ms, color 200ms, margin 300ms, text-shadow 200ms,
+  transition:
+    box-shadow 200ms,
+    color 200ms,
+    margin 300ms,
+    text-shadow 200ms,
     width 300ms;
 }
 .tracker-card-container,
@@ -11,8 +15,12 @@
   margin-left: 1em;
   margin-right: 1em;
   width: 14.5em;
-  transition: box-shadow 400ms 400ms, color 400ms 600ms, margin 400ms,
-    text-shadow 400ms 600ms, width 400ms;
+  transition:
+    box-shadow 400ms 400ms,
+    color 400ms 600ms,
+    margin 400ms,
+    text-shadow 400ms 600ms,
+    width 400ms;
 }
 .tracker-card-container {
   margin-bottom: 3em;

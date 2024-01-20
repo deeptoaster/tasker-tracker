@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import Button from './components/Button';
+import Link from './components/Link';
+
 import './Help.css';
 
 export default function Help(props: { hideHelp: () => void }): JSX.Element {
@@ -11,13 +14,9 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
       <p>
         <strong>
           Tasker Tracker helps you track stuff with{' '}
-          <a
-            href="https://tasker.joaoapps.com/"
-            rel="noreferrer"
-            target="_blank"
-          >
+          <Link external={true} href="https://tasker.joaoapps.com/">
             Tasker
-          </a>{' '}
+          </Link>{' '}
           and Google Sheets.
         </strong>{' '}
         For example, you might be interested in keeping a log of what you have
@@ -39,13 +38,12 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
           Sleeping, Socializing, Working)
         </li>
         <li>
-          <a
+          <Link
+            external={true}
             href="https://www.bbc.com/future/article/20190403-how-much-water-should-you-drink-a-day"
-            rel="noreferrer"
-            target="_blank"
           >
             How often you drink water
-          </a>
+          </Link>
         </li>
         <li>When you use the toilet</li>
         <li>When your dog uses the toilet</li>
@@ -58,36 +56,33 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
       <ol>
         <li>
           Make a copy of{' '}
-          <a
+          <Link
+            external={true}
             href="https://docs.google.com/spreadsheets/d/1FM4yns1OOVF2VmTaK00dLNSP6s5HavDLmp8yHKbOWF0/edit?usp=sharing"
-            rel="noreferrer"
-            target="_blank"
           >
             this spreadsheet
-          </a>{' '}
+          </Link>{' '}
           into your own Google Drive account. (This is where your stuff gets
           logged!)
         </li>
         <li>Use this tool to create and download your Tasker config.</li>
         <li>
           Extract the Project XML files from the ZIP and{' '}
-          <a
+          <Link
+            external={true}
             href="https://www.reddit.com/r/tasker/comments/7g7694/how_to_import_a_file_into_tasker_a_quick_easy/"
-            rel="noreferrer"
-            target="_blank"
           >
             import them into Tasker
-          </a>
+          </Link>
           .
         </li>
         <li>
-          <a
+          <Link
+            external={true}
             href="https://tasker.joaoapps.com/userguide/en/app_widgets.html"
-            rel="noreferrer"
-            target="_blank"
           >
             Set up some Shortcuts in Tasker
-          </a>{' '}
+          </Link>{' '}
           (or any other way you'd like to trigger the tasks to run).
         </li>
       </ol>
@@ -99,9 +94,9 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
         to get you started with visualizations, but don't that stop you from
         creating more.
       </p>
-      <button className="button-stub overlay-close" onClick={hideHelp}>
+      <Button onClick={hideHelp} variant="stub">
         Close
-      </button>
+      </Button>
     </aside>
   );
 }

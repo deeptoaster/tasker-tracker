@@ -2,11 +2,11 @@ import * as React from 'react';
 import {
   CSSTransition,
   SwitchTransition,
-  TransitionGroup
+  TransitionGroup,
 } from 'react-transition-group';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Config, Stage, StageError, Tracker } from './TrackerDefs';
+import { Config, Stage, StageError, Tracker } from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';
@@ -30,12 +30,12 @@ export default function App(): JSX.Element {
 
   const disableNavigation = useCallback(
     (): void => setNavigationDisabled(true),
-    []
+    [],
   );
 
   const enableNavigation = useCallback(
     (): void => setNavigationDisabled(false),
-    []
+    [],
   );
 
   const hideHelp = useCallback((): void => setHelpVisible(false), []);
@@ -46,22 +46,22 @@ export default function App(): JSX.Element {
         setConfig({ ...config, ...partialConfig });
       }
     },
-    [config]
+    [config],
   );
 
   const setClientId = useCallback(
     (clientId: string): void => setPartialConfig({ clientId }),
-    [setPartialConfig]
+    [setPartialConfig],
   );
 
   const setClientSecret = useCallback(
     (clientSecret: string): void => setPartialConfig({ clientSecret }),
-    [setPartialConfig]
+    [setPartialConfig],
   );
 
   const setTrackers = useCallback(
     (trackers: ReadonlyArray<Tracker>): void => setPartialConfig({ trackers }),
-    [setPartialConfig]
+    [setPartialConfig],
   );
 
   const showHelp = useCallback((): void => setHelpVisible(true), []);
@@ -78,7 +78,7 @@ export default function App(): JSX.Element {
 
       errorTimeout.current = window.setTimeout(
         () => setError(null),
-        ERROR_DURATION
+        ERROR_DURATION,
       );
     }
   }, [error]);
@@ -104,7 +104,7 @@ export default function App(): JSX.Element {
             onExiting={disableNavigation}
             timeout={{
               enter: 1200,
-              exit: 300
+              exit: 300,
             }}
           >
             {config == null ? (

@@ -15,14 +15,18 @@
 .stage-exit-active .create-card-option + .create-card-option::before {
   top: 50%;
   bottom: 50%;
-  transition: top 200ms, bottom 200ms;
+  transition:
+    top 200ms,
+    bottom 200ms;
 }
 .create-card-option + .create-card-option::before,
 .stage-appear-active .create-card-option + .create-card-option::before,
 .stage-enter-active .create-card-option + .create-card-option::before {
   top: 1em;
   bottom: 1em;
-  transition: top 400ms 800ms, bottom 400ms 800ms;
+  transition:
+    top 400ms 800ms,
+    bottom 400ms 800ms;
 }
 .create-card-option + .create-card-option::before {
   content: '';

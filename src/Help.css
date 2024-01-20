@@ -1,8 +1,3 @@
-.overlay-close {
-  display: block;
-  float: right;
-  margin-bottom: 2em;
-}
 aside.overlay-enter,
 aside.overlay-exit-active {
   background-color: transparent;
@@ -22,7 +17,9 @@ aside {
   z-index: 1;
   overflow: auto;
   padding: 2em 20%;
-  transition: background-color 300ms, color 300ms;
+  transition:
+    background-color 300ms,
+    color 300ms;
 }
 aside.overlay-enter a,
 aside.overlay-enter-active,
@@ -30,8 +27,16 @@ a aside.overlay-enter h2,
 aside.overlay-enter-active h2 {
   transition: color 300ms;
 }
+aside button {
+  display: block;
+  float: right;
+  margin-bottom: 2em;
+}
 aside.overlay-enter.overlay-enter button,
 aside.overlay-enter-active.overlay-enter-active button,
 aside.overlay-exit-active.overlay-exit-active button {
-  transition: background-color 3000ms, box-shadow 3000ms, color 3000ms;
+  transition:
+    background-color 3000ms,
+    box-shadow 3000ms,
+    color 3000ms;
 }

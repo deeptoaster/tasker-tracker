@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { MouseEvent, useCallback, useMemo, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
-import * as TrackerUtils from './TrackerUtils';
-import { Config, Stage, StageError } from './TrackerDefs';
+import * as TrackerUtils from './utils';
+import { Config, Stage, StageError } from './defs';
+import Button from './components/Button';
 
 const DOWNLOAD_NAME = 'tracker.zip';
 
@@ -27,7 +28,7 @@ export default function Footer(props: {
     setStage,
     showHelp,
     stage,
-    stageError
+    stageError,
   } = props;
 
   const [downloadBlob, setDownloadBlob] = useState<Blob | null>(null);
@@ -43,7 +44,7 @@ export default function Footer(props: {
   const downloadUrl = useMemo(
     (): string | null =>
       downloadBlob != null ? window.URL.createObjectURL(downloadBlob) : null,
-    [downloadBlob]
+    [downloadBlob],
   );
 
   const handleDownloadClick = useCallback(
@@ -54,7 +55,7 @@ export default function Footer(props: {
         event.preventDefault();
       }
     },
-    [downloadBlob]
+    [downloadBlob],
   );
 
   const next = useCallback((): void => {
@@ -68,10 +69,10 @@ export default function Footer(props: {
     }
   }, [setError, setStage, stage, stageError]);
 
-  React.useEffect((): void => {
+  useEffect((): void => {
     if (config != null && stage === Stage.DOWNLOAD) {
       TrackerUtils.exportToBlob(config).then((blob: Blob): void =>
-        setDownloadBlob(blob)
+        setDownloadBlob(blob),
       );
     } else {
       setDownloadBlob(null);
@@ -89,38 +90,35 @@ export default function Footer(props: {
         <CSSTransition classNames="stage" key="pager" timeout={300}>
           <footer>
             <div className="pull-left">
-              <button onClick={showHelp}>Show Help</button>
-              <a
-                className="button"
+              <Button onClick={showHelp}>Show Help</Button>
+              <Button
+                external={true}
                 href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
-                rel="noreferrer"
-                target="_blank"
               >
                 Buy Me a Beer
-              </a>
+              </Button>
             </div>
             <div className="pull-right">
-              <button onClick={back}>
+              <Button onClick={back}>
                 {stage === 0 ? 'Start Over' : 'Back'}
-              </button>
+              </Button>
               {downloadUrl != null ? (
-                <a
-                  className="button button-primary"
+                <Button
                   download={DOWNLOAD_NAME}
+                  external={true}
                   href={downloadUrl}
                   onClick={handleDownloadClick}
-                  rel="noreferrer"
-                  target="_blank"
+                  variant="primary"
                 >
                   Download
-                </a>
+                </Button>
               ) : (
-                <button
-                  className="button-primary"
+                <Button
                   onClick={!navigationDisabled ? next : undefined}
+                  variant="primary"
                 >
                   Next
-                </button>
+                </Button>
               )}
             </div>
           </footer>

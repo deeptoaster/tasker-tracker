@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StageError, Tracker } from '../TrackerDefs';
-import SpreadsheetRow from '../SpreadsheetRow';
+import { StageError, Tracker } from '../defs';
+import SpreadsheetRow from '../components/SpreadsheetRow';
 
 import './SpreadsheetSettingsStage.css';
 
@@ -143,7 +143,7 @@ export default function SpreadsheetSettingsStage(props: {
                   focused &&
                   (stageError?.source === 'sheetId' ||
                     stageError?.source === 'sheetName') &&
-                    stageError.trackerIndex === trackerIndex
+                  stageError.trackerIndex === trackerIndex
                     ? stageError
                     : null
                 }

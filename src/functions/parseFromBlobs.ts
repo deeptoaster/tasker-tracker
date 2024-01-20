@@ -9,7 +9,7 @@ import {
   Tag,
   Tracker,
   VariableName
-} from '../TrackerDefs';
+} from '../defs';
 
 const TASK_APPEND_REGEX = new RegExp(
   `^${TASK_APPEND_PREFIX}([A-Z]\\w+[\\da-z])$`
@@ -103,8 +103,10 @@ function parseVariable(variableNode: Element): Variable | null {
 function getOptionsAndVariables(text: string): ParsedObjects {
   const options: Array<Option> = [];
   const variables: { [name: string]: string } = {};
-  const taskerData = new DOMParser().parseFromString(text, FILE_TYPE_DEFAULT)
-    .firstChild;
+  const taskerData = new DOMParser().parseFromString(
+    text,
+    FILE_TYPE_DEFAULT
+  ).firstChild;
 
   if (taskerData != null) {
     taskerData.childNodes.forEach((node: Node) => {
@@ -137,125 +139,116 @@ function getOptionsAndVariables(text: string): ParsedObjects {
 
 export default function parseFromBlobs(files: FileList): Promise<Config> {
   return Promise.all(
-    Array.from(files).map(
-      (file: File): Promise<Array<ParsedObjects>> => {
-        if (!FILE_TYPES.includes(file.type)) {
-          throw new Error(
-            'Config must be in Tasker XML format or compressed as a ZIP.'
-          );
-        }
-
-        return JSZip.loadAsync(file)
-          .then(
-            (zip: JSZip): Promise<Array<ParsedObjects>> =>
-              Promise.all(
-                Object.values(zip.files).map(
-                  (file: JSZipObject): Promise<ParsedObjects> =>
-                    file.async('string').then(getOptionsAndVariables)
-                )
-              )
-          )
-          .catch(
-            (): Promise<Array<ParsedObjects>> =>
-              file
-                .text()
-                .then(getOptionsAndVariables)
-                .then(Array.of)
-          );
-      }
-    )
-  ).then(
-    (allParsedObjects: Array<Array<ParsedObjects>>): Config => {
-      const { options, variables } = ([] as Array<ParsedObjects>)
-        .concat(...allParsedObjects)
-        .reduce(
-          (
-            { options, variables }: ParsedObjects,
-            parsedObjects: ParsedObjects
-          ): ParsedObjects => ({
-            options: options.concat(parsedObjects.options),
-            variables: Object.assign(variables, parsedObjects.variables)
-          }),
-          { options: [], variables: {} }
+    Array.from(files).map((file: File): Promise<Array<ParsedObjects>> => {
+      if (!FILE_TYPES.includes(file.type)) {
+        throw new Error(
+          'Config must be in Tasker XML format or compressed as a ZIP.'
         );
+      }
 
-      const config: ConfigBuilder = {};
+      return JSZip.loadAsync(file)
+        .then(
+          (zip: JSZip): Promise<Array<ParsedObjects>> =>
+            Promise.all(
+              Object.values(zip.files).map(
+                (file: JSZipObject): Promise<ParsedObjects> =>
+                  file.async('string').then(getOptionsAndVariables)
+              )
+            )
+        )
+        .catch(
+          (): Promise<Array<ParsedObjects>> =>
+            file.text().then(getOptionsAndVariables).then(Array.of)
+        );
+    })
+  ).then((allParsedObjects: Array<Array<ParsedObjects>>): Config => {
+    const { options, variables } = ([] as Array<ParsedObjects>)
+      .concat(...allParsedObjects)
+      .reduce(
+        (
+          { options, variables }: ParsedObjects,
+          parsedObjects: ParsedObjects
+        ): ParsedObjects => ({
+          options: options.concat(parsedObjects.options),
+          variables: Object.assign(variables, parsedObjects.variables)
+        }),
+        { options: [], variables: {} }
+      );
 
-      const trackers: ReadonlyArray<Tracker> = Object.values(
-        options.reduce(
+    const config: ConfigBuilder = {};
+
+    const trackers: ReadonlyArray<Tracker> = Object.values(
+      options.reduce(
+        (
+          trackers: { readonly [title: string]: Partial<Tracker> },
+          option: Option
+        ): { readonly [title: string]: Partial<Tracker> } => ({
+          ...trackers,
+          [option.trackerTitle]: {
+            ...trackers[option.trackerTitle],
+            options: [
+              ...(option.trackerTitle in trackers
+                ? trackers[option.trackerTitle].options ?? []
+                : []),
+              option.option
+            ]
+          }
+        }),
+        Object.entries(variables).reduce(
           (
             trackers: { readonly [title: string]: Partial<Tracker> },
-            option: Option
-          ): { readonly [title: string]: Partial<Tracker> } => ({
-            ...trackers,
-            [option.trackerTitle]: {
-              ...trackers[option.trackerTitle],
-              options: [
-                ...(option.trackerTitle in trackers
-                  ? trackers[option.trackerTitle].options ?? []
-                  : []),
-                option.option
-              ]
-            }
-          }),
-          Object.entries(variables).reduce(
-            (
-              trackers: { readonly [title: string]: Partial<Tracker> },
-              [name, value]: [string, string]
-            ): { readonly [title: string]: Partial<Tracker> } =>
-              name.startsWith(VariableName.SHEET_ID)
-                ? {
-                    ...trackers,
-                    [name.slice(VariableName.SHEET_ID.length)]: {
-                      ...trackers[name.slice(VariableName.SHEET_ID.length)],
-                      sheetId: value,
-                      title: name.slice(VariableName.SHEET_ID.length)
-                    }
+            [name, value]: [string, string]
+          ): { readonly [title: string]: Partial<Tracker> } =>
+            name.startsWith(VariableName.SHEET_ID)
+              ? {
+                  ...trackers,
+                  [name.slice(VariableName.SHEET_ID.length)]: {
+                    ...trackers[name.slice(VariableName.SHEET_ID.length)],
+                    sheetId: value,
+                    title: name.slice(VariableName.SHEET_ID.length)
                   }
-                : name.startsWith(VariableName.SHEET_NAME)
-                ? {
-                    ...trackers,
-                    [name.slice(VariableName.SHEET_NAME.length)]: {
-                      ...trackers[name.slice(VariableName.SHEET_NAME.length)],
-                      sheetName: value,
-                      title: name.slice(VariableName.SHEET_NAME.length)
-                    }
+                }
+              : name.startsWith(VariableName.SHEET_NAME)
+              ? {
+                  ...trackers,
+                  [name.slice(VariableName.SHEET_NAME.length)]: {
+                    ...trackers[name.slice(VariableName.SHEET_NAME.length)],
+                    sheetName: value,
+                    title: name.slice(VariableName.SHEET_NAME.length)
                   }
-                : trackers,
-            {}
-          )
+                }
+              : trackers,
+          {}
         )
-      ).filter(
-        (tracker: Partial<Tracker>): boolean =>
-          tracker.options != null &&
-          tracker.sheetId != null &&
-          tracker.sheetName != null &&
-          tracker.title != null
-      ) as ReadonlyArray<Tracker>;
+      )
+    ).filter(
+      (tracker: Partial<Tracker>): boolean =>
+        tracker.options != null &&
+        tracker.sheetId != null &&
+        tracker.sheetName != null &&
+        tracker.title != null
+    ) as ReadonlyArray<Tracker>;
 
-      if (trackers.length !== 0) {
-        config.trackers = trackers;
-      }
-
-      if (VariableName.CLIENT_ID in variables) {
-        config.clientId = variables[VariableName.CLIENT_ID];
-      }
-
-      if (VariableName.CLIENT_SECRET in variables) {
-        config.clientSecret = variables[VariableName.CLIENT_SECRET];
-      }
-
-      if (
-        config.clientId != null &&
-        config.clientSecret != null &&
-        config.trackers != null
-      ) {
-        return config as Config;
-      } else {
-        throw new Error(
-          'Invalid or incomplete Tasker Tracker config uploaded.'
-        );
-      }
+    if (trackers.length !== 0) {
+      config.trackers = trackers;
     }
-  );
+
+    if (VariableName.CLIENT_ID in variables) {
+      config.clientId = variables[VariableName.CLIENT_ID];
+    }
+
+    if (VariableName.CLIENT_SECRET in variables) {
+      config.clientSecret = variables[VariableName.CLIENT_SECRET];
+    }
+
+    if (
+      config.clientId != null &&
+      config.clientSecret != null &&
+      config.trackers != null
+    ) {
+      return config as Config;
+    } else {
+      throw new Error('Invalid or incomplete Tasker Tracker config uploaded.');
+    }
+  });
 }

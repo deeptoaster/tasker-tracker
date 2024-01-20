@@ -1,8 +1,10 @@
+import { MouseEvent, ReactNode } from 'react';
+
 export const TRACKER_DEFAULT: Tracker = {
   options: [''],
   sheetId: '',
   sheetName: 'Sheet1',
-  title: ''
+  title: '',
 };
 
 export const CONFIG_DEFAULT: Config = {
@@ -12,9 +14,9 @@ export const CONFIG_DEFAULT: Config = {
     {
       ...TRACKER_DEFAULT,
       options: ['Spam', 'Eggs', 'Ham'],
-      title: 'Breakfast'
-    }
-  ]
+      title: 'Breakfast',
+    },
+  ],
 };
 
 export const FILE_TYPE_DEFAULT: DOMParserSupportedType = 'application/xml';
@@ -25,7 +27,7 @@ export const TASK_APPEND_PREFIX = 'Append ';
 
 export enum Tag {
   TASK = 'Task',
-  VARIABLE = 'Variable'
+  VARIABLE = 'Variable',
 }
 
 export enum VariableName {
@@ -33,12 +35,23 @@ export enum VariableName {
   CLIENT_SECRET = 'ClientSecret',
   SHEET_ID = 'SheetId',
   SHEET_NAME = 'SheetName',
-  TIMEZONE = 'Timezone'
+  TIMEZONE = 'Timezone',
 }
 
 export const TAG_PREFIXES: { [tag in Tag]: string } = {
   [Tag.TASK]: 'task',
-  [Tag.VARIABLE]: 'vars'
+  [Tag.VARIABLE]: 'vars',
+};
+
+type ButtonClickableProps = {
+  readonly onClick: (event: MouseEvent) => void;
+};
+
+export type ClickableProps = CommonClickableProps &
+  (ButtonClickableProps | LinkClickableProps);
+
+type CommonClickableProps = {
+  readonly children?: ReactNode;
 };
 
 export type Config = {
@@ -47,12 +60,22 @@ export type Config = {
   readonly trackers: ReadonlyArray<Tracker>;
 };
 
+type LinkClickableProps = {
+  readonly download?: string;
+  readonly external?: boolean;
+  readonly href: string;
+  readonly onClick?: (event: MouseEvent) => void;
+};
+
+export type SpreadableClickableProps = CommonClickableProps &
+  Partial<ButtonClickableProps & LinkClickableProps>;
+
 export enum Stage {
   EDIT_TRACKERS,
   API_SETTINGS,
   SPREADSHEET_SETTINGS,
   DOWNLOAD,
-  length
+  length,
 }
 
 export class StageError extends Error {
@@ -61,21 +84,21 @@ export class StageError extends Error {
     message: string,
     focus: () => void,
     source: Exclude<keyof Tracker, 'options'>,
-    trackerIndex: number
+    trackerIndex: number,
   );
   public constructor(
     message: string,
     focus: () => void,
     source: 'options',
     trackerIndex: number,
-    optionIndex: number
+    optionIndex: number,
   );
   public constructor(
     message: string,
     public readonly focus: () => void,
     public readonly source: keyof Config | keyof Tracker,
     public readonly trackerIndex?: number,
-    public readonly optionIndex?: number
+    public readonly optionIndex?: number,
   ) {
     super(message);
     this.name = 'StageError';

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
-import { StageError, Tracker } from './TrackerDefs';
+import { StageError, Tracker } from '../defs';
+import Button from './Button';
 import TrackerOptionRow from './TrackerOptionRow';
 
 import './TrackerCard.css';
@@ -86,18 +87,14 @@ export default function TrackerCard(
             )
           )}
           <li className="preview" key={null}>
-            <button
-              className="button-add button-stub"
-              onClick={addTrackerOption}
-            />
+            <Button onClick={addTrackerOption} variant="add" />
           </li>
         </ul>
       </article>
-      <button
-        className={`button-close button-stub ${
-          removeTracker == null ? 'hidden' : ''
-        }`}
+      <Button
+        hidden={removeTracker == null}
         onClick={removeTracker ?? undefined}
+        variant="close"
       />
     </div>
   );

@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { StageError } from '../TrackerDefs';
+import Input from '../components/Input';
+import Link from '../components/Link';
+import { StageError } from '../defs';
 
 import './ApiSettingsStage.css';
 
@@ -19,7 +21,7 @@ export default function ApiSettingsStage(props: {
     setClientId,
     setClientSecret,
     setStageError,
-    showHelp
+    showHelp,
   } = props;
 
   const clientIdInput = useRef<HTMLInputElement>(null);
@@ -27,24 +29,12 @@ export default function ApiSettingsStage(props: {
 
   const focusClientId = useCallback(
     (): void => clientIdInput.current?.focus(),
-    []
+    [],
   );
 
   const focusClientSecret = useCallback(
     (): void => clientSecretInput.current?.focus(),
-    []
-  );
-
-  const updateClientSecret = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void =>
-      setClientSecret(event.currentTarget.value),
-    [setClientSecret]
-  );
-
-  const updateClientId = useCallback(
-    (event: ChangeEvent<HTMLInputElement>): void =>
-      setClientId(event.currentTarget.value),
-    [setClientId]
+    [],
   );
 
   useEffect((): void => {
@@ -53,7 +43,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client ID cannot be empty.',
           focusClientId,
-          'clientId'
+          'clientId',
         );
       }
 
@@ -61,7 +51,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client ID does not appear to be valid.',
           focusClientId,
-          'clientId'
+          'clientId',
         );
       }
 
@@ -69,7 +59,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client Secret cannot be empty.',
           focusClientSecret,
-          'clientSecret'
+          'clientSecret',
         );
       }
 
@@ -77,7 +67,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client Secret does not appear to be valid.',
           focusClientSecret,
-          'clientSecret'
+          'clientSecret',
         );
       }
 
@@ -97,47 +87,37 @@ export default function ApiSettingsStage(props: {
       <article className="api-card">
         <h3>API Settings</h3>
         <p>
-          Click{' '}
-          <button className="button-link" onClick={showHelp}>
-            Show Help
-          </button>{' '}
-          below to learn how to set up a spreadsheet.
+          Click <Link onClick={showHelp}>Show Help</Link> below to learn how to
+          set up a spreadsheet.
         </p>
         <p>
           Follow the first three steps of{' '}
-          <a href="https://forum.joaoapps.com/index.php?resources/add-a-row-of-data-to-a-google-spreadsheet-no-plugins.383/">
+          <Link
+            external={true}
+            href="https://forum.joaoapps.com/index.php?resources/add-a-row-of-data-to-a-google-spreadsheet-no-plugins.383/"
+          >
             this Tasker guide
-          </a>{' '}
+          </Link>{' '}
           and enter the <label htmlFor="api-client-id">Client ID</label> and{' '}
           <label htmlFor="api-client-secret">Client Secret</label> below. (Don't
           worry! This tool runs in your browser, so we can't read any of your
           data.)
         </p>
         <form>
-          <div className="form-control">
-            <label htmlFor="api-client-id">Client ID</label>
-            <div className="input-group">
-              <input
-                id="api-client-id"
-                onChange={updateClientId}
-                ref={clientIdInput}
-                type="text"
-                value={clientId}
-              />
-            </div>
-          </div>
-          <div className="form-control">
-            <label htmlFor="api-client-secret">Client Secret</label>
-            <div className="input-group">
-              <input
-                id="api-client-secret"
-                onChange={updateClientSecret}
-                ref={clientSecretInput}
-                type="text"
-                value={clientSecret}
-              />
-            </div>
-          </div>
+          <Input
+            id="api-client-id"
+            inputRef={clientIdInput}
+            label="Client ID"
+            onUpdate={setClientId}
+            value={clientId}
+          />
+          <Input
+            id="api-client-secret"
+            inputRef={clientSecretInput}
+            label="Client Secret"
+            onUpdate={setClientSecret}
+            value={clientSecret}
+          />
         </form>
       </article>
     </div>

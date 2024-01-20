@@ -1,0 +1,35 @@
+.overlay-enter a,
+.overlay-exit-active a,
+.stage-appear a,
+.stage-enter a,
+.stage-exit-active a {
+  color: transparent;
+  transition: color 200ms;
+}
+a,
+.overlay-enter-active a,
+.stage-appear-active a,
+.stage-enter-active a,
+.card-enter-active a,
+button.button-link.button-link,
+.overlay-enter-active button.button-link.button-link,
+.stage-appear-active button.button-link.button-link,
+.stage-enter-active button.button-link.button-link,
+.card-enter-active button.button-link.button-link {
+  color: #859fab;
+  text-decoration: none;
+  transition: color 400ms 600ms;
+}
+a:focus,
+a:hover,
+button.button-link:focus,
+button.button-link:hover {
+  text-decoration: underline;
+  outline: none;
+}
+button.button-link.button-link.button-link {
+  box-shadow: none;
+  padding: 0;
+  background-color: transparent;
+  text-shadow: inherit;
+}

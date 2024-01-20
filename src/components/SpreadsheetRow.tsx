@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
-import { StageError } from './TrackerDefs';
+import { StageError } from '../defs';
 
 export default function SpreadsheetRow(props: {
   onFocus: () => void;
