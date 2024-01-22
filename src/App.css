@@ -81,13 +81,8 @@ body {
   background-color: #e3f3fb;
   color: #505f66;
 }
-figure,
-form,
-h2,
-p {
-  margin: 1em 0;
-}
 figure {
+  margin: 2em 0 1em 0;
   text-align: center;
 }
 footer {
@@ -102,6 +97,11 @@ footer .button + button,
 footer button + .button,
 footer .button + .button {
   margin-left: 2em;
+}
+form,
+h2,
+p {
+  margin: 1em 0;
 }
 .overlay-enter h2,
 .overlay-exit-active h2,
