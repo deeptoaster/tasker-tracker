@@ -12,12 +12,8 @@ a.button:hover {
 .stage-exit-active.stage-exit-active.stage-exit-active .button,
 .stage-enter-done .card-enter button,
 .stage-enter-done .card-enter .button,
-.stage-enter-done
-  .card-exit-active.card-exit-active
-  button
-  .stage-enter-done
-  .card-exit-active.card-exit-active
-  .button {
+.stage-enter-done .card-exit-active.card-exit-active button,
+.stage-enter-done .card-exit-active.card-exit-active .button {
   box-shadow: none;
   background-color: transparent;
   color: transparent;

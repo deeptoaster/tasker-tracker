@@ -22,21 +22,23 @@ aside {
     color 300ms;
 }
 aside.overlay-enter a,
-aside.overlay-enter-active,
-a aside.overlay-enter h2,
+aside.overlay-enter-active a,
+aside.overlay-enter h2,
 aside.overlay-enter-active h2 {
   transition: color 300ms;
-}
-aside button {
-  display: block;
-  float: right;
-  margin-bottom: 2em;
 }
 aside.overlay-enter.overlay-enter button,
 aside.overlay-enter-active.overlay-enter-active button,
 aside.overlay-exit-active.overlay-exit-active button {
   transition:
-    background-color 3000ms,
-    box-shadow 3000ms,
-    color 3000ms;
+    background-color 300ms,
+    box-shadow 300ms,
+    color 300ms;
+}
+.modal-actions {
+  margin: 1em 0 2em 0;
+  text-align: right;
+}
+.modal-actions button {
+  margin-left: 2em;
 }

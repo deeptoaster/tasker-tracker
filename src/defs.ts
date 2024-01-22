@@ -4,7 +4,7 @@ export const TRACKER_DEFAULT: Tracker = {
   options: [''],
   sheetId: '',
   sheetName: 'Sheet1',
-  title: '',
+  title: ''
 };
 
 export const CONFIG_DEFAULT: Config = {
@@ -14,9 +14,9 @@ export const CONFIG_DEFAULT: Config = {
     {
       ...TRACKER_DEFAULT,
       options: ['Spam', 'Eggs', 'Ham'],
-      title: 'Breakfast',
-    },
-  ],
+      title: 'Breakfast'
+    }
+  ]
 };
 
 export const FILE_TYPE_DEFAULT: DOMParserSupportedType = 'application/xml';
@@ -24,10 +24,11 @@ export const FILE_TYPES = [FILE_TYPE_DEFAULT, 'application/zip', 'text/xml'];
 export const PROJECT_BASE = 'Base';
 export const SERVICE_PREFIX = 'TT';
 export const TASK_APPEND_PREFIX = 'Append ';
+export const TRANSITION_DURATION = { enter: 1200, exit: 300 };
 
 export enum Tag {
   TASK = 'Task',
-  VARIABLE = 'Variable',
+  VARIABLE = 'Variable'
 }
 
 export enum VariableName {
@@ -35,12 +36,12 @@ export enum VariableName {
   CLIENT_SECRET = 'ClientSecret',
   SHEET_ID = 'SheetId',
   SHEET_NAME = 'SheetName',
-  TIMEZONE = 'Timezone',
+  TIMEZONE = 'Timezone'
 }
 
 export const TAG_PREFIXES: { [tag in Tag]: string } = {
   [Tag.TASK]: 'task',
-  [Tag.VARIABLE]: 'vars',
+  [Tag.VARIABLE]: 'vars'
 };
 
 type ButtonClickableProps = {
@@ -75,7 +76,7 @@ export enum Stage {
   API_SETTINGS,
   SPREADSHEET_SETTINGS,
   DOWNLOAD,
-  length,
+  length
 }
 
 export class StageError extends Error {
@@ -84,21 +85,21 @@ export class StageError extends Error {
     message: string,
     focus: () => void,
     source: Exclude<keyof Tracker, 'options'>,
-    trackerIndex: number,
+    trackerIndex: number
   );
   public constructor(
     message: string,
     focus: () => void,
     source: 'options',
     trackerIndex: number,
-    optionIndex: number,
+    optionIndex: number
   );
   public constructor(
     message: string,
     public readonly focus: () => void,
     public readonly source: keyof Config | keyof Tracker,
     public readonly trackerIndex?: number,
-    public readonly optionIndex?: number,
+    public readonly optionIndex?: number
   ) {
     super(message);
     this.name = 'StageError';

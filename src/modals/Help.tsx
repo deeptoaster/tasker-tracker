@@ -1,15 +1,13 @@
 import * as React from 'react';
 
-import Button from './components/Button';
-import Link from './components/Link';
-
-import './Help.css';
+import Link from '../components/Link';
+import Modal from '../components/Modal';
 
 export default function Help(props: { hideHelp: () => void }): JSX.Element {
   const { hideHelp } = props;
 
   return (
-    <aside>
+    <Modal actions={[{ label: 'Close', onClick: hideHelp }]}>
       <h3>What's Tasker Tracker?</h3>
       <p>
         <strong>
@@ -94,9 +92,6 @@ export default function Help(props: { hideHelp: () => void }): JSX.Element {
         to get you started with visualizations, but don't that stop you from
         creating more.
       </p>
-      <Button onClick={hideHelp} variant="stub">
-        Close
-      </Button>
-    </aside>
+    </Modal>
   );
 }

@@ -2,7 +2,12 @@ import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StageError, TRACKER_DEFAULT, Tracker } from '../defs';
+import {
+  StageError,
+  TRACKER_DEFAULT,
+  TRANSITION_DURATION,
+  Tracker
+} from '../defs';
 import Button from '../components/Button';
 import TrackerCard from '../components/TrackerCard';
 
@@ -213,7 +218,7 @@ export default function EditTrackersStage(props: {
             <CSSTransition
               classNames="card"
               key={trackerIndex}
-              timeout={{ enter: 1200, exit: 300 }}
+              timeout={TRANSITION_DURATION}
             >
               <TrackerCard
                 {...tracker}

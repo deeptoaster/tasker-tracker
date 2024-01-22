@@ -3,7 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import * as TrackerUtils from './utils';
-import { Config, Stage, StageError } from './defs';
+import { Config, Stage, StageError, TRANSITION_DURATION } from './defs';
 import Button from './components/Button';
 
 const DOWNLOAD_NAME = 'tracker.zip';
@@ -28,7 +28,7 @@ export default function Footer(props: {
     setStage,
     showHelp,
     stage,
-    stageError,
+    stageError
   } = props;
 
   const [downloadBlob, setDownloadBlob] = useState<Blob | null>(null);
@@ -44,7 +44,7 @@ export default function Footer(props: {
   const downloadUrl = useMemo(
     (): string | null =>
       downloadBlob != null ? window.URL.createObjectURL(downloadBlob) : null,
-    [downloadBlob],
+    [downloadBlob]
   );
 
   const handleDownloadClick = useCallback(
@@ -55,7 +55,7 @@ export default function Footer(props: {
         event.preventDefault();
       }
     },
-    [downloadBlob],
+    [downloadBlob]
   );
 
   const next = useCallback((): void => {
@@ -72,7 +72,7 @@ export default function Footer(props: {
   useEffect((): void => {
     if (config != null && stage === Stage.DOWNLOAD) {
       TrackerUtils.exportToBlob(config).then((blob: Blob): void =>
-        setDownloadBlob(blob),
+        setDownloadBlob(blob)
       );
     } else {
       setDownloadBlob(null);
@@ -82,12 +82,20 @@ export default function Footer(props: {
   return (
     <TransitionGroup component={null}>
       {error != null ? (
-        <CSSTransition classNames="error" key="error" timeout={300}>
+        <CSSTransition
+          classNames="error"
+          key="error"
+          timeout={TRANSITION_DURATION.exit}
+        >
           <p className="error">{error.message}</p>
         </CSSTransition>
       ) : null}
       {config != null ? (
-        <CSSTransition classNames="stage" key="pager" timeout={300}>
+        <CSSTransition
+          classNames="stage"
+          key="pager"
+          timeout={TRANSITION_DURATION.exit}
+        >
           <footer>
             <div className="pull-left">
               <Button onClick={showHelp}>Show Help</Button>

@@ -2,17 +2,23 @@ import * as React from 'react';
 import {
   CSSTransition,
   SwitchTransition,
-  TransitionGroup,
+  TransitionGroup
 } from 'react-transition-group';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Config, Stage, StageError, Tracker } from './defs';
+import {
+  Config,
+  Stage,
+  StageError,
+  TRANSITION_DURATION,
+  Tracker
+} from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';
 import EditTrackersStage from './stages/EditTrackersStage';
 import Footer from './Footer';
-import Help from './Help';
+import Help from './modals/Help';
 import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
 
 import './App.css';
@@ -30,12 +36,12 @@ export default function App(): JSX.Element {
 
   const disableNavigation = useCallback(
     (): void => setNavigationDisabled(true),
-    [],
+    []
   );
 
   const enableNavigation = useCallback(
     (): void => setNavigationDisabled(false),
-    [],
+    []
   );
 
   const hideHelp = useCallback((): void => setHelpVisible(false), []);
@@ -46,22 +52,22 @@ export default function App(): JSX.Element {
         setConfig({ ...config, ...partialConfig });
       }
     },
-    [config],
+    [config]
   );
 
   const setClientId = useCallback(
     (clientId: string): void => setPartialConfig({ clientId }),
-    [setPartialConfig],
+    [setPartialConfig]
   );
 
   const setClientSecret = useCallback(
     (clientSecret: string): void => setPartialConfig({ clientSecret }),
-    [setPartialConfig],
+    [setPartialConfig]
   );
 
   const setTrackers = useCallback(
     (trackers: ReadonlyArray<Tracker>): void => setPartialConfig({ trackers }),
-    [setPartialConfig],
+    [setPartialConfig]
   );
 
   const showHelp = useCallback((): void => setHelpVisible(true), []);
@@ -78,7 +84,7 @@ export default function App(): JSX.Element {
 
       errorTimeout.current = window.setTimeout(
         () => setError(null),
-        ERROR_DURATION,
+        ERROR_DURATION
       );
     }
   }, [error]);
@@ -89,7 +95,10 @@ export default function App(): JSX.Element {
     <>
       <TransitionGroup component={null}>
         {helpVisible ? (
-          <CSSTransition classNames="overlay" timeout={300}>
+          <CSSTransition
+            classNames="overlay"
+            timeout={TRANSITION_DURATION.exit}
+          >
             <Help hideHelp={hideHelp} />
           </CSSTransition>
         ) : null}
@@ -102,10 +111,7 @@ export default function App(): JSX.Element {
             key={config == null ? null : stage}
             onEntered={enableNavigation}
             onExiting={disableNavigation}
-            timeout={{
-              enter: 1200,
-              exit: 300,
-            }}
+            timeout={TRANSITION_DURATION}
           >
             {config == null ? (
               <CreateTrackersStage
