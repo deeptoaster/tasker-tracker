@@ -1,5 +1,3 @@
-import { MouseEvent, ReactNode } from 'react';
-
 export const TRACKER_DEFAULT: Tracker = {
   options: [''],
   sheetId: '',
@@ -44,32 +42,11 @@ export const TAG_PREFIXES: { [tag in Tag]: string } = {
   [Tag.VARIABLE]: 'vars'
 };
 
-type ButtonClickableProps = {
-  readonly onClick: (event: MouseEvent) => void;
-};
-
-export type ClickableProps = CommonClickableProps &
-  (ButtonClickableProps | LinkClickableProps);
-
-type CommonClickableProps = {
-  readonly children?: ReactNode;
-};
-
 export type Config = {
   readonly clientId: string;
   readonly clientSecret: string;
   readonly trackers: ReadonlyArray<Tracker>;
 };
-
-type LinkClickableProps = {
-  readonly download?: string;
-  readonly external?: boolean;
-  readonly href: string;
-  readonly onClick?: (event: MouseEvent) => void;
-};
-
-export type SpreadableClickableProps = CommonClickableProps &
-  Partial<ButtonClickableProps & LinkClickableProps>;
 
 export enum Stage {
   EDIT_TRACKERS,

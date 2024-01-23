@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { Button } from 'squiffles-components';
 
 import * as TrackerUtils from './utils';
 import { Config, Stage, StageError, TRANSITION_DURATION } from './defs';
-import Button from './components/Button';
 
 const DOWNLOAD_NAME = 'tracker.zip';
 

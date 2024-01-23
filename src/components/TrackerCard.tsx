@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+import { Button } from 'squiffles-components';
 
 import { StageError, Tracker } from '../defs';
-import Button from './Button';
 import TrackerOptionRow from './TrackerOptionRow';
 
 import './TrackerCard.css';

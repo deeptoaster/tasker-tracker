@@ -1,6 +1,7 @@
 const ESLintPlugin = require('eslint-webpack-plugin');
+const path = require('path');
 
-module.exports = env => ({
+module.exports = (env) => ({
   devServer: {
     static: __dirname
   },
@@ -17,7 +18,10 @@ module.exports = env => ({
         type: 'asset/resource'
       },
       {
-        exclude: /node_modules/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules/squiffles-components')
+        ],
         test: /\.tsx?$/,
         use: {
           loader: 'babel-loader',
@@ -44,11 +48,11 @@ module.exports = env => ({
   },
   plugins: [
     new ESLintPlugin({
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.ts', '.tsx']
     })
   ],
   resolve: {
-    extensions: ['.js', '.json', '.ts', '.tsx']
+    extensions: ['.js', '.ts', '.tsx']
   },
   target: env.production ? 'browserslist' : 'web',
   watch: false

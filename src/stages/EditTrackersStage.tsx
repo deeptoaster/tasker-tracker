@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback, useEffect, useState } from 'react';
+import { Button } from 'squiffles-components';
 
 import {
   StageError,
@@ -8,7 +9,6 @@ import {
   TRANSITION_DURATION,
   Tracker
 } from '../defs';
-import Button from '../components/Button';
 import TrackerCard from '../components/TrackerCard';
 
 import './EditTrackersStage.css';

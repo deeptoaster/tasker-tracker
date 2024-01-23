@@ -33,8 +33,8 @@
   position: absolute;
   left: -0.05em;
   width: 0;
-  border-right: 0.05em solid #fff;
-  border-left: 0.05em solid #a6b8c1;
+  border-right: 0.05em solid var(--color-specular);
+  border-left: 0.05em solid var(--color-shadow);
   text-align: center;
 }
 .create-card-option + .create-card-option::after {
@@ -43,7 +43,7 @@
   top: 50%;
   left: -0.8em;
   margin-top: -0.75em;
-  background-color: #e3f3fb;
+  background-color: var(--color-background);
   font-family: 'Playfair Display', sans-serif;
 }
 .create-card-links {
@@ -58,5 +58,5 @@
 .create-card-links li + li::before {
   content: '\b7';
   padding: 0 1em;
-  color: #859fab;
+  color: var(--color-text-link);
 }

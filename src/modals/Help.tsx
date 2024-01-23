@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import Link from '../components/Link';
-import Modal from '../components/Modal';
+import { Link, Modal } from 'squiffles-components';
 
 export default function Help(props: { hideHelp: () => void }): JSX.Element {
   const { hideHelp } = props;

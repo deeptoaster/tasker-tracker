@@ -1,10 +1,9 @@
 import * as React from 'react';
+import { Button, Link } from 'squiffles-components';
 import { ChangeEvent, useCallback, useEffect } from 'react';
 
 import * as TrackerUtils from '../utils';
 import { CONFIG_DEFAULT, Config, FILE_TYPES } from '../defs';
-import Button from '../components/Button';
-import Link from '../components/Link';
 
 import './CreateTrackersStage.css';
 

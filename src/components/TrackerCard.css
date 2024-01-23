@@ -60,15 +60,8 @@
 .tracker-card li::before,
 .stage-appear-active .tracker-card li::before,
 .stage-enter-active .tracker-card li::before,
-.stage-enter-done .tracker-card li::before,
-.tracker-card-container button,
-.tracker-card-container button:active:active,
-.stage-appear-active.stage-appear-active .tracker-card-container button,
-.stage-enter-active.stage-enter-active .tracker-card-container button,
-.stage-enter-done
-  .tracker-card-container.card-enter-active.card-enter-active
-  button {
-  color: #859fab;
+.stage-enter-done .tracker-card li::before {
+  color: var(--color-text-button-symbolic);
 }
 .tracker-card li::before,
 .stage-appear-active .tracker-card li::before,
@@ -98,7 +91,6 @@
 .tracker-card-container button:focus,
 .tracker-card-container button:hover {
   z-index: 1;
-  color: #96acb6;
 }
 .tracker-card-container li button.button-close {
   position: absolute;

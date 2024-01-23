@@ -1,8 +1,7 @@
 import * as React from 'react';
+import { Input, Link } from 'squiffles-components';
 import { useCallback, useEffect, useRef } from 'react';
 
-import Input from '../components/Input';
-import Link from '../components/Link';
 import { StageError } from '../defs';
 
 import './ApiSettingsStage.css';
@@ -21,7 +20,7 @@ export default function ApiSettingsStage(props: {
     setClientId,
     setClientSecret,
     setStageError,
-    showHelp,
+    showHelp
   } = props;
 
   const clientIdInput = useRef<HTMLInputElement>(null);
@@ -29,12 +28,12 @@ export default function ApiSettingsStage(props: {
 
   const focusClientId = useCallback(
     (): void => clientIdInput.current?.focus(),
-    [],
+    []
   );
 
   const focusClientSecret = useCallback(
     (): void => clientSecretInput.current?.focus(),
-    [],
+    []
   );
 
   useEffect((): void => {
@@ -43,7 +42,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client ID cannot be empty.',
           focusClientId,
-          'clientId',
+          'clientId'
         );
       }
 
@@ -51,7 +50,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client ID does not appear to be valid.',
           focusClientId,
-          'clientId',
+          'clientId'
         );
       }
 
@@ -59,7 +58,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client Secret cannot be empty.',
           focusClientSecret,
-          'clientSecret',
+          'clientSecret'
         );
       }
 
@@ -67,7 +66,7 @@ export default function ApiSettingsStage(props: {
         throw new StageError(
           'Client Secret does not appear to be valid.',
           focusClientSecret,
-          'clientSecret',
+          'clientSecret'
         );
       }
 

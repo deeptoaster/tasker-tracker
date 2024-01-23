@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+import { Button } from 'squiffles-components';
 
-import Button from './Button';
 import { StageError } from '../defs';
 
 export default function TrackerOptionRow(props: {
