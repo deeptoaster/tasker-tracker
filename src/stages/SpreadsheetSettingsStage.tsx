@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Card } from 'squiffles-components';
 
-import { StageError, Tracker } from '../defs';
 import SpreadsheetRow from '../components/SpreadsheetRow';
+import { StageError } from '../defs';
+import type { Tracker } from '../defs';
 
 export default function SpreadsheetSettingsStage(props: {
   setStageError: (stageError: StageError | null) => void;

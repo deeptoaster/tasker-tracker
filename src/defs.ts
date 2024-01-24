@@ -57,12 +57,14 @@ export enum Stage {
 
 export class StageError extends Error {
   public constructor(message: string, focus: () => void, source: keyof Config);
+
   public constructor(
     message: string,
     focus: () => void,
     source: Exclude<keyof Tracker, 'options'>,
     trackerIndex: number
   );
+
   public constructor(
     message: string,
     focus: () => void,
@@ -70,6 +72,7 @@ export class StageError extends Error {
     trackerIndex: number,
     optionIndex: number
   );
+
   public constructor(
     message: string,
     public readonly focus: () => void,

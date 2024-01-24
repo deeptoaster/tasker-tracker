@@ -9,9 +9,6 @@
   overflow: visible;
   margin-bottom: 2.5em;
 }
-.tracker-card-container li.preview::before {
-  display: none;
-}
 .tracker-card-container.preview article button {
   width: 14.5em;
   height: 100%;

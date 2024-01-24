@@ -3,13 +3,14 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { TRANSITION_DURATION } from 'squiffles-components';
 
-import { Config, Stage, StageError, Tracker } from './defs';
+import type { Config, StageError, Tracker } from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';
 import EditTrackersStage from './stages/EditTrackersStage';
 import Help from './modals/Help';
 import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
+import { Stage } from './defs';
 import TrackerFooter from './TrackerFooter';
 
 import './App.css';

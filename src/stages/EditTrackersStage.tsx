@@ -3,7 +3,8 @@ import { Button, Card, TRANSITION_DURATION } from 'squiffles-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback, useEffect, useState } from 'react';
 
-import { StageError, TRACKER_DEFAULT, Tracker } from '../defs';
+import { StageError, TRACKER_DEFAULT } from '../defs';
+import type { Tracker } from '../defs';
 import TrackerCard from '../components/TrackerCard';
 
 import './EditTrackersStage.css';
@@ -135,7 +136,7 @@ export default function EditTrackersStage(props: {
       for (
         let trackerIndex = 0;
         trackerIndex < trackers.length;
-        trackerIndex++
+        trackerIndex += 1
       ) {
         const { options } = trackers[trackerIndex];
 
@@ -172,7 +173,7 @@ export default function EditTrackersStage(props: {
             for (
               let otherOptionIndex = 0;
               otherOptionIndex < optionIndex;
-              otherOptionIndex++
+              otherOptionIndex += 1
             ) {
               if (options[otherOptionIndex] === option) {
                 return true;

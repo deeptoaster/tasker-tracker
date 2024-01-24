@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Button, Footer } from 'squiffles-components';
-import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { MouseEvent } from 'react';
 
 import * as TrackerUtils from './utils';
-import { Config, Stage, StageError } from './defs';
+import type { Config, StageError } from './defs';
+import { Stage } from './defs';
 
 const DOWNLOAD_NAME = 'tracker.zip';
 

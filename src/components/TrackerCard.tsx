@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Button, Card } from 'squiffles-components';
-import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import type { ChangeEvent } from 'react';
 
-import { StageError, Tracker } from '../defs';
+import type { StageError, Tracker } from '../defs';
 import TrackerOptionRow from './TrackerOptionRow';
 
 import './TrackerCard.css';
@@ -74,8 +75,8 @@ export default function TrackerCard(
                     ? (): void => removeTrackerOption(optionIndex)
                     : null
                 }
-                setOption={(option: string): void =>
-                  setTrackerOption(optionIndex, option)
+                setOption={(newOption: string): void =>
+                  setTrackerOption(optionIndex, newOption)
                 }
                 stageError={
                   stageError?.source === 'options' &&

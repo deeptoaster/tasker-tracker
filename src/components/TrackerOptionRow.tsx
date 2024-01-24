@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Button } from 'squiffles-components';
+import type { ChangeEvent } from 'react';
 
-import { StageError } from '../defs';
+import type { StageError } from '../defs';
 
 export default function TrackerOptionRow(props: {
   onFocus: () => void;

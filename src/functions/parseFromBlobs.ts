@@ -1,13 +1,13 @@
-import JSZip, { JSZipObject } from 'jszip';
+import JSZip from 'jszip';
+import type { JSZipObject } from 'jszip';
 
+import type { Config, Tracker } from '../defs';
 import {
-  Config,
   FILE_TYPES,
   FILE_TYPE_DEFAULT,
   SERVICE_PREFIX,
   TASK_APPEND_PREFIX,
   Tag,
-  Tracker,
   VariableName
 } from '../defs';
 
@@ -24,14 +24,16 @@ type Option = {
   trackerTitle: string;
 };
 
+type ParsedObjects = {
+  options: Array<Option>;
+  variables: Record<string, string>;
+};
+
+type Trackers = Readonly<Record<string, Partial<Tracker>>>;
+
 type Variable = {
   name: string;
   value: string;
-};
-
-type ParsedObjects = {
-  options: Array<Option>;
-  variables: { [name: string]: string };
 };
 
 function parseTask(optionNode: Element): Option | null {
@@ -51,7 +53,7 @@ function parseTask(optionNode: Element): Option | null {
             );
 
             if (matches != null) {
-              option.trackerTitle = matches[1];
+              [, option.trackerTitle] = matches;
             }
           }
         });
@@ -63,6 +65,7 @@ function parseTask(optionNode: Element): Option | null {
         }
 
         break;
+      // no default
     }
   });
 
@@ -92,6 +95,7 @@ function parseVariable(variableNode: Element): Variable | null {
         }
 
         break;
+      // no default
     }
   });
 
@@ -102,7 +106,7 @@ function parseVariable(variableNode: Element): Variable | null {
 
 function getOptionsAndVariables(text: string): ParsedObjects {
   const options: Array<Option> = [];
-  const variables: { [name: string]: string } = {};
+  const variables: Record<string, string> = {};
   const taskerData = new DOMParser().parseFromString(
     text,
     FILE_TYPE_DEFAULT
@@ -110,10 +114,10 @@ function getOptionsAndVariables(text: string): ParsedObjects {
 
   if (taskerData != null) {
     taskerData.childNodes.forEach((node: Node) => {
-      let option: Option | null;
-      let variable: Variable | null;
+      let option: Option | null = null;
+      let variable: Variable | null = null;
 
-      switch (node.nodeName) {
+      switch (node.nodeName as Tag) {
         case Tag.TASK:
           option = parseTask(node as Element);
 
@@ -130,6 +134,7 @@ function getOptionsAndVariables(text: string): ParsedObjects {
           }
 
           break;
+        // no default
       }
     });
   }
@@ -137,9 +142,9 @@ function getOptionsAndVariables(text: string): ParsedObjects {
   return { options, variables };
 }
 
-export default function parseFromBlobs(files: FileList): Promise<Config> {
+export default async function parseFromBlobs(files: FileList): Promise<Config> {
   return Promise.all(
-    Array.from(files).map((file: File): Promise<Array<ParsedObjects>> => {
+    Array.from(files).map(async (file: File): Promise<Array<ParsedObjects>> => {
       if (!FILE_TYPES.includes(file.type)) {
         throw new Error(
           'Config must be in Tasker XML format or compressed as a ZIP.'
@@ -148,16 +153,16 @@ export default function parseFromBlobs(files: FileList): Promise<Config> {
 
       return JSZip.loadAsync(file)
         .then(
-          (zip: JSZip): Promise<Array<ParsedObjects>> =>
+          async (zip: JSZip): Promise<Array<ParsedObjects>> =>
             Promise.all(
               Object.values(zip.files).map(
-                (file: JSZipObject): Promise<ParsedObjects> =>
-                  file.async('string').then(getOptionsAndVariables)
+                async (subfile: JSZipObject): Promise<ParsedObjects> =>
+                  subfile.async('string').then(getOptionsAndVariables)
               )
             )
         )
         .catch(
-          (): Promise<Array<ParsedObjects>> =>
+          async (): Promise<Array<ParsedObjects>> =>
             file.text().then(getOptionsAndVariables).then(Array.of)
         );
     })
@@ -179,10 +184,7 @@ export default function parseFromBlobs(files: FileList): Promise<Config> {
 
     const trackers: ReadonlyArray<Tracker> = Object.values(
       options.reduce(
-        (
-          trackers: { readonly [title: string]: Partial<Tracker> },
-          option: Option
-        ): { readonly [title: string]: Partial<Tracker> } => ({
+        (trackers: Trackers, option: Option): Trackers => ({
           ...trackers,
           [option.trackerTitle]: {
             ...trackers[option.trackerTitle],
@@ -195,10 +197,7 @@ export default function parseFromBlobs(files: FileList): Promise<Config> {
           }
         }),
         Object.entries(variables).reduce(
-          (
-            trackers: { readonly [title: string]: Partial<Tracker> },
-            [name, value]: [string, string]
-          ): { readonly [title: string]: Partial<Tracker> } =>
+          (trackers: Trackers, [name, value]: [string, string]): Trackers =>
             name.startsWith(VariableName.SHEET_ID)
               ? {
                   ...trackers,
@@ -209,15 +208,15 @@ export default function parseFromBlobs(files: FileList): Promise<Config> {
                   }
                 }
               : name.startsWith(VariableName.SHEET_NAME)
-              ? {
-                  ...trackers,
-                  [name.slice(VariableName.SHEET_NAME.length)]: {
-                    ...trackers[name.slice(VariableName.SHEET_NAME.length)],
-                    sheetName: value,
-                    title: name.slice(VariableName.SHEET_NAME.length)
+                ? {
+                    ...trackers,
+                    [name.slice(VariableName.SHEET_NAME.length)]: {
+                      ...trackers[name.slice(VariableName.SHEET_NAME.length)],
+                      sheetName: value,
+                      title: name.slice(VariableName.SHEET_NAME.length)
+                    }
                   }
-                }
-              : trackers,
+                : trackers,
           {}
         )
       )

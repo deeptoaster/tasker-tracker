@@ -1,14 +1,13 @@
 import JSZip from 'jszip';
 
+import type { Config, Tracker } from '../defs';
 import {
-  Config,
   FILE_TYPE_DEFAULT,
   PROJECT_BASE,
   SERVICE_PREFIX,
   TAG_PREFIXES,
   TASK_APPEND_PREFIX,
   Tag,
-  Tracker,
   VariableName
 } from '../defs';
 
@@ -30,7 +29,7 @@ function* makeIdGenerator(): Generator<
   never,
   GlobalField | TrackerField | VariableName | number
 > {
-  const keys: { [key: string]: number } = {};
+  const keys: Record<string, number> = {};
   let id = 0;
   let key = '';
 
@@ -38,7 +37,8 @@ function* makeIdGenerator(): Generator<
     key = (yield keys[key]).toString();
 
     if (!(key in keys)) {
-      keys[key] = id++;
+      keys[key] = id;
+      id += 1;
     }
   }
 }
@@ -693,7 +693,7 @@ function makeTrackerBlob(tracker: Tracker, now: number): Blob {
   return new Blob(text, { type: FILE_TYPE_DEFAULT });
 }
 
-export default function exportToBlob(config: Config): Promise<Blob> {
+export default async function exportToBlob(config: Config): Promise<Blob> {
   const now = Date.now();
   const zip = new JSZip();
 

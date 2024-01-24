@@ -4,47 +4,60 @@
   "eslintConfig": {
     "extends": [
       "eslint:recommended",
-      "react-app",
       "plugin:react/recommended",
       "plugin:typescript-sort-keys/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      "plugin:@typescript-eslint/all",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "airbnb",
+      "airbnb/hooks",
+      "airbnb-typescript",
+      "prettier"
     ],
     "parserOptions": {
       "project": "./tsconfig.json"
     },
+    "root": true,
     "rules": {
       "@typescript-eslint/array-type": [
-        "warn",
+        "error",
         {
           "default": "generic"
         }
       ],
-      "@typescript-eslint/explicit-function-return-type": "error",
-      "@typescript-eslint/explicit-member-accessibility": "error",
-      "@typescript-eslint/member-ordering": "error",
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "type"
+      ],
+      "@typescript-eslint/no-confusing-void-expression": [
+        "error",
+        {
+          "ignoreArrowShorthand": true
+        }
+      ],
       "@typescript-eslint/no-inferrable-types": [
         "error",
         {
           "ignoreParameters": true
         }
       ],
-      "@typescript-eslint/no-misused-promises": [
+      "@typescript-eslint/no-shadow": [
         "error",
         {
-          "checksVoidReturn": false
+          "ignoreOnInitialization": true
         }
       ],
-      "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
       "@typescript-eslint/no-unnecessary-condition": [
         "error",
         {
           "allowConstantLoopConditions": true
         }
       ],
-      "@typescript-eslint/no-unnecessary-qualifier": "error",
-      "@typescript-eslint/prefer-readonly": "error",
-      "@typescript-eslint/sort-type-union-intersection-members": "error",
+      "@typescript-eslint/parameter-properties": [
+        "error",
+        {
+          "prefer": "parameter-property"
+        }
+      ],
       "@typescript-eslint/strict-boolean-expressions": [
         "error",
         {
@@ -53,52 +66,28 @@
           "allowString": false
         }
       ],
-      "@typescript-eslint/switch-exhaustiveness-check": "error",
-      "arrow-body-style": "error",
-      "curly": "error",
-      "dot-notation": "error",
-      "eqeqeq": [
-        "error",
-        "always",
-        {
-          "null": "never"
-        }
-      ],
-      "no-await-in-loop": "error",
-      "no-return-await": "error",
-      "no-unreachable-loop": "error",
-      "no-unsafe-optional-chaining": "error",
-      "no-useless-backreference": "error",
-      "no-useless-return": "error",
-      "no-var": "error",
-      "prefer-const": "error",
-      "prefer-spread": "error",
-      "react/destructuring-assignment": "error",
-      "react/function-component-definition": "error",
       "react/jsx-boolean-value": [
         "error",
         "always"
       ],
-      "react/jsx-sort-props": "error",
-      "react/prefer-stateless-function": "error",
-      "react/self-closing-comp": "error",
       "sort-imports": [
         "error",
         {
           "allowSeparatedGroups": true
         }
       ],
-      "sort-keys": "error",
-      "react/no-unescaped-entities": "off",
-      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/max-params": "off",
       "@typescript-eslint/no-floating-promises": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "args": "all",
-          "argsIgnorePattern": "^_"
-        }
-      ]
+      "@typescript-eslint/no-unsafe-enum-comparison": "off",
+      "@typescript-eslint/prefer-enum-initializers": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
+      "jsx-a11y/anchor-is-valid": "off",
+      "jsx-a11y/label-has-associated-control": "off",
+      "react/jsx-props-no-spreading": "off",
+      "react/no-array-index-key": "off",
+      "react/no-unescaped-entities": "off",
+      "no-else-return": "off",
+      "no-nested-ternary": "off"
     }
   },
   "postcss": {
@@ -120,7 +109,7 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "core-js": "^3.30.1",
+    "core-js": "^3.35.1",
     "jszip": "^3.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -128,26 +117,28 @@
     "squiffles-components": "github:deeptoaster/squiffles-components#master"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
-    "@babel/preset-env": "^7.21.4",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.21.4",
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
     "@csstools/postcss-global-data": "^2.1.1",
-    "@types/react": "^17.0.58",
-    "@types/react-dom": "^17.0.19",
-    "@types/react-transition-group": "^4.4.5",
-    "autoprefixer": "^10.4.14",
+    "@types/react": "^17.0.75",
+    "@types/react-dom": "^17.0.25",
+    "@types/react-transition-group": "^4.4.10",
+    "autoprefixer": "^10.4.17",
     "babel-loader": "^8.3.0",
     "css-loader": "^5.2.7",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-typescript-sort-keys": "^2.3.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-typescript-sort-keys": "^3.1.0",
     "eslint-webpack-plugin": "^2.7.0",
     "postcss-custom-properties": "^13.3.4",
     "postcss-loader": "^5.3.0",
     "style-loader": "^2.0.0",
-    "webpack": "^5.79.0",
+    "webpack": "^5.90.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.13.3"
+    "webpack-dev-server": "^4.15.1"
   },
   "scripts": {
     "build": "webpack --env production --mode production",
