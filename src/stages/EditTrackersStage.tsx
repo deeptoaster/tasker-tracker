@@ -1,14 +1,9 @@
 import * as React from 'react';
+import { Button, Card, TRANSITION_DURATION } from 'squiffles-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useCallback, useEffect, useState } from 'react';
-import { Button } from 'squiffles-components';
 
-import {
-  StageError,
-  TRACKER_DEFAULT,
-  TRANSITION_DURATION,
-  Tracker
-} from '../defs';
+import { StageError, TRACKER_DEFAULT, Tracker } from '../defs';
 import TrackerCard from '../components/TrackerCard';
 
 import './EditTrackersStage.css';
@@ -202,7 +197,7 @@ export default function EditTrackersStage(props: {
       setStageError(null);
     } catch (error) {
       if ((error as Error).name === 'StageError') {
-        setStageError(error);
+        setStageError(error as StageError);
       } else {
         throw error;
       }
@@ -253,10 +248,10 @@ export default function EditTrackersStage(props: {
             </CSSTransition>
           )
         )}
-        <div className="tracker-card-container" key={null}>
-          <article className="tracker-card preview">
+        <div className="tracker-card-container preview" key={null}>
+          <Card padded={false}>
             <Button onClick={addTracker} variant="add" />
-          </article>
+          </Card>
         </div>
       </TransitionGroup>
     </div>

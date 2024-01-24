@@ -2,11 +2,14 @@ import * as React from 'react';
 
 import { Link, Modal } from 'squiffles-components';
 
-export default function Help(props: { hideHelp: () => void }): JSX.Element {
-  const { hideHelp } = props;
+export default function Help(props: {
+  hideHelp: () => void;
+  visible: boolean;
+}): JSX.Element {
+  const { hideHelp, visible } = props;
 
   return (
-    <Modal actions={[{ label: 'Close', onClick: hideHelp }]}>
+    <Modal actions={[{ label: 'Close', onClick: hideHelp }]} visible={visible}>
       <h3>What's Tasker Tracker?</h3>
       <p>
         <strong>

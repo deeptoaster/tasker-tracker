@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
+import { Card } from 'squiffles-components';
 
 import { StageError, Tracker } from '../defs';
 import SpreadsheetRow from '../components/SpreadsheetRow';
-
-import './SpreadsheetSettingsStage.css';
 
 export default function SpreadsheetSettingsStage(props: {
   setStageError: (stageError: StageError | null) => void;
@@ -99,7 +98,7 @@ export default function SpreadsheetSettingsStage(props: {
       setStageError(null);
     } catch (error) {
       if ((error as Error).name === 'StageError') {
-        setStageError(error);
+        setStageError(error as StageError);
       } else {
         throw error;
       }
@@ -109,7 +108,7 @@ export default function SpreadsheetSettingsStage(props: {
   return (
     <div>
       <h2>One last thing&mdash;the spreadsheets.</h2>
-      <article className="api-card">
+      <Card width={30}>
         <h3>Spreadsheet Settings</h3>
         <p>
           Each tracker records its data in a separate sheet on Google Sheets.
@@ -153,7 +152,7 @@ export default function SpreadsheetSettingsStage(props: {
             )
           )}
         </form>
-      </article>
+      </Card>
     </div>
   );
 }

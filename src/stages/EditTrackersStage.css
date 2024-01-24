@@ -4,20 +4,20 @@
   justify-content: center;
   margin: 0 -1em;
 }
-.tracker-card.preview {
+.tracker-card-container.preview article {
   box-shadow: none;
   overflow: visible;
   margin-bottom: 2.5em;
 }
-.tracker-card li.preview::before {
+.tracker-card-container li.preview::before {
   display: none;
 }
-.tracker-card.preview button {
+.tracker-card-container.preview article button {
   width: 14.5em;
   height: 100%;
   min-height: 8.175em;
   border-radius: 1em;
 }
-.tracker-card.preview button.add::before {
+.tracker-card-container.preview button.add::before {
   font-size: 8em;
 }

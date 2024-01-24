@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Input, Link } from 'squiffles-components';
+import { Card, Input, Link } from 'squiffles-components';
 import { useCallback, useEffect, useRef } from 'react';
 
 import { StageError } from '../defs';
@@ -73,7 +73,7 @@ export default function ApiSettingsStage(props: {
       setStageError(null);
     } catch (error) {
       if ((error as Error).name === 'StageError') {
-        setStageError(error);
+        setStageError(error as StageError);
       } else {
         throw error;
       }
@@ -83,7 +83,7 @@ export default function ApiSettingsStage(props: {
   return (
     <div>
       <h2>Let's get you authenticated.</h2>
-      <article className="api-card">
+      <Card width={30}>
         <h3>API Settings</h3>
         <p>
           Click <Link onClick={showHelp}>Show Help</Link> below to learn how to
@@ -118,7 +118,7 @@ export default function ApiSettingsStage(props: {
             value={clientSecret}
           />
         </form>
-      </article>
+      </Card>
     </div>
   );
 }

@@ -1,25 +1,16 @@
 import * as React from 'react';
-import {
-  CSSTransition,
-  SwitchTransition,
-  TransitionGroup
-} from 'react-transition-group';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { TRANSITION_DURATION } from 'squiffles-components';
 
-import {
-  Config,
-  Stage,
-  StageError,
-  TRANSITION_DURATION,
-  Tracker
-} from './defs';
+import { Config, Stage, StageError, Tracker } from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
 import CreateTrackersStage from './stages/CreateTrackersStage';
 import DownloadStage from './stages/DownloadStage';
 import EditTrackersStage from './stages/EditTrackersStage';
-import Footer from './Footer';
 import Help from './modals/Help';
 import SpreadsheetSettingsStage from './stages/SpreadsheetSettingsStage';
+import TrackerFooter from './TrackerFooter';
 
 import './App.css';
 
@@ -93,16 +84,7 @@ export default function App(): JSX.Element {
 
   return (
     <>
-      <TransitionGroup component={null}>
-        {helpVisible ? (
-          <CSSTransition
-            classNames="overlay"
-            timeout={TRANSITION_DURATION.exit}
-          >
-            <Help hideHelp={hideHelp} />
-          </CSSTransition>
-        ) : null}
-      </TransitionGroup>
+      <Help hideHelp={hideHelp} visible={helpVisible} />
       <section>
         <SwitchTransition>
           <CSSTransition
@@ -148,7 +130,7 @@ export default function App(): JSX.Element {
             ) : null}
           </CSSTransition>
         </SwitchTransition>
-        <Footer
+        <TrackerFooter
           config={config}
           error={error}
           navigationDisabled={navigationDisabled}

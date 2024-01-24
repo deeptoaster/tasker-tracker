@@ -1,74 +1,8 @@
-.error.error-enter,
-.error.error-exit-active {
-  opacity: 0;
-  transform: scale(0.85);
-}
-.error,
-.error.error-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition:
-    opacity 300ms,
-    transform 300ms;
-}
-.error {
-  position: absolute;
-  bottom: 3em;
-  box-shadow:
-    0 0 0.2em var(--color-background-error),
-    0.75em 0.75em 3em var(--color-shadow);
-  max-width: 80%;
-  padding: 1em 2em;
-  background-color: var(--color-background-error);
-  color: var(--color-text-error);
-  text-align: center;
-  font-weight: bold;
-  z-index: 1;
-}
 .pull-left {
   float: left;
 }
 .pull-right {
   float: right;
-}
-.stage-appear article,
-.stage-enter article,
-.stage-exit-active.stage-exit-active article,
-.card-enter article,
-.card-exit-active article,
-footer.stage-enter {
-  box-shadow: none;
-  color: transparent;
-  text-shadow: none;
-  transition:
-    box-shadow 200ms,
-    color 200ms,
-    text-shadow 200ms;
-}
-article,
-.stage-appear-active article,
-.stage-enter-active article,
-.card-enter-active article,
-footer,
-footer.stage-enter-active {
-  box-shadow:
-    -0.05em -0.05em var(--color-specular),
-    -0.5em -0.5em 2em var(--color-highlight),
-    0.05em 0.05em var(--color-shadow),
-    0.5em 0.5em 2em var(--color-shadow);
-  color: inherit;
-  text-shadow:
-    -0.05em -0.05em 0.05em var(--color-specular),
-    0.05em 0.05em 0.05em var(--color-shadow);
-  transition:
-    box-shadow 400ms 400ms,
-    color 400ms 600ms,
-    text-shadow 400ms 600ms;
-}
-article {
-  overflow: hidden;
-  margin-bottom: 3em;
-  border-radius: 1em;
 }
 body,
 button {
@@ -83,19 +17,6 @@ body {
 figure {
   margin: 2em 0 1em 0;
   text-align: center;
-}
-footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: 2em;
-}
-footer button + button,
-footer .button + button,
-footer button + .button,
-footer .button + .button {
-  margin-left: 2em;
 }
 form,
 h2,
@@ -144,10 +65,4 @@ section {
   left: 0;
   overflow: hidden;
   transition: filter 300ms;
-}
-aside + section {
-  filter: blur(0.5em);
-}
-aside.overlay-exit-active + section {
-  filter: none;
 }

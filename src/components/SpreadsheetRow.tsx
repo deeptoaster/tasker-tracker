@@ -3,6 +3,8 @@ import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 
 import { StageError } from '../defs';
 
+import './SpreadsheetRow.css';
+
 export default function SpreadsheetRow(props: {
   onFocus: () => void;
   setSheetId: (sheetId: string) => void;

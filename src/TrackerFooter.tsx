@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Button, Footer } from 'squiffles-components';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Button } from 'squiffles-components';
 
 import * as TrackerUtils from './utils';
-import { Config, Stage, StageError, TRANSITION_DURATION } from './defs';
+import { Config, Stage, StageError } from './defs';
 
 const DOWNLOAD_NAME = 'tracker.zip';
 
-export default function Footer(props: {
+export default function TrackerFooter(props: {
   config: Config | null;
   error: Error | null;
   navigationDisabled: boolean;
@@ -80,58 +79,37 @@ export default function Footer(props: {
   }, [config, stage]);
 
   return (
-    <TransitionGroup component={null}>
-      {error != null ? (
-        <CSSTransition
-          classNames="error"
-          key="error"
-          timeout={TRANSITION_DURATION.exit}
+    <Footer error={error} visible={config != null}>
+      <div className="pull-left">
+        <Button onClick={showHelp}>Show Help</Button>
+        <Button
+          external={true}
+          href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
         >
-          <p className="error">{error.message}</p>
-        </CSSTransition>
-      ) : null}
-      {config != null ? (
-        <CSSTransition
-          classNames="stage"
-          key="pager"
-          timeout={TRANSITION_DURATION.exit}
-        >
-          <footer>
-            <div className="pull-left">
-              <Button onClick={showHelp}>Show Help</Button>
-              <Button
-                external={true}
-                href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
-              >
-                Buy Me a Beer
-              </Button>
-            </div>
-            <div className="pull-right">
-              <Button onClick={back}>
-                {stage === 0 ? 'Start Over' : 'Back'}
-              </Button>
-              {downloadUrl != null ? (
-                <Button
-                  download={DOWNLOAD_NAME}
-                  external={true}
-                  href={downloadUrl}
-                  onClick={handleDownloadClick}
-                  variant="primary"
-                >
-                  Download
-                </Button>
-              ) : (
-                <Button
-                  onClick={!navigationDisabled ? next : undefined}
-                  variant="primary"
-                >
-                  Next
-                </Button>
-              )}
-            </div>
-          </footer>
-        </CSSTransition>
-      ) : null}
-    </TransitionGroup>
+          Buy Me a Beer
+        </Button>
+      </div>
+      <div className="pull-right">
+        <Button onClick={back}>{stage === 0 ? 'Start Over' : 'Back'}</Button>
+        {downloadUrl != null ? (
+          <Button
+            download={DOWNLOAD_NAME}
+            external={true}
+            href={downloadUrl}
+            onClick={handleDownloadClick}
+            variant="primary"
+          >
+            Download
+          </Button>
+        ) : (
+          <Button
+            onClick={!navigationDisabled ? next : undefined}
+            variant="primary"
+          >
+            Next
+          </Button>
+        )}
+      </div>
+    </Footer>
   );
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Link } from 'squiffles-components';
+import { Button, Card, Link } from 'squiffles-components';
 import { ChangeEvent, useCallback, useEffect } from 'react';
 
 import * as TrackerUtils from '../utils';
@@ -39,10 +39,10 @@ export default function CreateTrackersStage(props: {
   }, [setStageError]);
 
   return (
-    <div>
+    <div className="create-stage">
       <h2>Where would you like to start?</h2>
-      <article className="create-card">
-        <div className="create-card-option">
+      <Card padded={false}>
+        <div className="create-stage-option">
           <h3>Start From Scratch</h3>
           <p>
             Tell us about the things you want to track and we'll generate a
@@ -54,7 +54,7 @@ export default function CreateTrackersStage(props: {
             </Button>
           </figure>
         </div>
-        <div className="create-card-option">
+        <div className="create-stage-option">
           <h3>Start From Existing Config</h3>
           <p>
             If you've made a config with us already, you can make adjustments to
@@ -72,8 +72,8 @@ export default function CreateTrackersStage(props: {
             </Button>
           </figure>
         </div>
-      </article>
-      <ul className="create-card-links">
+      </Card>
+      <ul className="create-stage-links">
         <li>
           <Link onClick={showHelp}>About</Link>
         </li>

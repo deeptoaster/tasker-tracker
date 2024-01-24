@@ -22,7 +22,6 @@ export const FILE_TYPES = [FILE_TYPE_DEFAULT, 'application/zip', 'text/xml'];
 export const PROJECT_BASE = 'Base';
 export const SERVICE_PREFIX = 'TT';
 export const TASK_APPEND_PREFIX = 'Append ';
-export const TRANSITION_DURATION = { enter: 1200, exit: 300 };
 
 export enum Tag {
   TASK = 'Task',

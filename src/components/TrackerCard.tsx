@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { Button, Card } from 'squiffles-components';
 import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
-import { Button } from 'squiffles-components';
 
 import { StageError, Tracker } from '../defs';
 import TrackerOptionRow from './TrackerOptionRow';
@@ -53,7 +53,7 @@ export default function TrackerCard(
 
   return (
     <div className="tracker-card-container">
-      <article className="tracker-card">
+      <Card padded={false}>
         <h3>
           <input
             onChange={updateTitle}
@@ -90,7 +90,7 @@ export default function TrackerCard(
             <Button onClick={addTrackerOption} variant="add" />
           </li>
         </ul>
-      </article>
+      </Card>
       <Button
         hidden={removeTracker == null}
         onClick={removeTracker ?? undefined}

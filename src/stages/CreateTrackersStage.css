@@ -1,34 +1,34 @@
-.create-card {
+.create-stage article {
   display: flex;
   text-align: center;
 }
-.create-card-option {
+.create-stage-option {
   position: relative;
   width: 20em;
   padding: 1em 2em;
 }
-.create-card-option + .create-card-option {
+.create-stage-option + .create-stage-option {
   margin-left: 0.1em;
 }
-.stage-appear .create-card-option + .create-card-option::before,
-.stage-enter .create-card-option + .create-card-option::before,
-.stage-exit-active .create-card-option + .create-card-option::before {
+.stage-appear .create-stage-option + .create-stage-option::before,
+.stage-enter .create-stage-option + .create-stage-option::before,
+.stage-exit-active .create-stage-option + .create-stage-option::before {
   top: 50%;
   bottom: 50%;
   transition:
     top 200ms,
     bottom 200ms;
 }
-.create-card-option + .create-card-option::before,
-.stage-appear-active .create-card-option + .create-card-option::before,
-.stage-enter-active .create-card-option + .create-card-option::before {
+.create-stage-option + .create-stage-option::before,
+.stage-appear-active .create-stage-option + .create-stage-option::before,
+.stage-enter-active .create-stage-option + .create-stage-option::before {
   top: 1em;
   bottom: 1em;
   transition:
     top 400ms 800ms,
     bottom 400ms 800ms;
 }
-.create-card-option + .create-card-option::before {
+.create-stage-option + .create-stage-option::before {
   content: '';
   position: absolute;
   left: -0.05em;
@@ -37,7 +37,7 @@
   border-left: 0.05em solid var(--color-shadow);
   text-align: center;
 }
-.create-card-option + .create-card-option::after {
+.create-stage-option + .create-stage-option::after {
   content: 'OR';
   position: absolute;
   top: 50%;
@@ -46,16 +46,16 @@
   background-color: var(--color-background);
   font-family: 'Playfair Display', sans-serif;
 }
-.create-card-links {
+.create-stage-links {
   list-style-type: none;
   margin: 0;
   padding: 0;
   text-align: center;
 }
-.create-card-links li {
+.create-stage-links li {
   display: inline;
 }
-.create-card-links li + li::before {
+.create-stage-links li + li::before {
   content: '\b7';
   padding: 0 1em;
   color: var(--color-text-link);

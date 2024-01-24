@@ -25,23 +25,23 @@
 .tracker-card-container {
   margin-bottom: 3em;
 }
-.tracker-card {
+.tracker-card-container article {
   flex: 1;
   position: relative;
   margin-bottom: 1em;
   z-index: 1;
 }
-.tracker-card h3 {
+.tracker-card-container h3 {
   width: 10em;
   margin: 0.8em;
 }
-.tracker-card ul {
+.tracker-card-container ul {
   list-style-type: none;
   margin-top: 1.1em;
   margin-bottom: 0;
   padding: 0;
 }
-.tracker-card li {
+.tracker-card-container li {
   position: relative;
   width: 10.5em;
   height: 2em;
@@ -49,27 +49,28 @@
   padding: 0 2em;
   line-height: 2;
 }
-.stage-appear .tracker-card li::before,
-.stage-enter .tracker-card li::before,
-.stage-exit-active.stage-exit-active .tracker-card li::before,
-.stage-enter-done .card-enter .tracker-card li::before,
-.stage-enter-done .card-exit-active .tracker-card li::before {
+.stage-appear .tracker-card-container li::before,
+.stage-enter .tracker-card-container li::before,
+.stage-exit-active.stage-exit-active .tracker-card-container li::before,
+.stage-enter-done .tracker-card-container.card-enter li::before,
+.stage-enter-done .tracker-card-container.card-exit-active li::before {
   color: transparent;
   transition: color 200ms;
 }
-.tracker-card li::before,
-.stage-appear-active .tracker-card li::before,
-.stage-enter-active .tracker-card li::before,
-.stage-enter-done .tracker-card li::before {
+.tracker-card-container li::before,
+.stage-appear-active .tracker-card-container li::before,
+.stage-enter-active .tracker-card-container li::before,
+.stage-enter-done .tracker-card-container li::before {
   color: var(--color-text-button-symbolic);
 }
-.tracker-card li::before,
-.stage-appear-active .tracker-card li::before,
-.stage-enter-active .tracker-card li::before,
-.stage-enter-done .card-enter-active .tracker-card li::before {
+.stage-appear-active .tracker-card-container li::before,
+.stage-enter-active .tracker-card-container li::before {
   transition: color 400ms 800ms;
 }
-.tracker-card li::before {
+.stage-enter-done .tracker-card-container li::before {
+  transition: color 400ms;
+}
+.tracker-card-container li::before {
   content: '::';
   position: absolute;
   left: 0;
@@ -80,7 +81,10 @@
   letter-spacing: 0.1em;
   cursor: move;
 }
-.tracker-card li input {
+.tracker-card-container li.preview::before {
+  display: none;
+}
+.tracker-card-container li input {
   box-sizing: border-box;
 }
 .tracker-card-container button {
