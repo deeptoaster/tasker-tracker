@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { ERROR_DURATION, TRANSITION_DURATION } from 'squiffles-components';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { Config, StageError, Tracker } from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
