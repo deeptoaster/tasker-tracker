@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { TRANSITION_DURATION } from 'squiffles-components';
+import { ERROR_DURATION, TRANSITION_DURATION } from 'squiffles-components';
 
 import type { Config, StageError, Tracker } from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
@@ -14,8 +14,6 @@ import { Stage } from './defs';
 import TrackerFooter from './TrackerFooter';
 
 import './App.css';
-
-const ERROR_DURATION = 5000;
 
 export default function App(): JSX.Element {
   const [config, setConfig] = useState<Config | null>(null);

@@ -126,7 +126,7 @@ export default function EditTrackersStage(props: {
 
       if (titleInvalidIndex !== -1) {
         throw new StageError(
-          'Category title must start with a capital letter, end in a lowercase letter or number, and contain only letters, numbers, or underscores.',
+          'Category title must start with a capital letter, end in a lowercase letter or number, and contain only letters, numbers, and underscores.',
           focus,
           'title',
           titleEmptyIndex
