@@ -14,7 +14,7 @@ export default function TrackerFooter(props: {
   error: Error | null;
   navigationDisabled: boolean;
   setConfig: (config: Config | null) => void;
-  setError: (error: Error) => void;
+  setError: (error: Error | null) => void;
   setStage: (stage: Stage) => void;
   showHelp: () => void;
   stage: Stage;
@@ -81,7 +81,7 @@ export default function TrackerFooter(props: {
   }, [config, stage]);
 
   return (
-    <Footer error={error} visible={config != null}>
+    <Footer error={error} setError={setError} visible={config != null}>
       <div className="pull-left">
         <Button onClick={showHelp}>Show Help</Button>
         <Button

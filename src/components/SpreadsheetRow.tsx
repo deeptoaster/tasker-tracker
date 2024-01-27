@@ -39,6 +39,12 @@ export default function SpreadsheetRow(props: {
     [setSheetId]
   );
 
+  const updateSheetName = useCallback(
+    (event: ChangeEvent<HTMLInputElement>): void =>
+      setSheetName(event.currentTarget.value),
+    [setSheetName]
+  );
+
   useEffect((): void => {
     if (stageError?.source === 'sheetId') {
       sheetIdInput.current?.focus();
@@ -63,9 +69,7 @@ export default function SpreadsheetRow(props: {
       </div>
       <div className="input-group">
         <input
-          onChange={(event: ChangeEvent<HTMLInputElement>): void =>
-            setSheetName(event.currentTarget.value)
-          }
+          onChange={updateSheetName}
           ref={sheetNameInput}
           type="text"
           value={sheetName}

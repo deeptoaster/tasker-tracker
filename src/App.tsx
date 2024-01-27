@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { ERROR_DURATION, TRANSITION_DURATION } from 'squiffles-components';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { TRANSITION_DURATION } from 'squiffles-components';
 
 import type { Config, StageError, Tracker } from './defs';
 import ApiSettingsStage from './stages/ApiSettingsStage';
@@ -18,7 +18,6 @@ import './App.css';
 export default function App(): JSX.Element {
   const [config, setConfig] = useState<Config | null>(null);
   const [error, setError] = useState<Error | null>(null);
-  const errorTimeout = useRef<number>();
   const [helpVisible, setHelpVisible] = useState<boolean>(false);
   const [navigationDisabled, setNavigationDisabled] = useState<boolean>(false);
   const [stage, setStage] = useState<Stage>(Stage.EDIT_TRACKERS);
@@ -67,17 +66,6 @@ export default function App(): JSX.Element {
       setError(null);
     }
   }, [config]);
-
-  useEffect((): void => {
-    if (error != null) {
-      window.clearTimeout(errorTimeout.current);
-
-      errorTimeout.current = window.setTimeout(
-        () => setError(null),
-        ERROR_DURATION
-      );
-    }
-  }, [error]);
 
   useEffect((): void => setError(null), [stage]);
 
