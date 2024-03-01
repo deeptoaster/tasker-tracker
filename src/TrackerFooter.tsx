@@ -82,13 +82,13 @@ export default function TrackerFooter(props: {
 
   return (
     <Footer error={error} setError={setError} visible={config != null}>
-      <div className="pull-left">
+      <div>
         <Button onClick={showHelp}>Show Help</Button>
         <Button external={true} href={DONATION_URL}>
           Buy Me a Beer
         </Button>
       </div>
-      <div className="pull-right">
+      <div>
         <Button onClick={back}>{stage === 0 ? 'Start Over' : 'Back'}</Button>
         {downloadUrl != null ? (
           <Button

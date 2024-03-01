@@ -105,9 +105,6 @@
 .tracker-card-container li button.button-add {
   width: 100%;
 }
-.tracker-card-container button.hidden {
-  visibility: hidden;
-}
 .tracker-card-container button::before {
   font-weight: bold;
   font-size: 1.5em;
