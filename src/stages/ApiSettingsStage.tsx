@@ -4,8 +4,6 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { StageError } from '../defs';
 
-import './ApiSettingsStage.css';
-
 export default function ApiSettingsStage(props: {
   clientId: string;
   clientSecret: string;

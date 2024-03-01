@@ -70,6 +70,12 @@
         "error",
         "always"
       ],
+      "no-param-reassign": [
+        "error",
+        {
+          "props": false
+        }
+      ],
       "sort-imports": [
         "error",
         {

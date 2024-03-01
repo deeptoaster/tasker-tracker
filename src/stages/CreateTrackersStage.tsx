@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Card, Link } from 'squiffles-components';
-import { useCallback, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
+import { useCallback } from 'react';
 
 import * as TrackerUtils from '../utils';
 import { CONFIG_DEFAULT, FILE_TYPES } from '../defs';
@@ -11,16 +11,15 @@ import './CreateTrackersStage.css';
 
 export default function CreateTrackersStage(props: {
   setConfig: (trackers: Config) => void;
-  setError: (error: Error) => void;
-  setStageError: (stageError: null) => void;
+  setError: (error: Error | null) => void;
   showHelp: () => void;
 }): JSX.Element {
-  const { setConfig, setError, setStageError, showHelp } = props;
+  const { setConfig, setError, showHelp } = props;
 
-  const createNewConfig = useCallback(
-    (): void => setConfig(CONFIG_DEFAULT),
-    [setConfig]
-  );
+  const createNewConfig = useCallback((): void => {
+    setConfig(CONFIG_DEFAULT);
+    setError(null);
+  }, [setConfig, setError]);
 
   const uploadConfig = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
@@ -35,10 +34,6 @@ export default function CreateTrackersStage(props: {
     },
     [setConfig, setError]
   );
-
-  useEffect((): void => {
-    setStageError(null);
-  }, [setStageError]);
 
   return (
     <div className="create-stage">
