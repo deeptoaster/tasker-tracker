@@ -24,7 +24,7 @@ export default function EditTrackersStage(props: {
   );
 
   const addTrackerOption = useCallback(
-    (trackerIndexToChange): void =>
+    (trackerIndexToChange: number): void =>
       setTrackers(
         trackers.map(
           (tracker: Tracker, trackerIndex: number): Tracker =>

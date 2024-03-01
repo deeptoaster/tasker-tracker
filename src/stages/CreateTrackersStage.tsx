@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react';
 import { useCallback } from 'react';
 
 import * as TrackerUtils from '../utils';
-import { CONFIG_DEFAULT, FILE_TYPES } from '../defs';
+import { CONFIG_DEFAULT, DONATION_URL, FILE_TYPES } from '../defs';
 import type { Config } from '../defs';
 
 import './CreateTrackersStage.css';
@@ -75,10 +75,7 @@ export default function CreateTrackersStage(props: {
           <Link onClick={showHelp}>About</Link>
         </li>
         <li>
-          <Link
-            external={true}
-            href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
-          >
+          <Link external={true} href={DONATION_URL}>
             Donate
           </Link>
         </li>

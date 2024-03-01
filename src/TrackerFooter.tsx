@@ -5,7 +5,7 @@ import type { MouseEvent } from 'react';
 
 import * as TrackerUtils from './utils';
 import type { Config, StageError } from './defs';
-import { Stage } from './defs';
+import { DONATION_URL, Stage } from './defs';
 
 const DOWNLOAD_NAME = 'tracker.zip';
 
@@ -84,10 +84,7 @@ export default function TrackerFooter(props: {
     <Footer error={error} setError={setError} visible={config != null}>
       <div className="pull-left">
         <Button onClick={showHelp}>Show Help</Button>
-        <Button
-          external={true}
-          href="https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD"
-        >
+        <Button external={true} href={DONATION_URL}>
           Buy Me a Beer
         </Button>
       </div>

@@ -13,6 +13,9 @@
       "airbnb-typescript",
       "prettier"
     ],
+    "ignorePatterns": [
+      "*.js"
+    ],
     "parserOptions": {
       "project": "./tsconfig.json"
     },

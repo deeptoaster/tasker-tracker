@@ -1,3 +1,10 @@
+declare global {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Navigator {
+    msSaveBlob: (blob: Blob | null, defaultName: string) => boolean;
+  }
+}
+
 export const TRACKER_DEFAULT: Tracker = {
   options: [''],
   sheetId: '',
@@ -17,6 +24,8 @@ export const CONFIG_DEFAULT: Config = {
   ]
 };
 
+export const DONATION_URL =
+  'https://www.paypal.com/donate?business=T3NJS3T45WMFC&item_name=Tasker+Tracker&currency_code=USD';
 export const FILE_TYPE_DEFAULT: DOMParserSupportedType = 'application/xml';
 export const FILE_TYPES = [FILE_TYPE_DEFAULT, 'application/zip', 'text/xml'];
 export const PROJECT_BASE = 'Base';
