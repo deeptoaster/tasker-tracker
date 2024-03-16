@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "jsx": "preserve",
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "target": "es5"
   }
 }

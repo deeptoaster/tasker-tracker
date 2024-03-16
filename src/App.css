@@ -26,14 +26,13 @@ h2,
 .overlay-enter-done h2,
 .stage-appear-active h2,
 .stage-enter-active h2 {
-  color: inherit;
+  color: var(--color-text-heading);
   transition: color 600ms;
 }
 h2 {
   font:
     2em 'Playfair Display',
     sans-serif;
-  color: var(--color-text-heading);
 }
 h3 {
   margin: 0.8em 0;
