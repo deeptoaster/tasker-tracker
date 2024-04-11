@@ -1,6 +1,8 @@
 .git-ftp-ignore
 .git-ftp-include
 .gitignore
+.prettierrc
+README.md
 package-lock.json
 package.json
 src/*

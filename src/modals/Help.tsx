@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { Link, Modal } from 'squiffles-components';
 
 export default function Help(props: {
