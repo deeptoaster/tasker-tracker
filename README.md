@@ -55,13 +55,12 @@ with visualizations, but don't that stop you from creating more.
 
 Feedback and contributions are always welcome! If you have any bug reports,
 feature requests, or questions, please open a GitHub
-[issue](https://github.com/deeptoaster/tasker-tracker/issues). To contribute,
-follow the instructions below to set up local development and submit a GitHub
-[pull request](https://github.com/deeptoaster/tasker-tracker/pulls).
+[issue](https://github.com/deeptoaster/tasker-tracker/issues).
 
-## Local Development
-
-You will need to have [Git](https://git-scm.com/doc), [Node.js, and
+To contribute, follow the instructions below to set up local development and
+submit a GitHub [pull
+request](https://github.com/deeptoaster/tasker-tracker/pulls). You will need to
+have [Git](https://git-scm.com/doc), [Node.js, and
 npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 installed.
 
